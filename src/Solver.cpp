@@ -1,17 +1,17 @@
 #include "Solver.h"
-#define _CRTDBG_MAP_ALLOC
+//#define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
-#include <crtdbg.h>
+//#include <crtdbg.h>
 #include <math.h>
 #include <stdio.h> 
 #include <string>
 #include <algorithm>
-#include <GL/glut.h>
 #include <fstream>
 #include <iostream>
 #include <omp.h>
+#include<glad/glad.h>
 
-#define new ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
+//#define new ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #define _USE_MATH_DEFINES
 
 Solver::Solver()
@@ -80,9 +80,9 @@ Solver::Solver()
 
 	cout << "lambda =" << lambda_s << endl;
 
-	DataDir		=  "C:\\Users\\MasayaDohino\\Desktop\\cavelab\\simulation";
+	DataDir		=  "dataset";
 	//DataDir = "..\\Data\\Set\\";
-	WorkingDir  =  "C:\\Users\\MasayaDohino\\Desktop\\cavelab\\simulation";
+	WorkingDir  =  "simulation_dir";
 
 	cout << "Solver Constructor" << endl;
 
@@ -358,7 +358,7 @@ void Solver::cycle_stRL(complex<double> *p, int X, enum DIRECT offset){
 
 //---------------------------ï`âÊ------------------------------//
 //ç∂â∫Ç™(0,0), âEè„Ç™(Nx,Ny)
-void Solver::draw(Complex *p, Complex *q){
+void Solver::draw(Complex *p, Complex *q,GUI::ImageBuffer &img){
 	double N = max(mField->getNx(),mField->getNy());
 	double ws = 2.0*MAIN_WINDOW_X/WINDOW_W/N;
 	double hs = 2.0*MAIN_WINDOW_H/WINDOW_H/N;
@@ -370,43 +370,43 @@ void Solver::draw(Complex *p, Complex *q){
 			//Color c = color(30.0*(p[index(i,j)].real() + q[index(i,j)].real()));
 			glColor3d(c.red, c.green, c.blue);
 //			if(j==mField->getNpy()/2 || i==mField->getNpx()/2) glColor3d(1,1,1);
-			
 			glRectd(x*ws-1, y*hs-1, (x+1.0)*ws-1, (y+1.0)*hs-1);
 				
 		}
 	}
 
-	draw_model();
+	draw_model(img);
 }
 
 //---------------------------ï`âÊ------------------------------//
 //ç∂â∫Ç™(0,0), âEè„Ç™(Nx,Ny)
-void Solver::draw(Complex *p){
+void Solver::draw(Complex *p,GUI::ImageBuffer &img){
 	double N = max(mField->getNx(),mField->getNy());
-	double ws = 2.0*MAIN_WINDOW_X/WINDOW_W/N;
-	double hs = 2.0*MAIN_WINDOW_H/WINDOW_H/N;
+	double ws = img.getWidth()/N;
+	double hs = img.getHeight()/N;
 	for (int i = mField->getNpml(); i < mField->getNpx()-mField->getNpml(); i++){
 		for (int j = mField->getNpml(); j < mField->getNpy()-mField->getNpml(); j++){
-			int x = i-mField->getNpml();
+			double x = i-mField->getNpml();
 			int y = j-mField->getNpml();
 			Color c = color( norm(p[index(i,j)]) );
 			//Color c = color(30.0*p[index(i,j)].real());
-			glColor3d(c.red, c.green, c.blue);
-//			if(j==mField->getNpy()/2 || i==mField->getNpx()/2) glColor3d(1,1,1);
-			
-			glRectd(x*ws-1, y*hs-1, (x+1.0)*ws-1, (y+1.0)*hs-1);
+			img.Write(x*ws, y*hs, c.red*255, c.green*255, c.blue*255);
+			if(j==mField->getNpy()/2 || i==mField->getNpx()/2) {
+				img.Write(x*ws, y*hs, 255, 255, 255);
+			}
+			//glRectd(x*ws-1, y*hs-1, (x+1.0)*ws-1, (y+1.0)*hs-1);
 				
 		}
 	}
 
-	draw_model();
+	draw_model(img);
 }
 
 //éUóêëÃÇÃï`âÊ
-void Solver::draw_model(){
+void Solver::draw_model(GUI::ImageBuffer &img){
 	double N = max(mField->getNx(),mField->getNy());
-	double ws = 2.0*MAIN_WINDOW_X/WINDOW_W/N;
-	double hs = 2.0*MAIN_WINDOW_H/WINDOW_H/N;
+	double ws = img.getWidth()/N;
+	double hs = img.getHeight()/N;
 	for (int i = mField->getNpml(); i < mField->getNpx()-mField->getNpml(); i++){
 		for (int j = mField->getNpml(); j < mField->getNpy()-mField->getNpml(); j++){
 			int x = i-mField->getNpml();
@@ -414,17 +414,10 @@ void Solver::draw_model(){
 			//î}éøã´äE
 			const double n = N_S(i, j);	//Ç±Ç±Ç≈,ã¸ê‹ó¶ÇèëÇ´ä∑Ç¶ÇƒÇÕÇ¢ÇØÇ»Ç¢
 			const double s = SIG(i, j);
-
-			if(n == 1.0) continue;	//ã¸ê‹ó¶Ç™1Ç»ÇÁÇ∆ÇŒÇ∑
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glDepthMask(GL_FALSE);
-			glColor4d(0.7/(n+s), 0.7/(n+s), 0.7/(n+s), 0.6);
-			glDepthMask(GL_TRUE);
-		glRectd(x*ws-1, y*hs-1, (x+1.0)*ws-1, (y+1.0)*hs-1);	
+			img.ColorBlend(x*ws, y*hs, (0.7/(n+s))*255, (0.7/(n+s))*255, (0.7/(n+s))*255);
+			if(n == 1.0) continue;	//ã¸ê‹ó¶Ç™1Ç»ÇÁÇ∆ÇŒÇ∑	
 		}
 	}
-
 }
 
 void Solver::modelCheck() {

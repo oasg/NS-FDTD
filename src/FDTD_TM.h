@@ -28,7 +28,7 @@ public:
 	FDTD_TM();
 	virtual ~FDTD_TM();
 	virtual bool calc()=0;
-	void draw();
+	void draw(GUI::ImageBuffer &img);
 	void field();
 
 protected:

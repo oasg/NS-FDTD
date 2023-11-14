@@ -4,12 +4,14 @@
 #include "Object.h"
 #include "MenuWindow.h"
 #include "Model.h"
-#include <direct.h>
+//#include <direct.h>
 #include<stack>
 #include<math.h>
 #include<iomanip>
 #include "PhysicalConstant.h"
 #include "Field.h"
+#include<filesystem>
+#include "ImageBuffer.hpp"
 
 #define _USE_MATH_DEFINES
 
@@ -91,7 +93,7 @@ public:
 	Solver();
 	virtual ~Solver();
 	virtual bool calc() = 0;
-	virtual void draw() = 0;
+	virtual void draw(GUI::ImageBuffer &img) = 0;
 	virtual void field() = 0;
 	double getTime(){ return time; }
 	void nextTime(){
@@ -113,12 +115,12 @@ public:
 	};
 
 protected:
-	void draw(Complex *p);
-	void draw(Complex *p, Complex *q);
-	void draw_model();
-	void modelCheck();
+	void draw(Complex *p,GUI::ImageBuffer &img);
+	void draw(Complex *p, Complex *q,GUI::ImageBuffer &img);
+    void draw_model(GUI::ImageBuffer &img);
+    void modelCheck();
 
-	//---------------------------------------------------------//
+    //---------------------------------------------------------//
 	//--------------------ì¸éÀîg-------------------------------//
 	//---------------------------------------------------------//
 	void linearLightSource(complex<double> *p);	//â°ï˚å¸ÇÃê¸åıåπ
@@ -129,7 +131,7 @@ protected:
 		time = 0;	//éûä‘Ç0Ç…
 		//DataDir		=  "../DataSet/";
 		//DataDir = "..\\Data\\Set\\";
-		DataDir = "C:\\Users\\MasayaDohino\\Desktop\\cavelab\\simulation";
+		DataDir = "..\\data\\simulation";
 	}
 
 	void SetWaveParameter(double lam){
@@ -298,7 +300,8 @@ protected:
 	}
 
 	string MakeDir(string name){
-		if(_mkdir((DataDir + name).c_str()) == 0) cout << "makeNEWdir" <<endl;
+		if(std::filesystem::create_directory((DataDir + name).c_str()) == 0)
+			 cout << "makeNEWdir" <<endl;
 		return name + "/"; 
 	}
 

@@ -2,7 +2,7 @@
 #define _MODEL_H
 #include"PhysicalConstant.h"
 #include<string>
-#include<direct.h>
+//#include<direct.h>
 #include"Object.h"
 #include"Field.h"
 #include<iostream>

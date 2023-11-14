@@ -13,7 +13,7 @@ public:
 	void PMLfield();
 private:
 
-	complex<double> Dx2_n(complex<double> *p, int i, int j, int t){		//·•ª‰‰Zqd'2‚Ì¬•ª
+	complex<double> Dx2_n(complex<double> *p, int i, int j, int t){		//å·®åˆ†æ¼”ç®—å­d'2ã®æˆåˆ†
 		return (p[index(i,j+1, t)] + p[index(i, j-1, t)] - p[index(i-1,j+1, t)] - p[index(i-1, j-1, t)])/2.0;
 	};
 
@@ -21,7 +21,7 @@ private:
 		return (p[index(i+1,j, t)] + p[index(i-1, j, t)] - p[index(i+1,j-1, t)] - p[index(i-1, j-1, t)])/2.0;
 	}
 
-	complex<double> Dx2_n(complex<double> *p, int i, int j) {		//·•ª‰‰Zqd'2‚Ì¬•ª
+	complex<double> Dx2_n(complex<double> *p, int i, int j) {		//å·®åˆ†æ¼”ç®—å­d'2ã®æˆåˆ†
 		return (p[index(i, j + 1)] + p[index(i, j - 1)] - p[index(i - 1, j + 1)] - p[index(i - 1, j - 1)]) / 2.0;
 	};
 
@@ -29,13 +29,13 @@ private:
 		return (p[index(i + 1, j)] + p[index(i - 1, j)] - p[index(i + 1, j - 1)] - p[index(i - 1, j - 1)]) / 2.0;
 	}
 
-	//todo ‹«ŠE‹ß–T‚ÉS-FDTD‚ğg‚Á‚Ä‚È‚¢
+	//todo å¢ƒç•Œè¿‘å‚ã«S-FDTDã‚’ä½¿ã£ã¦ãªã„
 	void CalcE() {
 		int Npml = mField->getNpml();
 	#ifdef _OPENMP
 	#pragma omp parallel for
 	#endif
-		//“dŠE‚ÌŒvZ
+		//é›»ç•Œã®è¨ˆç®—
 		for (int i = Npml; i < mField->getNpx() - Npml; i++) {
 			for (int j = Npml; j < mField->getNpy() - Npml; j++) {
 				EZ(i, j, +1) = CEZ(i, j)*EZ(i, j, 0)
@@ -46,7 +46,7 @@ private:
 	}
 
 
-	//‹zû‹«ŠE‚ÍEz‚É‚µ‚©“K—p‚µ‚È‚¢‚©‚ç,H‚Í—Ìˆæ‚Ì’[‚à•’Ê‚ÉŒvZ‚·‚é(‚Å‚«‚é•ª‚Í)
+	//å¸åå¢ƒç•Œã¯Ezã«ã—ã‹é©ç”¨ã—ãªã„ã‹ã‚‰,Hã¯é ˜åŸŸã®ç«¯ã‚‚æ™®é€šã«è¨ˆç®—ã™ã‚‹(ã§ãã‚‹åˆ†ã¯)
 	void CalcH(){
 		int Npml = mField->getNpml();
 	#ifdef _OPENMP
@@ -58,7 +58,7 @@ private:
 		#endif
 		for(int i = Npml; i < mField->getNpx() - Npml; i++){
 			for(int j = Npml; j < mField->getNpy() - Npml; j++){
-				HX(i, j, +1) = HX(i, j, 0) - CHXLY(i, j)*(R_P*(EZ(i, j + 1, +1) - EZ(i, j, +1)) + R_M*Dy2_n(Ez, i, j + 1, +1));	//Hx‚ÌŒvZ Hx(i, j+1/2) -> Hx[i,j]
+				HX(i, j, +1) = HX(i, j, 0) - CHXLY(i, j)*(R_P*(EZ(i, j + 1, +1) - EZ(i, j, +1)) + R_M*Dy2_n(Ez, i, j + 1, +1));	//Hxã®è¨ˆç®— Hx(i, j+1/2) -> Hx[i,j]
 			}
 		}
 				
@@ -67,7 +67,7 @@ private:
 		#endif
 		for(int i = Npml; i < mField->getNpx() - Npml; i++){
 			for(int j = Npml; j < mField->getNpy() - Npml; j++){
-				HY(i, j, +1) = HY(i, j, 0) + CHYLX(i, j)*(R_P*(EZ(i + 1, j, +1) - EZ(i, j, +1)) + R_M*Dx2_n(Ez, i + 1, j, +1));	//Hy‚ÌŒvZ Hy(i+1/2, j) -> Hy[i,j]
+				HY(i, j, +1) = HY(i, j, 0) + CHYLX(i, j)*(R_P*(EZ(i + 1, j, +1) - EZ(i, j, +1)) + R_M*Dx2_n(Ez, i + 1, j, +1));	//Hyã®è¨ˆç®— Hy(i+1/2, j) -> Hy[i,j]
 			}
 		}
 			
@@ -113,7 +113,7 @@ private:
 		}
 	}
 
-	void CalcH_PML(){	//ˆê•”Ez=0‚ğQÆ‚µ‚Ä‚¢‚é‚ªA”z—ñ’è‹`ŠOQÆ‚Í‚È‚¢‚©‚çSt‚Íg‚í‚È‚­‚Ä‚¢‚¢H
+	void CalcH_PML(){	//ä¸€éƒ¨Ez=0ã‚’å‚ç…§ã—ã¦ã„ã‚‹ãŒã€é…åˆ—å®šç¾©å¤–å‚ç…§ã¯ãªã„ã‹ã‚‰Stã¯ä½¿ã‚ãªãã¦ã„ã„ï¼Ÿ
 		int Npml = mField->getNpml();
 	#ifdef _OPENMP
 	#pragma omp parallel
@@ -126,7 +126,7 @@ private:
 				for (int j = 0; j<mField->getNpy() - 1; j++) {
 //					if (i < Npml || i > mField->getNpx() - Npml - 1 || j < Npml || j > mField->getNpy() - Npml - 1)
 						HX(i, j, +1) = BHYP(i, j) * BHYM(i, j) * HX(i, j, 0) 
-							- BHYP(i, j)*CHXLY(i, j)*(R_P*(EZ(i, j+1, +1) - EZ(i, j, +1)) + R_M*Dy2_n(Ez, i, j+1, +1));	//Hx‚ÌŒvZ Hx(i, j+1/2) -> Hx[i,j]
+							- BHYP(i, j)*CHXLY(i, j)*(R_P*(EZ(i, j+1, +1) - EZ(i, j, +1)) + R_M*Dy2_n(Ez, i, j+1, +1));	//Hxã®è¨ˆç®— Hx(i, j+1/2) -> Hx[i,j]
 	
 				}
 			}
@@ -138,7 +138,7 @@ private:
 				for (int j = 1; j<mField->getNpy()-1; j++) {
 //					if (i < Npml || i > mField->getNpx() - Npml - 1 || j < Npml || j > mField->getNpy() - Npml - 1)
 						HY(i, j, +1) = BHXP(i, j) * BHXM(i, j) * HY(i, j, 0) 
-							+ BHXP(i, j)*CHYLX(i, j)*(R_P*(EZ(i+1, j, +1) - EZ(i, j, +1)) + R_M*Dx2_n(Ez, i+1, j, +1));	//Hy‚ÌŒvZ Hy(i+1/2, j) -> Hy[i,j]
+							+ BHXP(i, j)*CHYLX(i, j)*(R_P*(EZ(i+1, j, +1) - EZ(i, j, +1)) + R_M*Dx2_n(Ez, i+1, j, +1));	//Hyã®è¨ˆç®— Hy(i+1/2, j) -> Hy[i,j]
 			
 				}
 			}
@@ -146,9 +146,9 @@ private:
 		}
 	};
 
-	void absorbing();	//‹zû‹«ŠE
+	void absorbing();	//å¸åå¢ƒç•Œ
 
-	bool EndTask();		//1‰ñ‚ÌƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚ªI‚í‚Á‚½‚Æ‚«‚Ìˆ—
+	bool EndTask();		//1å›ã®ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãŒçµ‚ã‚ã£ãŸã¨ãã®å‡¦ç†
 
 	void ReStart(){
 		super::Initialize();
@@ -159,7 +159,7 @@ private:
 	void printDebugCalcHy(int,int,int,int);
 };
 
-//ƒvƒŠƒ“ƒgƒfƒoƒbƒO
+//ãƒ—ãƒªãƒ³ãƒˆãƒ‡ãƒãƒƒã‚°
 inline void NsFDTD_TM::printDebugCalcE(int i, int j, int _i, int _j){
 	if(i != _i || j!=_j) return;
 	cout << "===========pringDebug CalcE TM Mode===============" << endl; 
@@ -188,7 +188,7 @@ inline void NsFDTD_TM::printDebugCalcE(int i, int j, int _i, int _j){
 	cout << "==================================================" << endl; 
 };
 
-//ƒvƒŠƒ“ƒgƒfƒoƒbƒO
+//ãƒ—ãƒªãƒ³ãƒˆãƒ‡ãƒãƒƒã‚°
 inline void NsFDTD_TM::printDebugCalcHx(int i, int j, int _i, int _j){
 	if(i != _i || j!=_j) return;
 	cout << "===========pringDebug CalcHx TM Mode===============" << endl; 
@@ -203,7 +203,7 @@ inline void NsFDTD_TM::printDebugCalcHx(int i, int j, int _i, int _j){
 	cout << "==================================================" << endl; 
 }
 
-//ƒvƒŠƒ“ƒgƒfƒoƒbƒO
+//ãƒ—ãƒªãƒ³ãƒˆãƒ‡ãƒãƒƒã‚°
 inline void NsFDTD_TM::printDebugCalcHy(int i, int j, int _i, int _j){
 	if(i != _i || j!=_j) return;
 	cout << "===========pringDebug CalcHy TM Mode===============" << endl; 
@@ -228,6 +228,6 @@ inline void NsFDTD_TM::printDebugCalcHy(int i, int j, int _i, int _j){
 					+R_M*(  Dx2_n(Hy,i,j, 0) - Dy2_n(Hx,i,j, 0) )
 					);
 					*/
-//HX(i,j, +1) = HX(i,j, 0) - CHXLY(i,j)*( EZ(i,j, +1) - EZ(i,j-1, +1) );	//Hx‚ÌŒvZ Hx(i, j+1/2) -> Hx[i,j]
+//HX(i,j, +1) = HX(i,j, 0) - CHXLY(i,j)*( EZ(i,j, +1) - EZ(i,j-1, +1) );	//Hxã®è¨ˆç®— Hx(i, j+1/2) -> Hx[i,j]
 			
-//HY(i,j, +1) = HY(i,j, 0) + CHYLX(i,j)*( EZ(i,j, +1) - EZ(i-1,j, +1) );	//Hy‚ÌŒvZ Hy(i+1/2, j) -> Hy[i,j]
+//HY(i,j, +1) = HY(i,j, 0) + CHYLX(i,j)*( EZ(i,j, +1) - EZ(i-1,j, +1) );	//Hyã®è¨ˆç®— Hy(i+1/2, j) -> Hy[i,j]

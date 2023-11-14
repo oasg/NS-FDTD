@@ -38,6 +38,6 @@ bool FDTD::calc(){
 }
 
 //•`‰æ
-void FDTD::draw(){
-	Solver::draw(phi);
+void FDTD::draw(GUI::ImageBuffer &img){
+	Solver::draw(phi,img);
 }

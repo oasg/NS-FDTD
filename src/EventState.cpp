@@ -1,6 +1,6 @@
 #include "EventState.h"
 #include "stdio.h"
-#include <GL/glut.h>
+//#include <GL/glut.h>
 
 int MOUSE_BUTTON = 0;
 int MOUSE_STATE = 0;
@@ -12,13 +12,15 @@ int MOUSE_ST_Y = 0;
 unsigned char KEY_STATE = -1;
 int SPECIALKEY_STATE = -1;
 
+
+// TODO mouse state
 void setMouseState(int _button, int _state, int _x, int _y ){
 	MOUSE_BUTTON = _button;
 	MOUSE_STATE  = _state;
 	MOUSE_X      = _x;
 	MOUSE_Y      = _y;
-	if(MOUSE_STATE == GLUT_DOWN) {MOTION = 1; MOUSE_ST_X = _x; MOUSE_ST_Y = _y;}
-	if(MOUSE_STATE == GLUT_UP  ) MOTION = 0; 
+	// if(MOUSE_STATE == GLUT_DOWN) {MOTION = 1; MOUSE_ST_X = _x; MOUSE_ST_Y = _y;}
+	// if(MOUSE_STATE == GLUT_UP  ) MOTION = 0; 
 }
 
 void setPos(int _x,int _y){

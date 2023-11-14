@@ -1,14 +1,14 @@
 #define _USE_MATH_DEFINES
-#define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
-#include <crtdbg.h>
 #include "Object.h"
 #include "FDTD_TM.h"
 #include "Vec.h"
 #include <math.h>
 #include <cstring>
 #include<iostream>
-#define new ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
+//TODO MEAN?
+//#define new ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 using namespace std;
 const int n_ang = 180;
@@ -194,9 +194,9 @@ void FDTD_TM::IncidentWaveH(int ang){
 	}
 }
 
-void FDTD_TM::draw(){
+void FDTD_TM::draw(GUI::ImageBuffer &img){
 	//super::draw(Ezx, Ezy);	
-	super::draw(Ez);	
+	super::draw(Ez,img);	
 }
 
 bool FDTD_TM::calc(){

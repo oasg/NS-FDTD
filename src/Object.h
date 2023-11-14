@@ -8,15 +8,16 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <GL/glut.h>
+//#include <GL/glut.h>
 #include <vector>
 #include <map>
 #include <complex>
+#include"gui/ImageBuffer.hpp"
 
 using namespace std;
 
 #define _USE_MATH_DEFINES
-
+#define NANO 0.000000001
 
 typedef complex<double> Complex;
 const int REGION_X = 512;
@@ -34,9 +35,8 @@ const bool CHECK   = true;		//ボタンに表示した内容をファイルにとっておくかどうか
 const bool UNCHECK = false;
 
 
-const double nano  = 0.000000001;
-const double micro = 1000*nano;
-const double miri  = 1000000*nano;
+const double micro = 1000*NANO;
+const double miri  = 1000000*NANO;
 const double PI    = 3.14159265358979323846;
 
 const string Fourie = "../../Fourie/Fouie";
@@ -44,7 +44,7 @@ const string Fourie = "../../Fourie/Fouie";
 class Object{
 public:
 	virtual int calc() = 0;
-	virtual void draw() = 0;
+	virtual void draw(GUI::ImageBuffer &img) = 0;
 };
 
 struct Color{

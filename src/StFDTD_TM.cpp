@@ -86,7 +86,8 @@ bool StFDTD_TM::EndTask() {
 
 	string label = "";
 	NTFFindexform("", NTFF::NTFFDATA | NTFF::TOTAL);	// label -> "" にしたけど動くか確認してない.
-
+	//todo terminate
+	return false;  
 														//終了条件の確認
 	if (!Terminate())
 		return false;

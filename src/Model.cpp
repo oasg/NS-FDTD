@@ -12,10 +12,10 @@ FazzyModel(f)
 }
 
 string FazzyMieModel::mkdir(string root){
-	_mkdir((root + "Mie").c_str());
+	std::filesystem::create_directory((root + "Mie").c_str());
 
 	string name = "Mie/" + to_s((int)(mField->cellToNano(r))) +"nm,"+ mField->getStringCellInfo();
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	return name + "/";
 }
 
@@ -78,10 +78,10 @@ double FazzySlabModel::calcEPS(const double& x, const double& y, enum INTEG f){
 }
 
 string FazzySlabModel::mkdir(string root){
-	_mkdir((root + "SlabModel").c_str());
+	std::filesystem::create_directory((root + "SlabModel").c_str());
 
 	string name = "SlabModel/" + mField->getStringCellInfo();
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	return name + "/";
 }
 
@@ -194,19 +194,19 @@ double FazzyHair_incidenceModel::calcSIG(const double& x, const double& y, const
 }
 
 string FazzyHair_incidenceModel::mkdir(string root) {
-	_mkdir((root + "HairModel").c_str());
+	std::filesystem::create_directory((root + "HairModel").c_str());
 	string name;
 
 	if (mField->sig == false) {
-		_mkdir((root + "HairModel/incidenceplane").c_str());				//吸収係数なしの場合
+		std::filesystem::create_directory((root + "HairModel/incidenceplane").c_str());				//吸収係数なしの場合
 		name = "HairModel/incidenceplane/" + mField->getStringCellInfo();
 	}
 	else if (mField->sig == true) {
-		_mkdir((root + "HairModel/incidenceplane_withSig").c_str());		//吸収係数ありの場合
+		std::filesystem::create_directory((root + "HairModel/incidenceplane_withSig").c_str());		//吸収係数ありの場合
 		name = "HairModel/incidenceplane_withSig/" + mField->getStringCellInfo();
 	}
 
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	
 	return name + "/";
 }
@@ -327,19 +327,19 @@ double FazzyHair_incidenceLayerModel::calcSIG(const double& x, const double& y, 
 }
 
 string FazzyHair_incidenceLayerModel::mkdir(string root) {
-	_mkdir((root + "HairModel").c_str());
+	std::filesystem::create_directory((root + "HairModel").c_str());
 	string name;
 
 	if (mField->sig == false) {
-		_mkdir((root + "HairModel/incidenceLayer").c_str());				//吸収係数なしの場合
+		std::filesystem::create_directory((root + "HairModel/incidenceLayer").c_str());				//吸収係数なしの場合
 		name = "HairModel/incidenceLayer/" + mField->getStringCellInfo();
 	}
 	else if (mField->sig == true) {
-		_mkdir((root + "HairModel/incidenceLayer_withSig").c_str());		//吸収係数ありの場合
+		std::filesystem::create_directory((root + "HairModel/incidenceLayer_withSig").c_str());		//吸収係数ありの場合
 		name = "HairModel/incidenceLayer_withSig/" + mField->getStringCellInfo();
 	}
 
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 
 	return name + "/";
 }
@@ -461,19 +461,19 @@ double FazzyHair_incidenceLayerModel_try::calcSIG(const double& x, const double&
 }
 
 string FazzyHair_incidenceLayerModel_try::mkdir(string root) {
-	_mkdir((root + "HairModel").c_str());
+	std::filesystem::create_directory((root + "HairModel").c_str());
 	string name;
 
 	if (mField->sig == false) {
-		_mkdir((root + "HairModel/incidenceLayer").c_str());				//吸収係数なしの場合
+		std::filesystem::create_directory((root + "HairModel/incidenceLayer").c_str());				//吸収係数なしの場合
 		name = "HairModel/incidenceLayer/" + mField->getStringCellInfo();
 	}
 	else if (mField->sig == true) {
-		_mkdir((root + "HairModel/incidenceLayer_withSig").c_str());		//吸収係数ありの場合
+		std::filesystem::create_directory((root + "HairModel/incidenceLayer_withSig").c_str());		//吸収係数ありの場合
 		name = "HairModel/incidenceLayer_withSig/" + mField->getStringCellInfo();
 	}
 
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 
 	return name + "/";
 }
@@ -529,19 +529,19 @@ double FazzyHair_NONcuticleModel::calcSIG(const double& x, const double& y, cons
 }
 
 string FazzyHair_NONcuticleModel::mkdir(string root) {
-	_mkdir((root + "HairModel").c_str());
+	std::filesystem::create_directory((root + "HairModel").c_str());
 	string name;
 
 	if (mField->sig == false) {
-		_mkdir((root + "HairModel/NONcuticle").c_str());				//吸収係数なしの場合
+		std::filesystem::create_directory((root + "HairModel/NONcuticle").c_str());				//吸収係数なしの場合
 		name = "HairModel/NONcuticle/" + mField->getStringCellInfo();
 	}
 	else if (mField->sig == true) {
-		_mkdir((root + "HairModel/NONcuticle_withSig").c_str());		//吸収係数ありの場合
+		std::filesystem::create_directory((root + "HairModel/NONcuticle_withSig").c_str());		//吸収係数ありの場合
 		name = "HairModel/NONcuticle_withSig/" + mField->getStringCellInfo();
 	}
 
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	return name + "/";
 }
 
@@ -595,14 +595,14 @@ double FazzyHair_normalModel::calcEPS(const double& x, const double& y, enum INT
 }
 
 string FazzyHair_normalModel::mkdir(string root) {
-	_mkdir((root + "HairModel").c_str());
-	_mkdir((root + "HairModel/normalplane").c_str());
+	std::filesystem::create_directory((root + "HairModel").c_str());
+	std::filesystem::create_directory((root + "HairModel/normalplane").c_str());
 	
 	string name = "HairModel/normalplane/e=" + to_s((double)e);
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	
 	name = "HairModel/normalplane/e=" + to_s((double)e) + "/" + mField->getStringCellInfo();
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	return name + "/";
 }
 
@@ -703,10 +703,10 @@ double BuprestidaeModel::initializeIoB(int i) {
 }
 
 string BuprestidaeModel::mkdir(string root) {
-	_mkdir((root + "Buprestidae").c_str());
+	std::filesystem::create_directory((root + "Buprestidae").c_str());
 
 	string name = "Buprestidae\\"+to_s(int(lambda));
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	return name+"\\" ;
 }
 
@@ -884,10 +884,10 @@ double BuprestidaeModelWithNoise::initializeIoB(int i) {
 }
 
 string BuprestidaeModelWithNoise::mkdir(string root) {
-	_mkdir((root + "BuprestidaeWithNoise").c_str());
+	std::filesystem::create_directory((root + "BuprestidaeWithNoise").c_str());
 
 	string name = "BuprestidaeWithNoise\\" + to_s(int(lambda));
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	return name + "\\";
 }
 
@@ -1241,10 +1241,10 @@ double BuprestidaeModelsmooth2nd::initializeIoB(int i) {
 }
 
 string BuprestidaeModelsmooth2nd::mkdir(string root) {
-	_mkdir((root + "BuprestidaeModelsmooth2nd").c_str());
+	std::filesystem::create_directory((root + "BuprestidaeModelsmooth2nd").c_str());
 
 	string name = "BuprestidaeModelsmooth2nd\\" + to_s(int(lambda));
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	return name + "\\";
 }
 
@@ -1491,10 +1491,10 @@ double BuprestidaeModelWithNoise2nd::initializeIoB(int i) {
 }
 
 string BuprestidaeModelWithNoise2nd::mkdir(string root) {
-	_mkdir((root + "BuprestidaeWithNoise2nd").c_str());
+	std::filesystem::create_directory((root + "BuprestidaeWithNoise2nd").c_str());
 
 	string name = "BuprestidaeWithNoise2nd\\" + to_s(int(lambda));
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	return name + "\\";
 }
 
@@ -1856,10 +1856,10 @@ double BuprestidaeModelSmooth24::initializeIoB(int i) {
 }
 
 string BuprestidaeModelSmooth24::mkdir(string root) {
-	_mkdir((root + "BuprestidaeSmooth24").c_str());
+	std::filesystem::create_directory((root + "BuprestidaeSmooth24").c_str());
 
 	string name = "BuprestidaeSmooth24\\" + to_s(int(lambda));
-	_mkdir((root + name).c_str());	//ディレクトリの作成
+	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	return name + "\\";
 }
 

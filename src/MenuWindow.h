@@ -44,7 +44,7 @@ public:
 	void setState(double _state);
 	void save();
 	int calc();
-	void draw();
+	void draw(GUI::ImageBuffer &img);
 };
 
 void drawBitmapString(void *font, char *string, int x, int y);
@@ -58,7 +58,7 @@ public:
 	static void setButton(string tag, double val);	//値の変更
 	static void saveButton(string tag);
 	static void saveButton(string tag, double val);	//値を変更して保存
-	static void draw();	//すべてのボタンを表示させる
+	static void draw(GUI::ImageBuffer &img);	//すべてのボタンを表示させる
 	static void deleteAllButton();
 };
 

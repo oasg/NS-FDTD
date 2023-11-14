@@ -28,13 +28,14 @@ void drawBitmapString(void *font, string s, int x, int y)
 	double _x1 =  2.0*x/WINDOW_W - 1;
 	double _y1 = -2.0*y/WINDOW_H + 1;
 	
-	glPushAttrib(GL_CURRENT_BIT);
-	glRasterPos2d(_x1, _y1);		/* 描画位置 */
-  /* ビットマップ文字列の描画 */
-	for(unsigned int i=0; i<s.size() ;i++)
-		glutBitmapCharacter(font, s[i]);
+// 	glPushAttrib(GL_CURRENT_BIT);
+// 	glRasterPos2d(_x1, _y1);		/* 描画位置 */
+//   /* ビットマップ文字列の描画 */
+// 	for(unsigned int i=0; i<s.size() ;i++)
+// 		glutBitmapCharacter(font, s[i]);
 
-  glPopAttrib();
+//   glPopAttrib();
+
 }
 
 map<string, Button*> ButtonFactory::bList;
@@ -61,11 +62,11 @@ int Button::calc(){
 	return 1; 
 }
 
-void Button::draw(){
-	glColor3d(1, 1, 1);  //色は白で描画 TODO　背景によっては隠れる
-	drawBitmapString(GLUT_BITMAP_HELVETICA_18, tag, x,y);
-	drawBitmapString(GLUT_BITMAP_HELVETICA_18, to_s(value), x + 10*tag.size() ,y);
-
+void Button::draw(GUI::ImageBuffer &img){
+	//TODO DRAW 
+	// glColor3d(1, 1, 1);  //色は白で描画 TODO　背景によっては隠れる
+	// drawBitmapString(GLUT_BITMAP_HELVETICA_18, tag, x,y);
+	// drawBitmapString(GLUT_BITMAP_HELVETICA_18, to_s(value), x + 10*tag.size() ,y);
 	//if(check)	file << value << endl;	//記録する場合はファイルに書き込む
 }
 
@@ -87,11 +88,11 @@ void ButtonFactory::setButton(string _tag, double _val){
 	addButton(_tag, _val, false);
 }
 
-void ButtonFactory::draw(){
+void ButtonFactory::draw(GUI::ImageBuffer &img){
 	map<string, Button*>::iterator it = bList.begin();
 	while( it != bList.end() )
 	{
-		(*it).second->draw();
+		(*it).second->draw(img);
 		++it;
 	}
 }

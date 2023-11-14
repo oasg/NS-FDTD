@@ -19,7 +19,8 @@ public:
 	~Simulator();
 
 	virtual int calc();
-	virtual void draw();
+	virtual void draw(GUI::ImageBuffer &img);
+
 };
 
 

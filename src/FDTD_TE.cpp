@@ -81,8 +81,9 @@ FDTD_TE::~FDTD_TE(){
 }
 
 
-void FDTD_TE::draw(){
-	super::draw(Ey);	
+void FDTD_TE::draw(GUI::ImageBuffer &img){
+	super::draw(Ey,img);
+
 }
 
 void FDTD_TE::OpenData(string prefix){

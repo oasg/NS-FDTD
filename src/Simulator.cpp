@@ -1,7 +1,7 @@
 #define _USE_MATH_DEFINES
-#define _CRTDBG_MAP_ALLOC
+//#define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
-#include <crtdbg.h>
+//#include <crtdbg.h>
 #include "Simulator.h"
 #include "EventState.h"
 #include "Solver.h"
@@ -16,12 +16,13 @@ Simulator::Simulator() {
 	cout << "2: StFDTD_TE" << endl;
 	cout << "3: NsFDTD_TM" << endl;
 	cout << "4: NsFDTD_TE" << endl;
-	cin >> mode;
-	if(mode == 1)	solv = new StFDTD_TM();
-	else if(mode == 2)	solv = new StFDTD_TE();
-	else if(mode == 3)	solv = new NsFDTD_TM();
-	else if(mode == 4)	solv = new NsFDTD_TE();
-	else exit(-1);
+	//cin >> mode;
+	// if(mode == 1)	solv = new StFDTD_TM();
+	// else if(mode == 2)	solv = new StFDTD_TE();
+	// else if(mode == 3)	solv = new NsFDTD_TM();
+	// else if(mode == 4)	solv = new NsFDTD_TE();
+	// else exit(-1);
+	solv = new StFDTD_TM();
 
 //	solv = new StFDTD_TM();
 //	solv = new StFDTD_TE();
@@ -50,10 +51,11 @@ int Simulator::calc()
 	return 1;
 }
 
-void Simulator::draw()
+//draw gui and simulation result in the window
+void Simulator::draw(GUI::ImageBuffer &img)
 {
 	//	return;
 	//if (((int)solv->getTime()) % 20 != 0) return;
-	solv->draw();					//シミュレーション状況描画
-	ButtonFactory::draw();		//ボタンを描画
+	solv->draw(img);					//シミュレーション状況描画
+	ButtonFactory::draw(img);		//ボタンを描画
 }

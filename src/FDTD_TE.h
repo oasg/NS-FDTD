@@ -18,7 +18,7 @@ public:
 	virtual ~FDTD_TE();
 
 	virtual bool calc()=0;
-	virtual void draw();
+	virtual void draw(GUI::ImageBuffer &img);
 	virtual void field();
 	void Initialize();
 
