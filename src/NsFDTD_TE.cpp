@@ -13,7 +13,7 @@ NsFDTD_TE::~NsFDTD_TE(){
 };
 
 bool NsFDTD_TE::calc(){	
-
+	//std::lock_guard<std::mutex> lock(field_mutex);
 	CalcE();	//“dŠE‚ÌŒvŽZ
 	CalcE_PML();
 

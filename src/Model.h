@@ -7,6 +7,7 @@
 #include"Field.h"
 #include<iostream>
 
+
 using namespace std;
 enum INTEG{
 	D_XY = 0,

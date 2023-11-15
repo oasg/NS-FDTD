@@ -1,6 +1,7 @@
 #include "Window.hpp"
 #include <iostream>
 #include <thread>
+#include <future>
 
 namespace GUI
 {
@@ -51,8 +52,8 @@ namespace GUI
             // when timer is up
             if (glfwGetTime() - tick > _imageDuration){
                 // copy image from simulation result
-                sim->draw(img);
                 // display image
+                sim->draw(img);
                 _imglayer->update_ImageBuffer(img);
                 //reset the timer
                 tick = glfwGetTime();

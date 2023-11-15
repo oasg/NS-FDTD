@@ -50,7 +50,7 @@ void StFDTD_TM::field(){
 }
 
 bool StFDTD_TM::calc(){
-
+	std::lock_guard<std::mutex> lock(field_mutex);
 	CalcE();
 	//EZX(mField->getNpx()/2, mField->getNpy()/2) += 0.5*ray_coef*polar(1.0, w_s*time);
 	//EZY(mField->getNpx()/2, mField->getNpy()/2) += 0.5*ray_coef*polar(1.0, w_s*time);

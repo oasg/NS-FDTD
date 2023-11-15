@@ -12,6 +12,7 @@
 #include "ImageBuffer.hpp"
 #include <thread>
 
+
 void SIMThread(std::shared_ptr<Simulator> sim){
 	bool run = true;
 	while(run)	{

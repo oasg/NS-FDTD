@@ -20,6 +20,7 @@ NsFDTD_TM::~NsFDTD_TM(){
 
 
 bool NsFDTD_TM::calc() {
+	//std::lock_guard<std::mutex> lock(field_mutex);
 //	CalcE();	//“dê‚ÌŒvZ
 	CalcE_PML();
 	NsScatteredWave(wave_angle);	//U—”g‚Ì“üË

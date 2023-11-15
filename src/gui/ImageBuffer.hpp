@@ -2,6 +2,7 @@
 #define IMAGE_BUFFER
 #include "Shader.hpp"
 #include <memory>
+
 namespace GUI
 {
     class ImageBuffer
@@ -9,6 +10,7 @@ namespace GUI
     private:
         unsigned char *_img;  //8bit rgb
         int _w,_h;
+
     public:
         ImageBuffer(int width,int hight);
         void Write(int x,int y,unsigned char r,unsigned char g,unsigned char b);

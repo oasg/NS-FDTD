@@ -34,7 +34,7 @@ Solver::Solver()
 	//mField = new Field(3000, 3000, 4, 16);//4
 	//mField = new Field(1000, 1000, 4, 8);
 
-	mField = new Field(31920, 31920, 210, 20);
+	mField = new Field(4000, 4000, 10, 10);
 
 	//LambdaRange    = Range<double>(Nano_S(400), Nano_S(600), Nano_S(30));
 	//LambdaRange    = Range<double>(Nano_S(100), Nano_S(100), Nano_S(5)); // λ
@@ -51,7 +51,7 @@ Solver::Solver()
 
 	time = 0;
 	// T = 1/f = λ/c
-	maxStep  = 2000; // t/T == 100
+	maxStep  = 20000; // t/T == 100
 	//mField->sig = false;		//吸収係数σの有無　有：true / 無：false (FazzyHair_incidence(Layer)Modelのみ選択、 その他の場合false)
 	mField->sig = true;
 	n_s     = new double[mField->getNcel()];	//屈折率
@@ -363,17 +363,12 @@ void Solver::draw(Complex *p, Complex *q,GUI::ImageBuffer &img){
 	//the calculation threads will be locked
 	//the drawing thread will copy the field to the image buffer
 	std::lock_guard<std::mutex> lock(field_mutex);
-	double N = max(mField->getNx(),mField->getNy());
-	double ws = img.getWidth()/N;
-	double hs = img.getHeight()/N;
-	for (int i = mField->getNpml(); i < mField->getNpx()-mField->getNpml(); i++){
-		for (int j = mField->getNpml(); j < mField->getNpy()-mField->getNpml(); j++){
-			int x = i-mField->getNpml();
-			int y = j-mField->getNpml();
+	for (int i = 0; i < mField->getNpx(); i++){
+		for (int j = 0; j < mField->getNpy(); j++){
 			Color c = color( norm(p[index(i,j)] + q[index(i,j)]) );
 			//Color c = color(30.0*(p[index(i,j)].real() + q[index(i,j)].real()));
 //			if(j==mField->getNpy()/2 || i==mField->getNpx()/2) glColor3d(1,1,1);
-			img.Write(x*ws, y*hs, c.red*255, c.green*255, c.blue*255);
+			img.Write(i, j, c.red*255, c.green*255, c.blue*255);
 		}
 	}
 
@@ -386,7 +381,7 @@ void Solver::draw(Complex *p,GUI::ImageBuffer &img){
 	//critical section
 	//the calculation threads will be locked
 	//the drawing thread will copy the field to the image buffer
-	//std::lock_guard<std::mutex> lock(field_mutex);
+	std::lock_guard<std::mutex> lock(field_mutex);
 	for (int i = 0; i < mField->getNpx(); i++){
 		for (int j = 0; j < mField->getNpy(); j++){
 			Color c = color( norm(p[index(i,j)]) );
@@ -395,7 +390,6 @@ void Solver::draw(Complex *p,GUI::ImageBuffer &img){
 			if(j==mField->getNpy()/2 || i==mField->getNpx()/2) {
 				img.Write(i, j, 255, 255, 255);
 			}
-				
 		}
 	}
 	draw_model(img);
@@ -412,7 +406,7 @@ void Solver::draw_model(GUI::ImageBuffer &img){
 			//媒質境界
 			const double n = N_S(i, j);	//ここで,屈折率を書き換えてはいけない
 			const double s = SIG(i, j);
-			img.ColorBlend(i, j, (0.7/(n+s))*255, (0.7/(n+s))*255, (0.7/(n+s))*255);
+			img.ColorBlend(i, j, (0.3/(n+s))*255, (0.3/(n+s))*255, (0.3/(n+s))*255);
 			if(n == 1.0) continue;	//屈折率が1ならとばす	
 		}
 	}
