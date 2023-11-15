@@ -359,19 +359,21 @@ void Solver::cycle_stRL(complex<double> *p, int X, enum DIRECT offset){
 //---------------------------•`‰æ------------------------------//
 //¶‰º‚ª(0,0), ‰Eã‚ª(Nx,Ny)
 void Solver::draw(Complex *p, Complex *q,GUI::ImageBuffer &img){
+	//critical section
+	//the calculation threads will be locked
+	//the drawing thread will copy the field to the image buffer
+	std::lock_guard<std::mutex> lock(field_mutex);
 	double N = max(mField->getNx(),mField->getNy());
-	double ws = 2.0*MAIN_WINDOW_X/WINDOW_W/N;
-	double hs = 2.0*MAIN_WINDOW_H/WINDOW_H/N;
+	double ws = img.getWidth()/N;
+	double hs = img.getHeight()/N;
 	for (int i = mField->getNpml(); i < mField->getNpx()-mField->getNpml(); i++){
 		for (int j = mField->getNpml(); j < mField->getNpy()-mField->getNpml(); j++){
 			int x = i-mField->getNpml();
 			int y = j-mField->getNpml();
 			Color c = color( norm(p[index(i,j)] + q[index(i,j)]) );
 			//Color c = color(30.0*(p[index(i,j)].real() + q[index(i,j)].real()));
-			glColor3d(c.red, c.green, c.blue);
 //			if(j==mField->getNpy()/2 || i==mField->getNpx()/2) glColor3d(1,1,1);
-			glRectd(x*ws-1, y*hs-1, (x+1.0)*ws-1, (y+1.0)*hs-1);
-				
+			img.Write(x*ws, y*hs, c.red*255, c.green*255, c.blue*255);
 		}
 	}
 
@@ -381,40 +383,36 @@ void Solver::draw(Complex *p, Complex *q,GUI::ImageBuffer &img){
 //---------------------------•`‰æ------------------------------//
 //¶‰º‚ª(0,0), ‰Eã‚ª(Nx,Ny)
 void Solver::draw(Complex *p,GUI::ImageBuffer &img){
-	double N = max(mField->getNx(),mField->getNy());
-	double ws = img.getWidth()/N;
-	double hs = img.getHeight()/N;
-	for (int i = mField->getNpml(); i < mField->getNpx()-mField->getNpml(); i++){
-		for (int j = mField->getNpml(); j < mField->getNpy()-mField->getNpml(); j++){
-			double x = i-mField->getNpml();
-			int y = j-mField->getNpml();
+	//critical section
+	//the calculation threads will be locked
+	//the drawing thread will copy the field to the image buffer
+	//std::lock_guard<std::mutex> lock(field_mutex);
+	for (int i = 0; i < mField->getNpx(); i++){
+		for (int j = 0; j < mField->getNpy(); j++){
 			Color c = color( norm(p[index(i,j)]) );
 			//Color c = color(30.0*p[index(i,j)].real());
-			img.Write(x*ws, y*hs, c.red*255, c.green*255, c.blue*255);
+			img.Write(i, j, c.red*255, c.green*255, c.blue*255);
 			if(j==mField->getNpy()/2 || i==mField->getNpx()/2) {
-				img.Write(x*ws, y*hs, 255, 255, 255);
+				img.Write(i, j, 255, 255, 255);
 			}
-			//glRectd(x*ws-1, y*hs-1, (x+1.0)*ws-1, (y+1.0)*hs-1);
 				
 		}
 	}
-
 	draw_model(img);
 }
 
 //U—‘Ì‚Ì•`‰æ
 void Solver::draw_model(GUI::ImageBuffer &img){
+	//already in critical section
 	double N = max(mField->getNx(),mField->getNy());
 	double ws = img.getWidth()/N;
 	double hs = img.getHeight()/N;
-	for (int i = mField->getNpml(); i < mField->getNpx()-mField->getNpml(); i++){
-		for (int j = mField->getNpml(); j < mField->getNpy()-mField->getNpml(); j++){
-			int x = i-mField->getNpml();
-			int y = j-mField->getNpml();
+	for (int i = 0; i < mField->getNpx(); i++){
+		for (int j = 0; j < mField->getNpy(); j++){
 			//”}¿‹«ŠE
 			const double n = N_S(i, j);	//‚±‚±‚Å,‹üÜ—¦‚ğ‘‚«Š·‚¦‚Ä‚Í‚¢‚¯‚È‚¢
 			const double s = SIG(i, j);
-			img.ColorBlend(x*ws, y*hs, (0.7/(n+s))*255, (0.7/(n+s))*255, (0.7/(n+s))*255);
+			img.ColorBlend(i, j, (0.7/(n+s))*255, (0.7/(n+s))*255, (0.7/(n+s))*255);
 			if(n == 1.0) continue;	//‹üÜ—¦‚ª1‚È‚ç‚Æ‚Î‚·	
 		}
 	}

@@ -12,6 +12,7 @@
 #include "Field.h"
 #include<filesystem>
 #include "ImageBuffer.hpp"
+#include<mutex>
 
 #define _USE_MATH_DEFINES
 
@@ -88,6 +89,8 @@ protected:
 	Range<double>	LambdaRange;
 	Range<int>		WaveAngleRange;
 	FazzyModel	*mModel;
+	//protect the field to access by gui(main) thread
+	std::mutex field_mutex;
 	Field		*mField;	//フィールド
 public:
 	Solver();
@@ -96,6 +99,7 @@ public:
 	virtual void draw(GUI::ImageBuffer &img) = 0;
 	virtual void field() = 0;
 	double getTime(){ return time; }
+	Field* getFild(){ return mField; }
 	void nextTime(){
 		time += DT_S;							//時間の更新
 		ray_coef = 1-exp(-0.0001*time*time);	//波が不連続に入射されるのを防ぐための係数

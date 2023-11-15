@@ -15,10 +15,9 @@ namespace GUI {
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
         // ImGui::StyleColorsLight();
-
         // Setup Platform/Renderer backends
         ImGui_ImplGlfw_InitForOpenGL(_window, true);
-        const char* glsl_version = "#version 150";
+        const char* glsl_version = "#version 400";
         ImGui_ImplOpenGL3_Init(glsl_version);
     }
     
@@ -35,12 +34,12 @@ namespace GUI {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
     }
-    void GUILayer::GUI_End()
+    void GUILayer::GUI_PostRender()
     {
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
-    void GUILayer::GUI_Draw()
+    void GUILayer::GUI_DrawBuffer()
     {
         ImGui::ShowDemoWindow();
         

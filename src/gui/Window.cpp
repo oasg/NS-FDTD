@@ -35,22 +35,31 @@ namespace GUI
     void GUIWindow::InitContext()
     {
         _guilayer = std::make_unique<GUILayer>(_window);
+        _imglayer = std::make_unique<ImageDispalyLayer>();
     }
-    void GUIWindow::doLoop(ImageBuffer &img)
+    void GUIWindow::doLoop(ImageBuffer &img,std::shared_ptr<Simulator> sim)
     {
+        double tick = glfwGetTime();
         while (!glfwWindowShouldClose(_window))
         {
             std::chrono::milliseconds sleepDuration(33); // 30fps
             std::this_thread::sleep_for(sleepDuration);
+            glClear(GL_COLOR_BUFFER_BIT);
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             _guilayer->GUI_Begin();
-            _guilayer->GUI_Draw();
-            // ImGui::Begin("OpenGl Texture Test");
-            // ImGui::Text("size = %d x %d", img.getWidth(),img.getHeight());
-            // ImGui::Image((void *)img.getImg(), ImVec2(img.getWidth(),img.getHeight()));
-            // ImGui::End();
-            glClear(GL_COLOR_BUFFER_BIT);
-            _guilayer->GUI_End();
+            _guilayer->GUI_DrawBuffer();
+            // when timer is up
+            if (glfwGetTime() - tick > _imageDuration){
+                // copy image from simulation result
+                sim->draw(img);
+                // display image
+                _imglayer->update_ImageBuffer(img);
+                //reset the timer
+                tick = glfwGetTime();
+            }
+            _imglayer->upadte_ratio();
+            _imglayer->draw_ImageLayer();
+            _guilayer->GUI_PostRender();
             glfwSwapBuffers(_window);
             glfwPollEvents();
         }

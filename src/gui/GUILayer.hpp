@@ -12,9 +12,8 @@ namespace GUI{
         GUILayer(GLFWwindow *_window);
         ~GUILayer();
         void GUI_Begin();
-        void GUI_End();
-        void GUI_Draw();
-
+        void GUI_PostRender();
+        void GUI_DrawBuffer();
     };
     
     

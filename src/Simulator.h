@@ -17,7 +17,8 @@ private:
 public:
 	Simulator();
 	~Simulator();
-
+	inline int getFieldW(){return solv->getFild()->getNpx();};
+	inline int getFieldH(){return solv->getFild()->getNpy();};
 	virtual int calc();
 	virtual void draw(GUI::ImageBuffer &img);
 
