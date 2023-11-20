@@ -39,9 +39,10 @@ namespace GUI
             void update_ImageBuffer(ImageBuffer &img);
             void draw_ImageLayer();
             void upadte_ratio();
+            GLuint get_texture(){return _texture;}
         private:
             unsigned int VAO, VBO, EBO;
-            unsigned int _texture;
+            GLuint _texture;
             std::shared_ptr<Shader> _shader;
     };
 }

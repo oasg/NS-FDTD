@@ -1,7 +1,6 @@
 #include "Window.hpp"
 #include <iostream>
 #include <thread>
-#include <future>
 
 namespace GUI
 {
@@ -35,10 +34,10 @@ namespace GUI
     }
     void GUIWindow::InitContext()
     {
-        _guilayer = std::make_unique<GUILayer>(_window);
+        _guilayer = std::make_unique<GUIApp>(_window);
         _imglayer = std::make_unique<ImageDispalyLayer>();
     }
-    void GUIWindow::doLoop(ImageBuffer &img,std::shared_ptr<Simulator> sim)
+    void GUIWindow::doLoop()
     {
         double tick = glfwGetTime();
         while (!glfwWindowShouldClose(_window))
@@ -47,20 +46,33 @@ namespace GUI
             std::this_thread::sleep_for(sleepDuration);
             glClear(GL_COLOR_BUFFER_BIT);
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
             _guilayer->GUI_Begin();
-            _guilayer->GUI_DrawBuffer();
+//            _guilayer->GUI_DrawBuffer();
+//            ImGui::Begin("Simulation watch");
+//            ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+//			ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+//            int height = vMax.y - vMin.y;
+//            int width = vMax.x - vMin.x;
+//            int min = std::min(width, height);
+//            ImGui::Image((void*)(intptr_t)_imglayer->get_texture(), ImVec2(min,min));
+//            ImGui::End();
+            _guilayer->GUI_Draw();
+            _guilayer->GUI_PostRender();
             // when timer is up
-            if (glfwGetTime() - tick > _imageDuration){
+            if (glfwGetTime() - tick > _imageDuration)
+            {
                 // copy image from simulation result
                 // display image
-                sim->draw(img);
-                _imglayer->update_ImageBuffer(img);
-                //reset the timer
+//                sim->draw(img);
+//                _imglayer->update_ImageBuffer(img);
+                // reset the timer
                 tick = glfwGetTime();
             }
-            _imglayer->upadte_ratio();
-            _imglayer->draw_ImageLayer();
-            _guilayer->GUI_PostRender();
+            // _imglayer->upadte_ratio();
+            // _imglayer->draw_ImageLayer();
+            
+
             glfwSwapBuffers(_window);
             glfwPollEvents();
         }

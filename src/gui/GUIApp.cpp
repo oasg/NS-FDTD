@@ -1,8 +1,10 @@
-#include"GUILayer.hpp"
-#include <GLFW/glfw3.h>
-namespace GUI {
+#include "GUIApp.hpp"
+#include "Menu.hpp"
+#include "SimControl.hpp"
+namespace GUI
+{
 
-    GUILayer::GUILayer(GLFWwindow *_window)
+    GUIApp::GUIApp(GLFWwindow *_window)
     {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
@@ -11,37 +13,42 @@ namespace GUI {
         (void)io;
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
         // ImGui::StyleColorsLight();
         // Setup Platform/Renderer backends
         ImGui_ImplGlfw_InitForOpenGL(_window, true);
-        const char* glsl_version = "#version 400";
+        const char *glsl_version = "#version 330";
         ImGui_ImplOpenGL3_Init(glsl_version);
+        _gui_elements.push_back(std::make_shared<MenuElement>());
+        _gui_elements.push_back(std::make_shared<SimControlElemnet>());
     }
-    
-    GUILayer::~GUILayer()
+
+    GUIApp::~GUIApp()
     {
         // Cleanup
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }
-    void GUILayer::GUI_Begin()
+    void GUIApp::GUI_Begin()
     {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
     }
-    void GUILayer::GUI_PostRender()
+    void GUIApp::GUI_PostRender()
     {
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
-    void GUILayer::GUI_DrawBuffer()
+    void GUIApp::GUI_Draw()
     {
-        ImGui::ShowDemoWindow();
-        
+        for(auto ep: _gui_elements){
+            ep->draw();
+        }
+
     }
 }
