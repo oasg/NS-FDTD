@@ -1,6 +1,7 @@
 #include "ImageBuffer.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "imgui.h"
 namespace GUI
 {
     ImageBuffer::ImageBuffer(int width, int hight) : _w(width), _h(hight)
@@ -25,16 +26,6 @@ namespace GUI
     }
     ImageDispalyLayer::ImageDispalyLayer()
     {
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-        glGenBuffers(1, &EBO);
-        glBindVertexArray(VAO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(texCoords), indices, GL_STATIC_DRAW);
 
         glGenTextures(1, &_texture);
         glBindTexture(GL_TEXTURE_2D, _texture);
@@ -43,16 +34,6 @@ namespace GUI
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        // pos.x pos.y pos.z
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(0 * sizeof(float)));
-        glEnableVertexAttribArray(0);
-        // texcoord.x texcoord.y
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
-        glEnableVertexAttribArray(1);
-        _shader = std::make_shared<Shader>("../scene/shaders/Image_vert.glsl", "../scene/shaders/Image_frag.glsl");
-        _shader->use();
-        glUniform1i(glGetUniformLocation(_shader->ID, "Texture"), 0);
     }
     ImageDispalyLayer::~ImageDispalyLayer()
     {
@@ -60,23 +41,21 @@ namespace GUI
         glDeleteBuffers(1, &VBO);
         glDeleteBuffers(1, &EBO);
     }
-    void ImageDispalyLayer::update_ImageBuffer(ImageBuffer &img)
+    void ImageDispalyLayer::update_ImageBuffer(std::shared_ptr<ImageBuffer> img)
     {
         glActiveTexture(GL_TEXTURE0);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img.getWidth(), img.getHeight(), 0,GL_RGB, GL_UNSIGNED_BYTE, img.getImg());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img->getWidth(), img->getHeight(), 0,GL_RGB, GL_UNSIGNED_BYTE, img->getImg());
         glGenerateMipmap(GL_TEXTURE_2D);
     }
 
-    void ImageDispalyLayer::draw_ImageLayer() {
-        glBindTexture(GL_TEXTURE_2D, _texture);
-        _shader->use();
-        glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-    }
-    void ImageDispalyLayer::upadte_ratio()
-    {
-        int width,height;
-        glfwGetWindowSize(glfwGetCurrentContext(),&width, &height);
-        glUniform1f(glGetUniformLocation(_shader->ID, "aspect_ratio"), (float)height/(float)width);
+    void ImageDispalyLayer::draw() {
+            ImGui::Begin("Simulation watch");
+            ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+			ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+            int height = vMax.y - vMin.y;
+            int width = vMax.x - vMin.x;
+            int min = std::min(width, height);
+            ImGui::Image((void*)(intptr_t)_texture, ImVec2(min,min));
+            ImGui::End();
     }
 }

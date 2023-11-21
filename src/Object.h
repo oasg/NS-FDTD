@@ -25,13 +25,13 @@ const int REGION_Y = 512;
 const int WINDOW_W = REGION_X + 200;
 const int WINDOW_H = REGION_Y;
 
-//ƒƒCƒ“ƒEƒBƒ“ƒhƒE‚Ì‘å‚«‚³‚ÆˆÊ’u
+//ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Ì‘å‚«ï¿½ï¿½ï¿½ÆˆÊ’u
 const int MAIN_WINDOW_W = 200;
 const int MAIN_WINDOW_H = WINDOW_H;
 const int MAIN_WINDOW_X = WINDOW_W - MAIN_WINDOW_W;
 const int MAIN_WINDOW_Y = 0;
 
-const bool CHECK   = true;		//ƒ{ƒ^ƒ“‚É•\¦‚µ‚½“à—e‚ğƒtƒ@ƒCƒ‹‚É‚Æ‚Á‚Ä‚¨‚­‚©‚Ç‚¤‚©
+const bool CHECK   = true;		//ï¿½{ï¿½^ï¿½ï¿½ï¿½É•\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½eï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½É‚Æ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½
 const bool UNCHECK = false;
 
 
@@ -44,7 +44,7 @@ const string Fourie = "../../Fourie/Fouie";
 class Object{
 public:
 	virtual int calc() = 0;
-	virtual void draw(GUI::ImageBuffer &img) = 0;
+	virtual void draw(std::shared_ptr<GUI::ImageBuffer> img) = 0;
 };
 
 struct Color{
@@ -63,7 +63,7 @@ template<class T> T _min(T a, T b){
 }
 
 template<class T> double _pow(T a, int b){
-	if(b==0) return 1.0;				//0æ‚Í1
+	if(b==0) return 1.0;				//0ï¿½ï¿½ï¿½1
 	if(b<0)  return 1.0/_pow(a, -b);	//a^(-b) = 1/a^b 
 	T c =  _pow(a, b/2);
 	if(b%2 == 0)		

@@ -1,14 +1,14 @@
 #include "FDTD.h"
-static double min_lambda = 200*_pow(10,-9);		//’²‚×‚é”g’·‚Ì”ÍˆÍ
+static double min_lambda = 200*_pow(10,-9);		//ï¿½ï¿½ï¿½×‚ï¿½gï¿½ï¿½ï¿½Ì”Íˆï¿½
 static double max_lambda = 800*_pow(10,-9);
 
 FDTD::FDTD()
 :Solver()
 {
-	phi  = new complex<double>[3*mField->getNcel()];		//—ÌˆæŠm•Û
-	np   = new double[mField->getNcel()];		//ŒvZ—p’è”
+	phi  = new complex<double>[3*mField->getNcel()];		//ï¿½Ìˆï¿½mï¿½ï¿½
+	np   = new double[mField->getNcel()];		//ï¿½vï¿½Zï¿½pï¿½è”
 
-	for(int i=0; i<3*mField->getNcel(); i++)	phi[i] = 0;				//‰Šú‰»
+	for(int i=0; i<3*mField->getNcel(); i++)	phi[i] = 0;				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	for(int i=0; i<mField->getNcel(); i++)	np[i] = 0;
 
@@ -22,14 +22,14 @@ FDTD::~FDTD(){
 }
 
 void FDTD::Initialize(){
-	for(int i=0; i<3*mField->getNcel(); i++)	phi[i] = 0;				//‰Šú‰»
+	for(int i=0; i<3*mField->getNcel(); i++)	phi[i] = 0;				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	time = 0;
 }
 
 void FDTD::Initialize(double _lambda)
 {
 	for(int i=0; i<3*mField->getNcel(); i++)
-		phi[i] = 0;				//‰Šú‰»
+		phi[i] = 0;				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	time = 0;
 }
 
@@ -37,7 +37,7 @@ bool FDTD::calc(){
 	return true;
 }
 
-//•`‰æ
-void FDTD::draw(GUI::ImageBuffer &img){
+//ï¿½`ï¿½ï¿½
+void FDTD::draw(std::shared_ptr<GUI::ImageBuffer> img){
 	Solver::draw(phi,img);
 }

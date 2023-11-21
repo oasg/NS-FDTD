@@ -7,7 +7,7 @@
 namespace GUI{
     void MenuElement::draw() {
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-        ImGui::ShowDemoWindow();
+        //ImGui::ShowDemoWindow();
         if (ImGui::BeginMainMenuBar())
         {
             if (ImGui::BeginMenu("File"))

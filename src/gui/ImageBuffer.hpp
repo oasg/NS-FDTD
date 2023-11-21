@@ -2,6 +2,7 @@
 #define IMAGE_BUFFER
 #include "Shader.hpp"
 #include <memory>
+#include "GUIElement.hpp"
 
 namespace GUI
 {
@@ -21,29 +22,18 @@ namespace GUI
         unsigned char *getImg(){return _img;}
     };
 
-    const float texCoords[] = {
-        // positions              // texture coords
-        0.5f,  0.5f, 0.0f,      1.0f, 1.0f,   // top right
-        0.5f, -0.5f, 0.0f,      1.0f, 0.0f,   // bottom right
-        -0.5f, -0.5f, 0.0f,      0.0f, 0.0f,   // bottom left
-        -0.5f,  0.5f, 0.0f,      0.0f, 1.0f    // top left 
-    };
-    const unsigned int indices[] = {
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
-    };
     class ImageDispalyLayer{
         public:
             ImageDispalyLayer();
             ~ImageDispalyLayer();
-            void update_ImageBuffer(ImageBuffer &img);
-            void draw_ImageLayer();
-            void upadte_ratio();
+            void update_ImageBuffer(std::shared_ptr<ImageBuffer> img);
             GLuint get_texture(){return _texture;}
+            void draw();
         private:
             unsigned int VAO, VBO, EBO;
             GLuint _texture;
             std::shared_ptr<Shader> _shader;
+
     };
 }
 #endif

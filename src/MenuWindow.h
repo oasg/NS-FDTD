@@ -2,20 +2,20 @@
 #define _BUTTON_H
 #include"Object.h"
 #include <string>
-//ƒƒjƒ…[ƒEƒBƒ“ƒhƒE‚Ì‘å‚«‚³‚ÆˆÊ’u
+//ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Ì‘å‚«ï¿½ï¿½ï¿½ÆˆÊ’u
 const int MENU_WINDOW_W = WINDOW_W - MAIN_WINDOW_W;
 const int MENU_WINDOW_H = MAIN_WINDOW_W;
 const int MENU_WINDOW_X = 0;
 const int MENU_WINDOW_Y = WINDOW_H - MAIN_WINDOW_W;
 
-//ƒƒjƒ…[€–Ú‚Ì”z’uŠÖŒW
+//ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ú‚Ì”zï¿½uï¿½ÖŒW
 const int MENU_ITEM_EDGE = 5;
 const int MENU_ITEM_NUM = 4;
 const int MENU_ITEM_X   = 10;
 const int MENU_ITEM_Y   = 30;
 const int MENU_ITEM_W   = 180;
 const int MENU_ITEM_H   = 70;
-const int MENU_ITEM_D   = 30;//ŠÔŠu
+const int MENU_ITEM_D   = 30;//ï¿½ÔŠu
 
 class Point: public Object{
 protected:
@@ -31,8 +31,8 @@ public:
 
 class Button :public Point{
 private:
-	ofstream file;	//‹L˜^—p
-	bool check;		//‹L˜^‚·‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	ofstream file;	//ï¿½Lï¿½^ï¿½p
+	bool check;		//ï¿½Lï¿½^ï¿½ï¿½ï¿½é‚©ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½Ìƒtï¿½ï¿½ï¿½O
 protected:
 	int width,height;
 	string tag;
@@ -44,21 +44,21 @@ public:
 	void setState(double _state);
 	void save();
 	int calc();
-	void draw(GUI::ImageBuffer &img);
+	void draw(std::shared_ptr<GUI::ImageBuffer> img);
 };
 
 void drawBitmapString(void *font, char *string, int x, int y);
 
-//ƒ{ƒ^ƒ“‚ğˆêŠ‡‚ÅŠÇ—‚·‚éƒNƒ‰ƒX
+//ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½êŠ‡ï¿½ÅŠÇ—ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
 class ButtonFactory{
 private:
 	static map<string, Button*> bList;
 public:
-	static void addButton(string tag, double val, bool check);	//ƒ^ƒO‚Æ‰Šú’l‚ğ“n‚·
-	static void setButton(string tag, double val);	//’l‚Ì•ÏX
+	static void addButton(string tag, double val, bool check);	//ï¿½^ï¿½Oï¿½Æï¿½ï¿½ï¿½ï¿½lï¿½ï¿½nï¿½ï¿½
+	static void setButton(string tag, double val);	//ï¿½lï¿½Ì•ÏX
 	static void saveButton(string tag);
-	static void saveButton(string tag, double val);	//’l‚ğ•ÏX‚µ‚Ä•Û‘¶
-	static void draw(GUI::ImageBuffer &img);	//‚·‚×‚Ä‚Ìƒ{ƒ^ƒ“‚ğ•\¦‚³‚¹‚é
+	static void saveButton(string tag, double val);	//ï¿½lï¿½ï¿½ÏXï¿½ï¿½ï¿½Ä•Û‘ï¿½
+	static void draw(std::shared_ptr<GUI::ImageBuffer> img);	//ï¿½ï¿½ï¿½×‚Ä‚Ìƒ{ï¿½^ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	static void deleteAllButton();
 };
 

@@ -23,12 +23,12 @@ enum DIRECT{
 	BOTTOM = +1
 };
 
-//NTTF‚·‚é‚Ì‘‚«o‚µƒIƒvƒVƒ‡ƒ“
+//NTTFï¿½ï¿½ï¿½éï¿½Ìï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½
 namespace NTFF{
 	typedef unsigned int output;
-	const output NTFFDATA = 1;			//•ÏŠ·‚µ‚½ƒf[ƒ^iƒGƒlƒ‹ƒM[j‚ğ‘‚«o‚·
-	const output TOTAL    = 1 << 1;		//•ÏŠ·‚µ‚½ƒf[ƒ^‚Ì‡Œv‚ğÅŒã‚Ìs‚É‘‚«o‚·
-	const output REFLEC   = 1 << 2;		//•ÏŠ·‚µ‚½ƒf[ƒ^‚ğ‡Œv‚ÅŠ„‚Á‚½”½Ë—¦‚ğ‘‚«o‚·
+	const output NTFFDATA = 1;			//ï¿½ÏŠï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½iï¿½Gï¿½lï¿½ï¿½ï¿½Mï¿½[ï¿½jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½
+	const output TOTAL    = 1 << 1;		//ï¿½ÏŠï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½Ìï¿½ï¿½vï¿½ï¿½ï¿½ÅŒï¿½Ìsï¿½Éï¿½ï¿½ï¿½ï¿½oï¿½ï¿½
+	const output REFLEC   = 1 << 2;		//ï¿½ÏŠï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ÅŠï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë—ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½
 }
 
 namespace DATAFILE{
@@ -73,17 +73,17 @@ public:
 
 class Solver{
 private:
-	string DataDir;			//ƒf[ƒ^‚ğ’u‚­ƒfƒBƒŒƒNƒgƒŠ‚Ö‚ÌƒpƒX
-	string WorkingDir;		//ƒ‹[ƒg‚©‚çƒ[ƒLƒ“ƒOƒfƒBƒŒƒNƒgƒŠ‚Ö‚ÌƒpƒX
+	string DataDir;			//ï¿½fï¿½[ï¿½^ï¿½ï¿½uï¿½ï¿½ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½Ö‚Ìƒpï¿½X
+	string WorkingDir;		//ï¿½ï¿½ï¿½[ï¿½gï¿½ï¿½ï¿½çƒï¿½[ï¿½Lï¿½ï¿½ï¿½Oï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½Ö‚Ìƒpï¿½X
 	stack<double> LamList;
 	stack<int>	  WaveAngleList;
 protected:
-	const double H_S, DT_S;	//1ƒZƒ‹‚Ì‘å‚«‚³‚ÌƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l, •¨——Ê, 1ƒXƒeƒbƒv‚ ‚½‚è‚ÌŠÔ
-	double time;	//ŠÔ
-	double lambda_s, w_s, k_s, T_s;		//ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“—p‚Ì’l
-	int		wave_angle;	//”g‚ÌŠp“x
-	double	*n_s;		//‹üÜ—¦, —U“d—¦
-	double  *Sig_hair;	//ƒƒ‰ƒjƒ“F‘f‚Ì‹zûŒW”
+	const double H_S, DT_S;	//1ï¿½Zï¿½ï¿½ï¿½Ì‘å‚«ï¿½ï¿½ï¿½ÌƒVï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½l, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 1ï¿½Xï¿½eï¿½bï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
+	double time;	//ï¿½ï¿½ï¿½ï¿½
+	double lambda_s, w_s, k_s, T_s;		//ï¿½Vï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Ì’l
+	int		wave_angle;	//ï¿½gï¿½ÌŠpï¿½x
+	double	*n_s;		//ï¿½ï¿½ï¿½Ü—ï¿½, ï¿½Uï¿½dï¿½ï¿½
+	double  *Sig_hair;	//ï¿½ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½Fï¿½fï¿½Ì‹zï¿½ï¿½ï¿½Wï¿½ï¿½
 	double ray_coef;
 	int maxStep;
 	Range<double>	LambdaRange;
@@ -91,62 +91,62 @@ protected:
 	FazzyModel	*mModel;
 	//protect the field to access by gui(main) thread
 	std::mutex field_mutex;
-	Field		*mField;	//ƒtƒB[ƒ‹ƒh
+	Field		*mField;	//ï¿½tï¿½Bï¿½[ï¿½ï¿½ï¿½h
 public:
 	Solver();
 	virtual ~Solver();
 	virtual bool calc() = 0;
-	virtual void draw(GUI::ImageBuffer &img) = 0;
+	virtual void draw(std::shared_ptr<GUI::ImageBuffer> img) = 0;
 	virtual void field() = 0;
 	double getTime(){ return time; }
 	Field* getFild(){ return mField; }
 	void nextTime(){
-		time += DT_S;							//ŠÔ‚ÌXV
-		ray_coef = 1-exp(-0.0001*time*time);	//”g‚ª•s˜A‘±‚É“üË‚³‚ê‚é‚Ì‚ğ–h‚®‚½‚ß‚ÌŒW”
+		time += DT_S;							//ï¿½ï¿½ï¿½Ô‚ÌXï¿½V
+		ray_coef = 1-exp(-0.0001*time*time);	//ï¿½gï¿½ï¿½ï¿½sï¿½Aï¿½ï¿½ï¿½É“ï¿½ï¿½Ë‚ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ß‚ÌŒWï¿½ï¿½
 		if (((int)time) % 100 == 0)		cout << time << endl;
 /*
 		if ((int)time == 1)
-			modelCheck();		//U—‘Ìƒ‚ƒfƒ‹‚ğcapture‚µ‚ÄI—¹
+			modelCheck();		//ï¿½Uï¿½ï¿½ï¿½Ìƒï¿½ï¿½fï¿½ï¿½ï¿½ï¿½captureï¿½ï¿½ï¿½ÄIï¿½ï¿½
 */		
 /*
 		if (((int)time) % 100 == 1) {
 			ostringstream oss;
 			oss << std::setfill('0') << std::right << std::setw(5) << time - 1;
 			string name = oss.str();
-			capture(name);		//100step‚²‚Æ‚Éo—Í‚ğ‹L˜^@avi“®‰æì¬—p
+			capture(name);		//100stepï¿½ï¿½ï¿½Æ‚Éoï¿½Í‚ï¿½ï¿½Lï¿½^ï¿½@aviï¿½ï¿½ï¿½ï¿½ì¬ï¿½p
 		}
 */
 	};
 
 protected:
-	void draw(Complex *p,GUI::ImageBuffer &img);
-	void draw(Complex *p, Complex *q,GUI::ImageBuffer &img);
-    void draw_model(GUI::ImageBuffer &img);
+	void draw(Complex *p,std::shared_ptr<GUI::ImageBuffer> img);
+	void draw(Complex *p, Complex *q,std::shared_ptr<GUI::ImageBuffer> img);
+    void draw_model(std::shared_ptr<GUI::ImageBuffer> img);
     void modelCheck();
 
     //---------------------------------------------------------//
-	//--------------------“üË”g-------------------------------//
+	//--------------------ï¿½ï¿½ï¿½Ë”g-------------------------------//
 	//---------------------------------------------------------//
-	void linearLightSource(complex<double> *p);	//‰¡•ûŒü‚ÌüŒõŒ¹
-	void pointLightSource(complex<double> *p);	//’†S‚É“_ŒõŒ¹
+	void linearLightSource(complex<double> *p);	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½
+	void pointLightSource(complex<double> *p);	//ï¿½ï¿½ï¿½Sï¿½É“_ï¿½ï¿½ï¿½ï¿½
 	void scatteredWave(complex<double> *p, double *eps);
 
 	virtual void Initialize(){
-		time = 0;	//ŠÔ‚ğ0‚É
+		time = 0;	//ï¿½ï¿½ï¿½Ô‚ï¿½0ï¿½ï¿½
 		//DataDir		=  "../DataSet/";
 		//DataDir = "..\\Data\\Set\\";
 		DataDir = "..\\data\\simulation";
 	}
 
 	void SetWaveParameter(double lam){
-		lambda_s = lam;				//”g’·İ’è
-		k_s      = 2*PI/lambda_s;	//”g”
-		w_s      = LIGHT_SPEED_S*k_s;			//Špü”g”
-		T_s      = 2*M_PI/w_s;		//üŠú
+		lambda_s = lam;				//ï¿½gï¿½ï¿½ï¿½İ’ï¿½
+		k_s      = 2*PI/lambda_s;	//ï¿½gï¿½ï¿½
+		w_s      = LIGHT_SPEED_S*k_s;			//ï¿½pï¿½ï¿½ï¿½gï¿½ï¿½
+		T_s      = 2*M_PI/w_s;		//ï¿½ï¿½ï¿½ï¿½
 		mModel->InitializeLambda(Inv_Nano_S(lambda_s));
 	}
 
-	double bilinear_interpolation(complex<double> *, double, double);//ƒoƒCƒ‰ƒCƒi[ƒCƒ“ƒ^ƒ|ƒŒ[ƒVƒ‡ƒ“•âŠÔ
+	double bilinear_interpolation(complex<double> *, double, double);//ï¿½oï¿½Cï¿½ï¿½ï¿½Cï¿½iï¿½[ï¿½Cï¿½ï¿½ï¿½^ï¿½|ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	Color color(double);
 	bool neighber(int i, int j);
@@ -167,7 +167,7 @@ protected:
 	}
 
 	bool Terminate(){
-	//	return false; //¡‚Íí‚ÉI—¹
+	//	return false; //ï¿½ï¿½ï¿½Íï¿½ÉIï¿½ï¿½
 
 		if( !nextLambda()){
 			if(!nextWaveAngle()){
@@ -189,33 +189,33 @@ protected:
 		return true;
 	}
 
-	//‹zû‹«ŠE
-	void absorbing_stRL(complex<double> *p, int _X, enum DIRECT a);	//“K—p”z—ñ‚Æ, •Ç‚ÌˆÊ’u, ¶‰Eã‰º‚Ç‚Ì•Ç‚©
+	//ï¿½zï¿½ï¿½ï¿½ï¿½ï¿½E
+	void absorbing_stRL(complex<double> *p, int _X, enum DIRECT a);	//ï¿½Kï¿½pï¿½zï¿½ï¿½ï¿½, ï¿½Ç‚ÌˆÊ’u, ï¿½ï¿½ï¿½Eï¿½ã‰ºï¿½Ç‚Ì•Ç‚ï¿½
 	void absorbing_stTB(complex<double> *p, int _Y, enum DIRECT a);
 	void absorbing_nsRL(complex<double> *p, int _X, enum DIRECT a);
 	void absorbing_nsTB(complex<double> *p, int _Y, enum DIRECT a);
 
-	//üŠú‹«ŠE
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½E
 	void cycle_stRL(complex<double> *p, int _X, enum DIRECT a);
 
 
-	void MiePrint(complex<double>*, string);	//MieU—‰ğ‚Ìo—Í
+	void MiePrint(complex<double>*, string);	//Mieï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½Ìoï¿½ï¿½
 
 	void save_data(complex<double> *data, string name);
 	void open_data(complex<double> *data, string name);
 	//void capture(string name);
 
-	// ’†S·•ª‚Ì“ñ‰ñ”÷•ª x•ûŒü	
+	// ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½ï¿½ï¿½ xï¿½ï¿½ï¿½ï¿½	
 	complex<double> Dx2(complex<double>*p, int i, int j, int t){
 		return p[index(i+1,j, t)] + p[index(i-1,j, t)] - 2.0*p[index(i,j, t)];
 	};
 
-	// ’†S·•ª‚Ì“ñ‰ñ”÷•ª y•ûŒü 
+	// ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½ï¿½ï¿½ yï¿½ï¿½ï¿½ï¿½ 
 	complex<double> Dy2(complex<double>*p, int i, int j, int t){
 		return p[index(i,j+1, t)] + p[index(i,j-1, t)] - 2.0*p[index(i,j, t)];
 	};
 
-	//’†S·•ª‚Ì“ñ‰ñ”÷•ª, t•ûŒü
+	//ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½ï¿½ï¿½, tï¿½ï¿½ï¿½ï¿½
 	complex<double> Dt2(complex<double>* p, int i, int j){
 		return p[index(i,j, +1)] + p[index(i,j, -1)] - 2.0*p[index(i,j, 0)];
 	};
@@ -237,7 +237,7 @@ protected:
 		return mField->index(i,j);
 	};
 
-	//pml—p‚Ì”z—ñ”Ô†æ“¾
+	//pmlï¿½pï¿½Ì”zï¿½ï¿½Ôï¿½ï¿½æ“¾
 	int pmlIndex(const int &i, const int &j, const int &t){
 		int k = ( t + (int)time + 3) % 3;
 		return k*mField->getNcel() + pmlIndex(i,j);
@@ -249,7 +249,7 @@ protected:
 	}
 
 
-	//ƒQƒbƒ^[
+	//ï¿½Qï¿½bï¿½^ï¿½[
 	double& N_S(const int& i, const int& j){
 		return n_s[index(i,j)];
 	}
@@ -266,7 +266,7 @@ protected:
 		else{
 			ofp.open(DataDir + name + ".txt",ios::out | ios::app);
 		}
-		ofp.setf(ios::fixed, ios::floatfield);	//ŒÅ’è¬”“_, 20Œ…§“x‚Åw’è
+		ofp.setf(ios::fixed, ios::floatfield);	//ï¿½Å’è¬ï¿½ï¿½ï¿½_, 20ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Åwï¿½ï¿½
 		ofp.precision(30);
 		return ofp;
 	}
@@ -278,12 +278,12 @@ protected:
 	}
 
 
-	//ì¬‚·‚éƒtƒ@ƒCƒ‹‚Ì–¼‘O‚ğ”g’·‚ÆA“üËŠp“x‚Å•Ô‚·
+	//ï¿½ì¬ï¿½ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ì–ï¿½ï¿½Oï¿½ï¿½gï¿½ï¿½ï¿½ÆAï¿½ï¿½ï¿½ËŠpï¿½xï¿½Å•Ô‚ï¿½
 	string getDataName(){
 		return WorkingDir + getWaveData();
 	}
 
-	//”g‚Ìî•ñ‚ğ•Ô‚·
+	//ï¿½gï¿½Ìï¿½ï¿½ï¿½Ô‚ï¿½
 	string getWaveData(){
 		string str = "(WL=" + to_s(Inv_Nano_S(lambda_s)) + "nm,AOI=" + to_s(wave_angle) + "deg)";
 		return str;
@@ -319,21 +319,21 @@ protected:
 		return mField->cellToNano(a);
 	}
 
-	//(1 - ƒÁ0)/2 ‚ğ•Ô‚·
+	//(1 - ï¿½ï¿½0)/2 ï¿½ï¿½Ô‚ï¿½
 	double NsCoef(){
-		//ŒvZ—p’è”‚Ìİ’è
-		double kx_s = k_s *          pow(2.0, -0.25);	//2‚Ì-4•ª‚Ì1æ
+		//ï¿½vï¿½Zï¿½pï¿½è”ï¿½Ìİ’ï¿½
+		double kx_s = k_s *          pow(2.0, -0.25);	//2ï¿½ï¿½-4ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½
 		double ky_s = k_s * sqrt(1 - pow(2.0, -0.5 ));
 		double sin2_kx = pow(sin(kx_s*H_S/2), 2);
 		double sin2_ky = pow(sin(ky_s*H_S/2), 2);
 		double sin2_k  = pow(sin(k_s *H_S/2), 2);
-		return (sin2_kx + sin2_ky - sin2_k)/(4*sin2_kx*sin2_ky);		//(1-ƒÁ0)/2 = R_M, ( R_P = 1‚Æ‚·‚é‚Æ‚¨‚©‚µ‚­‚È‚é todo?)
+		return (sin2_kx + sin2_ky - sin2_k)/(4*sin2_kx*sin2_ky);		//(1-ï¿½ï¿½0)/2 = R_M, ( R_P = 1ï¿½Æ‚ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ todo?)
 	}
 
 
-	//Maxwell•û’ö®—p‚ÌŒW”‚Ì‚Ğ‚ÈŒ` ƒ¢t = 1
-	//ep_mu ƒÃ‚©ƒÊ(E‚ÌŒW”->ƒÃ, H‚ÌŒW”-> ƒÊ
-	//sig  ƒĞ
+	//Maxwellï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ÌŒWï¿½ï¿½ï¿½Ì‚Ğ‚ÈŒ` ï¿½ï¿½t = 1
+	//ep_mu ï¿½Ã‚ï¿½ï¿½ï¿½(Eï¿½ÌŒWï¿½ï¿½->ï¿½ï¿½, Hï¿½ÌŒWï¿½ï¿½-> ï¿½ï¿½
+	//sig  ï¿½ï¿½
 	double MaxwellCoef(double ep_mu, double sig){
 		return (1.0 - sig/ep_mu)/ (1.0 + sig/ep_mu);
 	}

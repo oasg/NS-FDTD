@@ -7,37 +7,29 @@
 #include "Solver.h"
 
 using namespace std;
-Simulator::Simulator() {
-	//Field *mField = new Field(2000, 2000, 10, 20); //width, height, ƒ¢h, Npml
-	//Model *mModel	 = new FazzyMieModel(mField, lambda_s);
-	int mode;
-
-	cout << "1: StFDTD_TM" << endl;
-	cout << "2: StFDTD_TE" << endl;
-	cout << "3: NsFDTD_TM" << endl;
-	cout << "4: NsFDTD_TE" << endl;
-	//cin >> mode;
-	// if(mode == 1)	solv = new StFDTD_TM();
-	// else if(mode == 2)	solv = new StFDTD_TE();
-	// else if(mode == 3)	solv = new NsFDTD_TM();
-	// else if(mode == 4)	solv = new NsFDTD_TE();
-	// else exit(-1);
-	solv = new StFDTD_TE();
-
-//	solv = new StFDTD_TM();
-//	solv = new StFDTD_TE();
-//	solv = new NsFDTD_TM();
-//	solv = new NsFDTD_TE();
-
-	solv->field();
-}
 
 Simulator::~Simulator() {
 	cout << "Simulator Destructor" << endl;
-	ButtonFactory::deleteAllButton();	//ƒ{ƒ^ƒ“‚Ìíœ, ƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚ÄI—¹‚µ‚½Û‚É,‚·‚Å‚É‰ğ•ú‚³‚ê‚½ƒ{ƒ^ƒ“‚ğ‰ğ•ú‚·‚é‹°‚ê‚ª‚ ‚é.(‚±‚Ì‡”Ô‚¾‚Æ‘åä•v‚©‚à)
-	delete solv;						//solver‚Ìíœ
+	ButtonFactory::deleteAllButton();	//ãƒœã‚¿ãƒ³ã®å‰Šé™¤, ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã¦çµ‚äº†ã—ãŸéš›ã«,ã™ã§ã«è§£æ”¾ã•ã‚ŒãŸãƒœã‚¿ãƒ³ã‚’è§£æ”¾ã™ã‚‹æã‚ŒãŒã‚ã‚‹.(ã“ã®é †ç•ªã ã¨å¤§ä¸ˆå¤«ã‹ã‚‚)
+	delete solv;						//solverã®å‰Šé™¤
 };
-
+Simulator::Simulator(TYPE::sim_type type) {
+    switch (type) {
+        case TYPE::sim_type::FTDT_TE:
+            solv = new StFDTD_TE();
+            break;
+        case TYPE::sim_type::FTDT_TM:
+            solv = new StFDTD_TM();
+            break;
+        case TYPE::sim_type::NsFTDT_TE:
+            solv = new NsFDTD_TE();
+            break;
+        case TYPE::sim_type::NsFTDT_TM:
+            solv = new NsFDTD_TM();
+            break;
+    }
+    solv->field();
+}
 int Simulator::calc()
 {
 	try {
@@ -52,10 +44,12 @@ int Simulator::calc()
 }
 
 //draw gui and simulation result in the window
-void Simulator::draw(GUI::ImageBuffer &img)
+void Simulator::draw(std::shared_ptr<GUI::ImageBuffer> img)
 {
 	//	return;
 	//if (((int)solv->getTime()) % 20 != 0) return;
-	solv->draw(img);					//ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ó‹µ•`‰æ
-	ButtonFactory::draw(img);		//ƒ{ƒ^ƒ“‚ğ•`‰æ
+	solv->draw(img);					//ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ³æç”»
+	ButtonFactory::draw(img);		//ãƒœã‚¿ãƒ³ã‚’æç”»
 }
+
+

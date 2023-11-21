@@ -15,18 +15,18 @@ const int n_ang = 180;
 FDTD_TM::FDTD_TM()
 :Solver()
 {
-	//—ÌˆæŠm•Û
-	Ez  = new complex<double>[3*mField->getNcel()];		//Ez(i,j)      ¨ Ez(i,j)
-	Hx  = new complex<double>[3*mField->getNcel()];		//Hx(i, j+0.5) ¨ Hx(i,j)
-	Hy  = new complex<double>[3*mField->getNcel()];		//Hy(i+0.5, j) ¨ Hy(i,j) ‚ğˆÓ–¡‚·‚é
+	//ï¿½Ìˆï¿½mï¿½ï¿½
+	Ez  = new complex<double>[3*mField->getNcel()];		//Ez(i,j)      ï¿½ï¿½ Ez(i,j)
+	Hx  = new complex<double>[3*mField->getNcel()];		//Hx(i, j+0.5) ï¿½ï¿½ Hx(i,j)
+	Hy  = new complex<double>[3*mField->getNcel()];		//Hy(i+0.5, j) ï¿½ï¿½ Hy(i,j) ï¿½ï¿½ï¿½Ó–ï¿½ï¿½ï¿½ï¿½ï¿½
 	Ezx = new complex<double>[3*mField->getNcel()];
 	Ezy = new complex<double>[3*mField->getNcel()];
 
-	//ŒvZ—p’è””z—ñ
-	C_EZ     = new double[mField->getNcel()];	//Cez(i, j)       ¨ CEZ(i,j)
-	C_EZLH	 = new double[mField->getNcel()];	//Cezlh(i, j)     ¨ CEZLH(i,j)
-	C_HXLY   = new double[mField->getNcel()];	//Chxly(i, j+0.5) ¨ CHXLY(i,j)
-	C_HYLX   = new double[mField->getNcel()];	//Chylx(i+0.5, j) ¨ CHYLX(i,j) ‚ğˆÓ–¡‚·‚é
+	//ï¿½vï¿½Zï¿½pï¿½è”ï¿½zï¿½ï¿½
+	C_EZ     = new double[mField->getNcel()];	//Cez(i, j)       ï¿½ï¿½ CEZ(i,j)
+	C_EZLH	 = new double[mField->getNcel()];	//Cezlh(i, j)     ï¿½ï¿½ CEZLH(i,j)
+	C_HXLY   = new double[mField->getNcel()];	//Chxly(i, j+0.5) ï¿½ï¿½ CHXLY(i,j)
+	C_HYLX   = new double[mField->getNcel()];	//Chylx(i+0.5, j) ï¿½ï¿½ CHYLX(i,j) ï¿½ï¿½ï¿½Ó–ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	C_EZX   = new double[mField->getNcel()]; 
 	C_EZY   = new double[mField->getNcel()];
@@ -34,8 +34,8 @@ FDTD_TM::FDTD_TM()
 	C_EZYLY = new double[mField->getNcel()];
 	C_HX    = new double[mField->getNcel()];
 	C_HY    = new double[mField->getNcel()];
-	C_HXLY  = new double[mField->getNcel()];	//Chxly(i, j+0.5) ¨ CHXLY(i,j)
-	C_HYLX  = new double[mField->getNcel()];	//Chylx(i+0.5, j) ¨ CHYLX(i,j) ‚ğˆÓ–¡‚·‚é
+	C_HXLY  = new double[mField->getNcel()];	//Chxly(i, j+0.5) ï¿½ï¿½ CHXLY(i,j)
+	C_HYLX  = new double[mField->getNcel()];	//Chylx(i+0.5, j) ï¿½ï¿½ CHYLX(i,j) ï¿½ï¿½ï¿½Ó–ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	EPS_EZ = new double[mField->getNcel()];
 	EPS_HX = new double[mField->getNcel()];
@@ -50,7 +50,7 @@ FDTD_TM::FDTD_TM()
 	B_HYp = new double[mField->getNcel()];
 	B_HYm = new double[mField->getNcel()];
 
-	//—Ìˆæ‰Šú‰»
+	//ï¿½Ìˆæ‰ï¿½ï¿½ï¿½ï¿½
 	for(int i=0; i<3*mField->getNcel(); i++)
 			Ez[i] = Hx[i] = Hy[i] = Ezx[i] = Ezy[i] = 0;
 
@@ -93,13 +93,13 @@ FDTD_TM::~FDTD_TM(){
 
 void FDTD_TM::Initialize(){
 	super::Initialize();
-	//—Ìˆæ‰Šú‰»
+	//ï¿½Ìˆæ‰ï¿½ï¿½ï¿½ï¿½
 	for(int i=0; i<3*mField->getNcel(); i++)
 		Ez[i] = Hx[i] = Hy[i] = Ezx[i] = Ezy[i] = 0;
 }
 
 void FDTD_TM::OpenData(string prefix){
-	string str = prefix+ "data/" + getWaveData();	//ƒf[ƒ^ƒI[ƒvƒ“
+	string str = prefix+ "data/" + getWaveData();	//ï¿½fï¿½[ï¿½^ï¿½Iï¿½[ï¿½vï¿½ï¿½
 	cout << str << endl;
 
 	open_data(Ez, str +"Ez");
@@ -116,7 +116,7 @@ void FDTD_TM::SaveData(string prefix){
 }
 
 void FDTD_TM::field(){
-	setWorkingDirPass(mModel->mkdir(getDataDirPass()));	//ƒf[ƒ^‚ğ•Û‘¶‚·‚éƒfƒBƒŒƒNƒgƒŠ‚Ìİ’è
+	setWorkingDirPass(mModel->mkdir(getDataDirPass()));	//ï¿½fï¿½[ï¿½^ï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½Ìİ’ï¿½
 	setWorkingDirPass(MakeDir("TM"));
 #ifdef _OPENMP
 #pragma omp parallel for
@@ -126,27 +126,27 @@ void FDTD_TM::field(){
 			EPSEZ(i,j) = mModel->calcEPS(i,j);
 			EPSHX(i,j) = mModel->calcEPS(i,j+0.5);
 			EPSHY(i,j) = mModel->calcEPS(i+0.5,j);
-			N_S(i,j)   = sqrt( mModel->calcEPS(i+0.5,j+0.5) / EPSILON_0_S );	//‹üÜ—¦ n = ã(ƒÃ/ ƒÃ0) (‚±‚±‚Å‚Í ƒÊ = ƒÊ0‚Æ‚µ‚Ä‚¢‚é‚Ì‚Å)
+			N_S(i,j)   = sqrt( mModel->calcEPS(i+0.5,j+0.5) / EPSILON_0_S );	//ï¿½ï¿½ï¿½Ü—ï¿½ n = ï¿½ï¿½(ï¿½ï¿½/ ï¿½ï¿½0) (ï¿½ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ ï¿½ï¿½ = ï¿½ï¿½0ï¿½Æ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ì‚ï¿½)
 
 			if(mField->sig == true)
-				SIG(i, j) = mModel->calcSIG(i, j, lambda_s);	// Hair/incidenceƒ‚ƒfƒ‹‚Ì‚İ(ƒƒ‰ƒjƒ“F‘fl—¶—L)
+				SIG(i, j) = mModel->calcSIG(i, j, lambda_s);	// Hair/incidenceï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ì‚ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½Fï¿½fï¿½lï¿½ï¿½ï¿½L)
 		}
 	}
 }
 
-//U—”g
+//ï¿½Uï¿½ï¿½ï¿½g
 void FDTD_TM::NsScatteredWave(int ang){
-	double rad = ang*M_PI/180;	//ƒ‰ƒWƒAƒ“•ÏŠ·
-	double _cos = cos(rad)*k_s;	//–ˆ‰ñŒvZ‚·‚é‚ÆŠÔ‚©‚©‚è‚»‚¤‚¾‚©‚ç,‘ã“ü‚µ‚Ä‚¨‚­
+	double rad = ang*M_PI/180;	//ï¿½ï¿½ï¿½Wï¿½Aï¿½ï¿½ï¿½ÏŠï¿½
+	double _cos = cos(rad)*k_s;	//ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½ï¿½Æï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½è‚»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
 	double _sin = sin(rad)*k_s;	
-	//double a = (1-exp(-_pow(0.01*time,2)));		//•s˜A‘±‚É“üË‚³‚ê‚é‚Ì‚ğ–h‚®ˆ×‚ÌŒW”
+	//double a = (1-exp(-_pow(0.01*time,2)));		//ï¿½sï¿½Aï¿½ï¿½ï¿½É“ï¿½ï¿½Ë‚ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½hï¿½ï¿½ï¿½×‚ÌŒWï¿½ï¿½
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif
 	for(int i=mField->getNpml(); i<mField->getNpx()-mField->getNpml(); i++){
 		for(int j=mField->getNpml(); j<mField->getNpy()-mField->getNpml(); j++){
 			if(EPSEZ(i,j) == EPSILON_0_S) continue;
-			double n  = sqrt(EPSEZ(i,j)/EPSILON_0_S);				//todo ƒĞ = 0‚ª‘O’ñ‚Ì˜b
+			double n  = sqrt(EPSEZ(i,j)/EPSILON_0_S);				//todo ï¿½ï¿½ = 0ï¿½ï¿½ï¿½Oï¿½ï¿½Ì˜b
 			double u0 = sin(w_s/n*H_S/2.0)  / sin(  k_s*H_S/2.0);
 			double u1 = sin(w_s/n*DT_S/2.0) / sin(n*k_s*H_S/2.0);
 			double _n = u0/u1;
@@ -158,11 +158,11 @@ void FDTD_TM::NsScatteredWave(int ang){
 	}
 }
 
-//“üË”g
+//ï¿½ï¿½ï¿½Ë”g
 void FDTD_TM::IncidentWave(int ang){
-	double rad = ang*M_PI/180;	//ƒ‰ƒWƒAƒ“•ÏŠ·
-	double _cos = cos(rad), _sin = sin(rad);	//–ˆ‰ñŒvZ‚·‚é‚ÆŠÔ‚©‚©‚è‚»‚¤‚¾‚©‚ç,‘ã“ü‚µ‚Ä‚¨‚­
-	//double a = (1-exp(-_pow(0.01*time,2)));		//•s˜A‘±‚É“üË‚³‚ê‚é‚Ì‚ğ–h‚®ˆ×‚ÌŒW”
+	double rad = ang*M_PI/180;	//ï¿½ï¿½ï¿½Wï¿½Aï¿½ï¿½ï¿½ÏŠï¿½
+	double _cos = cos(rad), _sin = sin(rad);	//ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½ï¿½Æï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½è‚»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
+	//double a = (1-exp(-_pow(0.01*time,2)));		//ï¿½sï¿½Aï¿½ï¿½ï¿½É“ï¿½ï¿½Ë‚ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½hï¿½ï¿½ï¿½×‚ÌŒWï¿½ï¿½
 	double a = ray_coef;
 #ifdef _OPENMP
 #pragma omp parallel for
@@ -178,9 +178,9 @@ void FDTD_TM::IncidentWave(int ang){
 }
 
 void FDTD_TM::IncidentWaveH(int ang){
-	double rad = ang*M_PI/180;	//ƒ‰ƒWƒAƒ“•ÏŠ·
-	double _cos = cos(rad), _sin = sin(rad);	//–ˆ‰ñŒvZ‚·‚é‚ÆŠÔ‚©‚©‚è‚»‚¤‚¾‚©‚ç,‘ã“ü‚µ‚Ä‚¨‚­
-	//double a = (1-exp(-_pow(0.01*time,2)));		//•s˜A‘±‚É“üË‚³‚ê‚é‚Ì‚ğ–h‚®ˆ×‚ÌŒW”
+	double rad = ang*M_PI/180;	//ï¿½ï¿½ï¿½Wï¿½Aï¿½ï¿½ï¿½ÏŠï¿½
+	double _cos = cos(rad), _sin = sin(rad);	//ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½ï¿½Æï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½è‚»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
+	//double a = (1-exp(-_pow(0.01*time,2)));		//ï¿½sï¿½Aï¿½ï¿½ï¿½É“ï¿½ï¿½Ë‚ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½hï¿½ï¿½ï¿½×‚ÌŒWï¿½ï¿½
 		double a = ray_coef;
 #ifdef _OPENMP
 #pragma omp parallel for
@@ -194,7 +194,7 @@ void FDTD_TM::IncidentWaveH(int ang){
 	}
 }
 
-void FDTD_TM::draw(GUI::ImageBuffer &img){
+void FDTD_TM::draw(std::shared_ptr<GUI::ImageBuffer> img){
 	//super::draw(Ezx, Ezy);	
 	super::draw(Ez,img);	
 }
@@ -207,34 +207,34 @@ void FDTD_TM::PML(){
 
 }
 
-//-------------------Near_To_Far•ÏŠ·---------------------//
+//-------------------Near_To_Farï¿½ÏŠï¿½---------------------//
 void FDTD_TM::NTFFindexform(string label, NTFF::output flag){
 	cout << "NTF start" << endl;
 
-	//Solver::MiePrint(Ez, "strong"); // MieU—‚É‚¨‚¢‚ÄAU—‘Ì”¼Œa1.2”{‚Å‚Ì‹­“x Ez ‚ğƒtƒ@ƒCƒ‹o—Í
+	//Solver::MiePrint(Ez, "strong"); // Mieï¿½Uï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½ÄAï¿½Uï¿½ï¿½ï¿½Ì”ï¿½ï¿½a1.2ï¿½{ï¿½Å‚Ì‹ï¿½ï¿½x Ez ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½oï¿½ï¿½
 
-	int cx = mField->getNpx()/2;	//À•W•ÏŠ·Œã‚ÌŒ´“_
+	int cx = mField->getNpx()/2;	//ï¿½ï¿½ï¿½Wï¿½ÏŠï¿½ï¿½ï¿½ÌŒï¿½ï¿½_
 	int cy = mField->getNpy()/2;
 	
 	double r0 = 1.0e6;
-    complex<double> iu( 0.0, 1.0 );		//’PˆÊ‹•”ƒxƒNƒgƒ‹
-	complex<double> Coef = sqrt( iu*k_s/(8*M_PI*r0) ) * exp( iu*k_s*r0 );	//ã(jw/8ƒÎcr)e^(jkr)
+    complex<double> iu( 0.0, 1.0 );		//ï¿½Pï¿½Ê‹ï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½
+	complex<double> Coef = sqrt( iu*k_s/(8*M_PI*r0) ) * exp( iu*k_s*r0 );	//ï¿½ï¿½(jw/8ï¿½ï¿½cr)e^(jkr)
     int offset = 5;		// closed line offset
 
-	int lt,rt, tp, bm;		//•Â‹È–Ê‚ÌêŠ	//ŒvZ—Ìˆæ“à
-	tp = mField->getNpy() - mField->getNpml() - offset;			//ã‚©‚ç-5
-	bm = mField->getNpml() + offset;			//‰º‚©‚ç5
-	rt = mField->getNpx() - mField->getNpml() - offset;		//‰E‚©‚ç-5
-	lt = mField->getNpml() + offset;			//¶‚©‚ç5
+	int lt,rt, tp, bm;		//ï¿½Â‹È–Ê‚ÌêŠ	//ï¿½vï¿½Zï¿½Ìˆï¿½ï¿½
+	tp = mField->getNpy() - mField->getNpml() - offset;			//ï¿½ã‚©ï¿½ï¿½-5
+	bm = mField->getNpml() + offset;			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½5
+	rt = mField->getNpx() - mField->getNpml() - offset;		//ï¿½Eï¿½ï¿½ï¿½ï¿½-5
+	lt = mField->getNpml() + offset;			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½5
 
-	double sum = 0;			//‘˜a
+	double sum = 0;			//ï¿½ï¿½ï¿½a
 	double strength[360];
 	int max_angle = 360;
 	for(int ang=0; ang<max_angle; ang++){
-		double rad = ang*M_PI/180.0;			//0(deg)start‚Æ‚·‚é‚Æ‚«
-		//double rad = (ang-90)*M_PI / 180.0;	//270(deg)start‚Æ‚·‚é‚Æ‚«
-		Vec2<double> r(cos(rad), sin(rad));		//‰“•û‚Ì•ûŒüƒxƒNƒgƒ‹.
-		Vec2<double> r2;						//’†S‚©‚çƒZƒ‹‚Ü‚Å‚Ì‹——£
+		double rad = ang*M_PI/180.0;			//0(deg)startï¿½Æ‚ï¿½ï¿½ï¿½Æ‚ï¿½
+		//double rad = (ang-90)*M_PI / 180.0;	//270(deg)startï¿½Æ‚ï¿½ï¿½ï¿½Æ‚ï¿½
+		Vec2<double> r(cos(rad), sin(rad));		//ï¿½ï¿½ï¿½ï¿½ï¿½Ì•ï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½.
+		Vec2<double> r2;						//ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½Ü‚Å‚Ì‹ï¿½ï¿½ï¿½
 
 		complex<double> Nz( 0, 0 );
         complex<double> Lx( 0, 0 );
@@ -243,7 +243,7 @@ void FDTD_TM::NTFFindexform(string label, NTFF::output flag){
 		
         // (left,bottom) -> (right,bottom) n=(0, -1)
         for ( int i=lt; i<rt; i++ ) {
-            r2   = Vec2<double>( i-cx, bm-cy);	//’†S‚©‚çƒZƒ‹‚Ü‚Å‚Ì‹——£
+            r2   = Vec2<double>( i-cx, bm-cy);	//ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½Ü‚Å‚Ì‹ï¿½ï¿½ï¿½
 			C_EZ =  EZ(i,bm, +1);
 			C_HX = 0.5 * ( HX(i,bm, +1) + HX(i,bm-1, +1) ); 
 
@@ -280,28 +280,28 @@ void FDTD_TM::NTFFindexform(string label, NTFF::output flag){
         }
  
         // Get Ephi
-        complex<double> EZZ = Coef * ( Z_0_S*Nz - Lx*sin(rad) + Ly*cos(rad) ); //‰ª“cæ”y‚ÌÀ‘•‚Å‚Í Lx, Ly‚É-‚ª‚Â‚­
+        complex<double> EZZ = Coef * ( Z_0_S*Nz - Lx*sin(rad) + Ly*cos(rad) ); //ï¿½ï¿½ï¿½cï¿½ï¿½yï¿½Ìï¿½ï¿½ï¿½ï¿½Å‚ï¿½ Lx, Lyï¿½ï¿½-ï¿½ï¿½ï¿½Â‚ï¿½
         
 		strength[int(ang)] = norm(EZZ);
 		sum += norm(EZZ);
 	}
 
-	//NTFF‚ÌŒ‹‰Ê‚ğo—Í
+	//NTFFï¿½ÌŒï¿½ï¿½Ê‚ï¿½ï¿½oï¿½ï¿½
 	if( (flag & NTFF::NTFFDATA) == NTFF::NTFFDATA ){
-		cout << "NTFF‚ÌŒ‹‰Ê‚ğo—Í" << endl;
+		cout << "NTFFï¿½ÌŒï¿½ï¿½Ê‚ï¿½ï¿½oï¿½ï¿½" << endl;
 		ofstream fp = WriteOpen(MakeDir("NTFF") + label + getWaveData());
 		for(int i=0; i<max_angle; i++)
 			fp << strength[i] << endl;
 	}
 
-	//NTFF‚ÌŒ‹‰Ê‚Ì‘˜a‚ğo—Í
+	//NTFFï¿½ÌŒï¿½ï¿½Ê‚Ì‘ï¿½ï¿½aï¿½ï¿½ï¿½oï¿½ï¿½
 	if( (flag & NTFF::TOTAL) == NTFF::TOTAL){
-		cout << "NTFF‚ÌŒ‹‰Ê‚Ì‘˜a‚ğo—Í" << endl;
-		ofstream fpntff= WriteOpen(MakeDir("NTFF") + label + "WaveAngleStrength", DATAFILE::ADD); //false‚Í’Ç‹Lƒ‚[ƒh
-		fpntff << "(" << to_s((int)Inv_Nano_S(lambda_s)) << "," << wave_angle << ")  " << sum << endl;		//”g’·‚²‚Æ‚Ì‘˜a‚ğo—Í
+		cout << "NTFFï¿½ÌŒï¿½ï¿½Ê‚Ì‘ï¿½ï¿½aï¿½ï¿½ï¿½oï¿½ï¿½" << endl;
+		ofstream fpntff= WriteOpen(MakeDir("NTFF") + label + "WaveAngleStrength", DATAFILE::ADD); //falseï¿½Í’Ç‹Lï¿½ï¿½ï¿½[ï¿½h
+		fpntff << "(" << to_s((int)Inv_Nano_S(lambda_s)) << "," << wave_angle << ")  " << sum << endl;		//ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Æ‚Ì‘ï¿½ï¿½aï¿½ï¿½ï¿½oï¿½ï¿½
 	}
 
-	//”½Ë—¦‚ğo—Í
+	//ï¿½ï¿½ï¿½Ë—ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½
 	if( (flag & NTFF::REFLEC) == NTFF::REFLEC){
 		ofstream fp = WriteOpen(MakeDir("Reflection") + label + getWaveData());
 		for(int ang = 0; ang < 360; ang++)

@@ -7,6 +7,7 @@
 #include "StFDTD_TM.h"
 #include "StFDTD_TE.h"
 #include "Object.h"
+#include "type/SimType.hpp"
 
 using namespace std;
 
@@ -15,12 +16,12 @@ private:
 	Solver *solv;	//Solver
 
 public:
-	Simulator();
+	Simulator(TYPE::sim_type type);
 	~Simulator();
 	inline int getFieldW(){return solv->getFild()->getNpx();};
 	inline int getFieldH(){return solv->getFild()->getNpy();};
 	virtual int calc();
-	virtual void draw(GUI::ImageBuffer &img);
+	virtual void draw(std::shared_ptr<GUI::ImageBuffer> img);
 
 };
 

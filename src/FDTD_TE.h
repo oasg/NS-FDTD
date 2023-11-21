@@ -7,10 +7,10 @@ class FDTD_TE: public Solver{
 	typedef Solver super;
 protected:
 	complex<double> *Ex, *Ey, *Hz, *Hzx, *Hzy;
-	double *C_EX, *C_EY, *C_EXLY, *C_EYLX, *C_HZLH;		//LX -> x”÷•ª LY -> y”÷•ª
+	double *C_EX, *C_EY, *C_EXLY, *C_EYLX, *C_HZLH;		//LX -> xï¿½ï¿½ï¿½ï¿½ LY -> yï¿½ï¿½ï¿½ï¿½
 	double *C_HZX, *C_HZY, *C_HZXLX, *C_HZYLY;
 	double *EPS_EX, *EPS_EY, *EPS_HZ;
-	double *B_EXp, *B_EXm, *B_EYp, *B_EYm; //pml•t‚«NsFDTD—p
+	double *B_EXp, *B_EXm, *B_EYp, *B_EYm; //pmlï¿½tï¿½ï¿½NsFDTDï¿½p
 	double *B_HZXp, *B_HZXm, *B_HZYp, *B_HZYm;
 
 public:
@@ -18,17 +18,17 @@ public:
 	virtual ~FDTD_TE();
 
 	virtual bool calc()=0;
-	virtual void draw(GUI::ImageBuffer &img);
+	virtual void draw(std::shared_ptr<GUI::ImageBuffer> img);
 	virtual void field();
 	void Initialize();
 
-	void NsScatteredWave(int angle);	//U—”g
+	void NsScatteredWave(int angle);	//ï¿½Uï¿½ï¿½ï¿½g
 	void IncidentWave(int angle);
 	void IncidentWaveH(int angle);
 
 	virtual void NTFFindexform(string label, NTFF::output flag = NTFF::REFLEC);
 
-	//ƒQƒbƒ^[
+	//ï¿½Qï¿½bï¿½^ï¿½[
 	complex<double>& EX(const int &i, const int &j, const int &t){
 		return Ex[pmlIndex(i,j, t)];
 	};

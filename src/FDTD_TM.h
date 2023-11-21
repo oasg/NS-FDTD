@@ -16,19 +16,19 @@ class FDTD_TM: public Solver{
 
 protected:
 	Complex *Ez, *Hx, *Hy;
-	Complex *Ezx, *Ezy; //pml—p
+	Complex *Ezx, *Ezy; //pmlï¿½p
 	double *C_EZ, *C_EZLH, *C_HXLY, *C_HYLX;
 	double *C_EZX, *C_EZY, *C_EZXLX, *C_EZYLY;
 	double *C_HX, *C_HY;
 	double *EPS_EZ, *EPS_HX, *EPS_HY;
-	double *B_EZXp, *B_EZXm, *B_EZYp, *B_EZYm; //pml•t‚«NsFDTD—p
+	double *B_EZXp, *B_EZXm, *B_EZYp, *B_EZYm; //pmlï¿½tï¿½ï¿½NsFDTDï¿½p
 	double *B_HXp, *B_HXm, *B_HYp, *B_HYm;
 
 public:
 	FDTD_TM();
 	virtual ~FDTD_TM();
 	virtual bool calc()=0;
-	void draw(GUI::ImageBuffer &img);
+	void draw(std::shared_ptr<GUI::ImageBuffer> img);
 	void field();
 
 protected:
@@ -38,11 +38,11 @@ protected:
 
 	void PML();
 
-	void NsScatteredWave(int angle);	//U—”g
+	void NsScatteredWave(int angle);	//ï¿½Uï¿½ï¿½ï¿½g
 	void IncidentWave(int angle);
 	void IncidentWaveH(int angle);
 
-	//ƒQƒbƒ^[(ƒCƒ“ƒ‰ƒCƒ“‰»‚·‚é‚±‚Æ‚ÅƒI[ƒo[ƒwƒbƒhíŒ¸, ‚È‚é‚©’m‚ç‚ñ‚¯‚Ç)
+	//ï¿½Qï¿½bï¿½^ï¿½[(ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚±ï¿½Æ‚ÅƒIï¿½[ï¿½oï¿½[ï¿½wï¿½bï¿½hï¿½íŒ¸, ï¿½È‚é‚©ï¿½mï¿½ï¿½ñ‚¯‚ï¿½)
 	Complex& EZ(const int &i, const int &j, const int &t){
 		return Ez[pmlIndex(i,j,t)];
 	};

@@ -22,15 +22,15 @@ void Point::setY(int _y){
 	y = _y;
 }
 
-/* •¶š•`‰æ*/
+/* ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½ï¿½*/
 void drawBitmapString(void *font, string s, int x, int y)
 {
 	double _x1 =  2.0*x/WINDOW_W - 1;
 	double _y1 = -2.0*y/WINDOW_H + 1;
 	
 // 	glPushAttrib(GL_CURRENT_BIT);
-// 	glRasterPos2d(_x1, _y1);		/* •`‰æˆÊ’u */
-//   /* ƒrƒbƒgƒ}ƒbƒv•¶š—ñ‚Ì•`‰æ */
+// 	glRasterPos2d(_x1, _y1);		/* ï¿½`ï¿½ï¿½Ê’u */
+//   /* ï¿½rï¿½bï¿½gï¿½}ï¿½bï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì•`ï¿½ï¿½ */
 // 	for(unsigned int i=0; i<s.size() ;i++)
 // 		glutBitmapCharacter(font, s[i]);
 
@@ -62,23 +62,23 @@ int Button::calc(){
 	return 1; 
 }
 
-void Button::draw(GUI::ImageBuffer &img){
+void Button::draw(std::shared_ptr<GUI::ImageBuffer> img){
 	//TODO DRAW 
-	// glColor3d(1, 1, 1);  //F‚Í”’‚Å•`‰æ TODO@”wŒi‚É‚æ‚Á‚Ä‚Í‰B‚ê‚é
+	// glColor3d(1, 1, 1);  //ï¿½Fï¿½Í”ï¿½ï¿½Å•`ï¿½ï¿½ TODOï¿½@ï¿½wï¿½iï¿½É‚ï¿½ï¿½ï¿½Ä‚Í‰Bï¿½ï¿½ï¿½
 	// drawBitmapString(GLUT_BITMAP_HELVETICA_18, tag, x,y);
 	// drawBitmapString(GLUT_BITMAP_HELVETICA_18, to_s(value), x + 10*tag.size() ,y);
-	//if(check)	file << value << endl;	//‹L˜^‚·‚éê‡‚Íƒtƒ@ƒCƒ‹‚É‘‚«‚Ş
+	//if(check)	file << value << endl;	//ï¿½Lï¿½^ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }
 
 void Button::save(){
 	if(file)
-		file << value << endl;	//‹L˜^‚·‚éê‡‚Íƒtƒ@ƒCƒ‹‚É‘‚«‚Ş
+		file << value << endl;	//ï¿½Lï¿½^ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	else
 		cout << "no file error" << endl;
 }
 
 void ButtonFactory::addButton(string _tag, double _val, bool _check){
-	if(bList.count(_tag) == 0)	//‘¶İ‚µ‚È‚¢ê‡
+	if(bList.count(_tag) == 0)	//ï¿½ï¿½ï¿½İ‚ï¿½ï¿½È‚ï¿½ï¿½ê‡
 		bList[_tag] = new Button(MENU_ITEM_X + MAIN_WINDOW_X, MENU_ITEM_D*bList.size() + MENU_ITEM_Y + MAIN_WINDOW_Y, MENU_ITEM_W, MENU_ITEM_H,  _tag, _val, _check);
 	else
 		bList[_tag]->setState(_val);
@@ -88,7 +88,7 @@ void ButtonFactory::setButton(string _tag, double _val){
 	addButton(_tag, _val, false);
 }
 
-void ButtonFactory::draw(GUI::ImageBuffer &img){
+void ButtonFactory::draw(std::shared_ptr<GUI::ImageBuffer> img){
 	map<string, Button*>::iterator it = bList.begin();
 	while( it != bList.end() )
 	{

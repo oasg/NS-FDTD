@@ -13,7 +13,7 @@ namespace GUI
         GLFWwindow *_window;
         bool isEnable = true;
         std::unique_ptr<GUIApp> _guilayer;
-        std::unique_ptr<ImageDispalyLayer> _imglayer;
+
         //display simulation result every _imageDuration 
         //second
         double _imageDuration = 0.1;

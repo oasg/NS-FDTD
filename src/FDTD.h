@@ -9,17 +9,17 @@
 class FDTD:public Solver{
 	typedef complex<double> Complex;
 protected:
-	complex<double> *phi;	//ƒÓ
+	complex<double> *phi;	//ï¿½ï¿½
 	double *np;
 public:
 	FDTD();
 	virtual ~FDTD();
 	virtual bool calc();
-	virtual void draw(GUI::ImageBuffer &img);
+	virtual void draw(std::shared_ptr<GUI::ImageBuffer> img);
 	virtual void field() = 0;
 
 protected:
-	void Mie_Cylinder_Incidence();	//MiewU—ƒ‚ƒfƒ‹‚Ì“üË”g
+	void Mie_Cylinder_Incidence();	//Miewï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ì“ï¿½ï¿½Ë”g
 	void Mie_Slub_Incidence();
 	
 	void Initialize(double);
@@ -36,10 +36,10 @@ public:
 	void field();
 
 protected:
-	//‹zû‹«ŠE
+	//ï¿½zï¿½ï¿½ï¿½ï¿½ï¿½E
 	void absorbing();
 
-	//üŠú‹«ŠE
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½E
 	void cycle();
 
 };
@@ -57,14 +57,14 @@ private:
 	complex<double> DxDy2(complex<double> *p, int i, int j, int t);
 	complex<double>  D0_2(complex<double> *p, int i, int j, int t);
 
-	//‹zû‹«ŠE
+	//ï¿½zï¿½ï¿½ï¿½ï¿½ï¿½E
 	virtual void absorbing_left();
 	virtual void absorbing_right();
 	virtual void absorbing_up();
 	virtual void absorbing_down();
 	virtual void absorbing();
 
-	void Mie_Cylinder_Incidence();	//MiewU—ƒ‚ƒfƒ‹‚Ì“üË”g
+	void Mie_Cylinder_Incidence();	//Miewï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ì“ï¿½ï¿½Ë”g
 };
 
 #endif //_FDTD_H
