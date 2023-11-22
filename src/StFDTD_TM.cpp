@@ -18,7 +18,7 @@ void StFDTD_TM::field(){
 	setWorkingDirPass(MakeDir("St"));
 	setWorkingDirPass(MakeDir(to_s(wave_angle) + "deg_lambda" + to_s((int)Inv_Nano_S(lambda_s))));
 
-	double sig_x, sig_y, sig_xx, sig_yy;//É–x, É–x*, É–y, É–y* Å@Å@<- B-PMLÇÃåWêî
+	double sig_x, sig_y, sig_xx, sig_yy;//œÉx, œÉx*, œÉy, œÉy* „ÄÄ„ÄÄ<- B-PML„ÅÆ‰øÇÊï∞
 	for(int i=0; i<mField->getNpx(); i++){
 		for(int j=0; j<mField->getNpy(); j++){
 			sig_x = mField->sigmaX(i,j);
@@ -33,16 +33,16 @@ void StFDTD_TM::field(){
 				sig_yy = MU_0_S / EPSILON_0_S * sig_y;
 			}
 
-			//É¢t = 1, É (i,j) = É 0 
- 			CEZX(i,j)   = MaxwellCoef(EPSEZ(i,j), sig_x);		// 1- É–/É√			  1/É√
+			//Œît = 1, Œº(i,j) = Œº0 
+ 			CEZX(i,j)   = MaxwellCoef(EPSEZ(i,j), sig_x);		// 1- œÉ/Œµ			  1/Œµ
 			CEZXLX(i,j) = MaxwellCoef2(EPSEZ(i,j), sig_x);		// --------			--------
-																// 1+ É–/É√			1+ É–/É√
+																// 1+ œÉ/Œµ			1+ œÉ/Œµ
 			CEZY(i,j)   = MaxwellCoef(EPSEZ(i,j), sig_y);
 			CEZYLY(i,j) = MaxwellCoef2(EPSEZ(i,j), sig_y);
 
-			CHX(i,j)    = MaxwellCoef(MU_0_S, sig_yy);			// 1- É–/É 			  1/É 
+			CHX(i,j)    = MaxwellCoef(MU_0_S, sig_yy);			// 1- œÉ/Œº			  1/Œº
 			CHXLY(i,j)  = MaxwellCoef2(MU_0_S, sig_yy);			// --------			--------
-																// 1+ É–/É 			1+ É–/É 
+																// 1+ œÉ/Œº			1+ œÉ/Œº
 			CHY(i,j)    = MaxwellCoef(MU_0_S, sig_xx);
 			CHYLX(i,j)  = MaxwellCoef2(MU_0_S, sig_xx);
 		}
@@ -80,15 +80,15 @@ bool StFDTD_TM::calc(){
 	return true;
 }
 
-//----------------èIóπéûÇÃédéñ------------------------//
+//----------------ÁµÇ‰∫ÜÊôÇ„ÅÆ‰ªï‰∫ã------------------------//
 bool StFDTD_TM::EndTask() {
 	cout << "End Task" << endl;
 
 	string label = "";
-	NTFFindexform("", NTFF::NTFFDATA | NTFF::TOTAL);	// label -> "" Ç…ÇµÇΩÇØÇ«ìÆÇ≠Ç©ämîFÇµÇƒÇ»Ç¢.
+	NTFFindexform("", NTFF::NTFFDATA | NTFF::TOTAL);	// label -> "" „Å´„Åó„Åü„Åë„Å©Âãï„Åè„ÅãÁ¢∫Ë™ç„Åó„Å¶„Å™„ÅÑ.
 	//todo terminate
 	return false;  
-														//èIóπèåèÇÃämîF
+														//ÁµÇ‰∫ÜÊù°‰ª∂„ÅÆÁ¢∫Ë™ç
 	if (!Terminate())
 		return false;
 
@@ -96,7 +96,7 @@ bool StFDTD_TM::EndTask() {
 	return true;
 }
 
-//----------------ãzé˚ã´äE-----------------------//
+//----------------Âê∏ÂèéÂ¢ÉÁïå-----------------------//
 
 void StFDTD_TM::absorbing(){
 	absorbing_stRL(Ez,0,	LEFT);
@@ -105,11 +105,11 @@ void StFDTD_TM::absorbing(){
 	absorbing_stTB(Ez,mField->getNy()-1,	TOP);
 }
 
-//----------------é¸ä˙ã´äE-----------------------//
+//----------------Âë®ÊúüÂ¢ÉÁïå-----------------------//
 void StFDTD_TM::cycle(){
 	cycle_stRL(Ez,0   ,LEFT);
 	cycle_stRL(Ez,mField->getNx()-1,RIGHT);
-	//i=0 Ç…i=Nx-2ÇÉRÉsÅ[, i=Nx-1Ç…i=1ÇÉRÉsÅ[
+	//i=0 „Å´i=Nx-2„Çí„Ç≥„Éî„Éº, i=Nx-1„Å´i=1„Çí„Ç≥„Éî„Éº
 	for(int i=0; i<mField->getNx(); i++){
 		EZ(i,0 ,+1) = EZ(i, mField->getNy()-2, +1);
 		EZ(i,mField->getNy()-1, +1) = EZ(i,1, +1);

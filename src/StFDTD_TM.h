@@ -12,13 +12,13 @@ public:
 private:
 	void absorbing();
 	void cycle();
-	bool EndTask();		//1‰ñ‚ÌƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚ªI‚í‚Á‚½‚Æ‚«‚Ìˆ—
+	bool EndTask();		//1å›ã®ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãŒçµ‚ã‚ã£ãŸã¨ãã®å‡¦ç†
 	void ReStart() {
 		super::Initialize();
 		field();
 	}
 
-	//todo ‹«ŠE‹ß–T‚ÉS-FDTD‚ğg‚Á‚Ä‚È‚¢
+	//todo å¢ƒç•Œè¿‘å‚ã«S-FDTDã‚’ä½¿ã£ã¦ãªã„
 	void CalcE() {
 	#ifdef _OPENMP
 	#pragma omp parallel
@@ -47,8 +47,8 @@ private:
 		}
 	}
 
-	//‹zû‹«ŠE‚ÍEz‚É‚µ‚©“K—p‚µ‚È‚¢‚©‚ç,H‚Í—Ìˆæ‚Ì’[‚à•’Ê‚ÉŒvZ‚·‚é(‚Å‚«‚é•ª‚Í)
-	void CalcH(){	//todo ŒvZ—Ìˆæ i=0?, 1? j=0?, 1?
+	//å¸åå¢ƒç•Œã¯Ezã«ã—ã‹é©ç”¨ã—ãªã„ã‹ã‚‰,Hã¯é ˜åŸŸã®ç«¯ã‚‚æ™®é€šã«è¨ˆç®—ã™ã‚‹(ã§ãã‚‹åˆ†ã¯)
+	void CalcH(){	//todo è¨ˆç®—é ˜åŸŸ i=0?, 1? j=0?, 1?
 	#ifdef _OPENMP
 	#pragma omp parallel
 	#endif
@@ -59,7 +59,7 @@ private:
 		for(int i=0; i<mField->getNpx(); i++)
 			for(int j=0; j<mField->getNpy()-1; j++)
 				HX(i,j,+1) = CHX(i,j)*HX(i,j,0) 
-						- CHXLY(i,j)*( EZX(i,j+1,+1)-EZX(i,j,+1) + EZY(i,j+1,+1)-EZY(i,j,+1));	//Hx‚ÌŒvZ Hx(i, j+1/2) -> Hx[i,j]
+						- CHXLY(i,j)*( EZX(i,j+1,+1)-EZX(i,j,+1) + EZY(i,j+1,+1)-EZY(i,j,+1));	//Hxã®è¨ˆç®— Hx(i, j+1/2) -> Hx[i,j]
 
 				
 		#ifdef _OPENMP
@@ -68,7 +68,7 @@ private:
 		for(int i=0; i<mField->getNpx()-1; i++)
 			for(int j=0; j<mField->getNpy(); j++)
 				HY(i,j,+1) = CHY(i,j)*HY(i,j, 0) 
-						+ CHYLX(i,j)*( EZX(i+1,j,+1)-EZX(i,j,+1) + EZY(i+1,j,+1)-EZY(i,j,+1) );	//Hy‚ÌŒvZ Hy(i+1/2, j) -> Hy[i,j]
+						+ CHYLX(i,j)*( EZX(i+1,j,+1)-EZX(i,j,+1) + EZY(i+1,j,+1)-EZY(i,j,+1) );	//Hyã®è¨ˆç®— Hy(i+1/2, j) -> Hy[i,j]
 
 		}
 	};

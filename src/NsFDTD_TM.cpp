@@ -7,7 +7,7 @@
 #include"NsFDTD_TM.h"
 #define new ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
-//---------------ƒRƒ“ƒXƒgƒ‰ƒNƒ^, ƒfƒXƒgƒ‰ƒNƒ^ -----------------//
+//---------------ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^, ï¿½fï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^ -----------------//
 NsFDTD_TM::NsFDTD_TM()
 :FDTD_TM()
 {
@@ -21,14 +21,14 @@ NsFDTD_TM::~NsFDTD_TM(){
 
 bool NsFDTD_TM::calc() {
 	//std::lock_guard<std::mutex> lock(field_mutex);
-//	CalcE();	//“dê‚ÌŒvZ
+//	CalcE();	//ï¿½dï¿½ï¿½ÌŒvï¿½Z
 	CalcE_PML();
-	NsScatteredWave(wave_angle);	//U—”g‚Ì“üË
+	NsScatteredWave(wave_angle);	//ï¿½Uï¿½ï¿½ï¿½gï¿½Ì“ï¿½ï¿½ï¿½
 	//pointLightSource(Ez);
-//	CalcH();	//¥ê‚ÌŒvZ
+//	CalcH();	//ï¿½ï¿½ï¿½ï¿½ÌŒvï¿½Z
 	CalcH_PML();
 	
-	//absorbing();					//‹zû‹«ŠE
+	//absorbing();					//ï¿½zï¿½ï¿½ï¿½ï¿½ï¿½E
 
 	//ButtonFactory::setButton("EZ", norm(EZ(mField->getNx()/2+10, mField->getNy()/2)));
 	if (time > maxStep) {
@@ -43,14 +43,14 @@ bool NsFDTD_TM::calc() {
 	return true;
 };
 
-//----------------I—¹‚Ìd–------------------------//
+//----------------ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Ìdï¿½ï¿½------------------------//
 bool NsFDTD_TM::EndTask(){
 	cout << "End Task" << endl;
 
 	string label = "";
-	NTFFindexform("", NTFF::NTFFDATA | NTFF::TOTAL );	// label -> "" ‚É‚µ‚½‚¯‚Ç“®‚­‚©Šm”F‚µ‚Ä‚È‚¢.
+	NTFFindexform("", NTFF::NTFFDATA | NTFF::TOTAL );	// label -> "" ï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½Ä‚È‚ï¿½.
 	
-	//I—¹ğŒ‚ÌŠm”F
+	//ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌŠmï¿½F
 	if( !Terminate() )
 		return false;
 
@@ -58,11 +58,11 @@ bool NsFDTD_TM::EndTask(){
 	return true;
 }
 
-//--------------ŒvZŒW”‚Ìİ’è---------------------//
+//--------------ï¿½vï¿½Zï¿½Wï¿½ï¿½ï¿½Ìİ’ï¿½---------------------//
 void NsFDTD_TM::field(){		
-	super::field();										//—U“d—¦‚Ìİ’è
+	super::field();										//ï¿½Uï¿½dï¿½ï¿½ï¿½Ìİ’ï¿½
 	setWorkingDirPass(MakeDir("Ns"));
-	R_M = NsCoef();		//·•ª‰‰Z—p‚ÌŒvZ’è”‚Ìİ’è
+	R_M = NsCoef();		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½pï¿½ÌŒvï¿½Zï¿½è”ï¿½Ìİ’ï¿½
 	R_P = 1.0-R_M;
 
 	for(int i=0; i<mField->getNpx(); i++){
@@ -74,9 +74,9 @@ void NsFDTD_TM::field(){
 			double u_hy = sin(w_s/sqrt(EPSHY(i,j)/EPSILON_0_S)*DT_S/2)/ sin(k_s*DT_S/2);
  			
 			CEZ(i,j)   = 1;							//(1 - tanh(a*h_s)) / (1 + tanh(a*H_S));
-			CEZLH(i,j) = u_ez*sqrt(mu/EPSEZ(i,j));		//u' ã(ƒÊ/ƒÃ)
-			CHXLY(i,j) = u_hx*sqrt(EPSHX(i,j)/mu);		//u' ã(ƒÃ/ƒÊ)
-			CHYLX(i,j) = u_hy*sqrt(EPSHY(i,j)/mu);		//u' ã(ƒÃ/ƒÊ)
+			CEZLH(i,j) = u_ez*sqrt(mu/EPSEZ(i,j));		//u' ï¿½ï¿½(ï¿½ï¿½/ï¿½ï¿½)
+			CHXLY(i,j) = u_hx*sqrt(EPSHX(i,j)/mu);		//u' ï¿½ï¿½(ï¿½ï¿½/ï¿½ï¿½)
+			CHYLX(i,j) = u_hy*sqrt(EPSHY(i,j)/mu);		//u' ï¿½ï¿½(ï¿½ï¿½/ï¿½ï¿½)
 		}
 	}
 	cout << "Ns_TM_Field" << endl;
@@ -93,7 +93,7 @@ void NsFDTD_TM::PMLfield() {
 #endif
 	for (int i = 0; i < mField->getNpx(); i++) {
 		for (int j = 0; j < mField->getNpy(); j++) {
-			double sig_x = mField->sigmaX(i, j);			//ƒĞx, ƒĞx*, ƒĞy, ƒĞy* @@<- B-PML‚ÌŒW”
+			double sig_x = mField->sigmaX(i, j);			//ï¿½ï¿½x, ï¿½ï¿½x*, ï¿½ï¿½y, ï¿½ï¿½y* ï¿½@ï¿½@<- B-PMLï¿½ÌŒWï¿½ï¿½
 			double sig_xx = mu / EPSILON_0_S * sig_x;
 			double sig_y = mField->sigmaY(i, j);
 			double sig_yy = mu / EPSILON_0_S * sig_y;
@@ -138,26 +138,26 @@ void NsFDTD_TM::PMLfield() {
 }
 
 void NsFDTD_TM::absorbing(){
-	absorbing_stRL(Hy, 0, LEFT);						//¶•Ç
+	absorbing_stRL(Hy, 0, LEFT);						//ï¿½ï¿½ï¿½ï¿½
 	absorbing_nsRL(Hy, 0, LEFT);
 
-	absorbing_stRL(Hy, mField->getNpx()-2, RIGHT);		//‰E•Ç
+	absorbing_stRL(Hy, mField->getNpx()-2, RIGHT);		//ï¿½Eï¿½ï¿½
 	absorbing_nsRL(Hy, mField->getNpx()-2, RIGHT);
 
-	absorbing_stTB(Hx, 0, BOTTOM);					//‰º•Ç
+	absorbing_stTB(Hx, 0, BOTTOM);					//ï¿½ï¿½ï¿½ï¿½
 	absorbing_nsTB(Hx, 0, BOTTOM);
 
-	absorbing_stTB(Hx, mField->getNpy()-2, TOP);			//ã•Ç
+	absorbing_stTB(Hx, mField->getNpy()-2, TOP);			//ï¿½ï¿½ï¿½
 	absorbing_nsTB(Hx, mField->getNpy()-2, TOP);
 }
 
-/* Field‚ÌŒW”İ’è‚Ì•”•ª
+/* Fieldï¿½ÌŒWï¿½ï¿½ï¿½İ’ï¿½Ì•ï¿½ï¿½ï¿½
 	double u_ez = sin(w_s/sqrt(EPSEZ(i,j)/EPSILON_0_S)*DT_S/2)/ sin(k_s*DT_S/2);
 	double u_hx = sin(w_s/sqrt(EPSHX(i,j)/EPSILON_0_S)*DT_S/2)/ sin(k_s*DT_S/2);
 	double u_hy = sin(w_s/sqrt(EPSHY(i,j)/EPSILON_0_S)*DT_S/2)/ sin(k_s*DT_S/2);
 */
 /*
-//MorphoModel‚ª‚«‚¿‚ñ‚Æ,üŠú“I‚É”z’u‚³‚ê‚Ä‚¢‚é‚©‚ÌŠm”F—p, field‚ÌSetEPS‚ÌŒã‚É”z’u
+//MorphoModelï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½É”zï¿½uï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½ÌŠmï¿½Fï¿½p, fieldï¿½ï¿½SetEPSï¿½ÌŒï¿½É”zï¿½u
 	cout << "confirm" << endl;
 	int s=0;
 	double bf = 1.0;
@@ -175,18 +175,18 @@ void NsFDTD_TM::absorbing(){
 	*/
 
 /*
-	//ŒvZ—p’è”‚Ìİ’è ŠÔˆá‚¦‚Ä‚½‚Á‚Û‚¢
+	//ï¿½vï¿½Zï¿½pï¿½è”ï¿½Ìİ’ï¿½ ï¿½Ôˆá‚¦ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Û‚ï¿½
 	double kx_s = 1/sqrt(sqrt(2.0)) * k_s;
 	double ky_s = sqrt(1 - 1/sqrt(2.0) ) * k_s;
 
 */
 
 	/*
-	double sig = 0;	//“±“d—¦=0‚Ål‚¦‚é
-	double a = 0;	//ƒ¿ = ƒĞ/(2ƒÃ) ‚æ‚è, ¡‚ÍƒĞ=0‚Æ‚µ‚Ä‚¢‚é‚Ì‚Åƒ¿‚à0
+	double sig = 0;	//ï¿½ï¿½ï¿½dï¿½ï¿½=0ï¿½Ålï¿½ï¿½ï¿½ï¿½
+	double a = 0;	//ï¿½ï¿½ = ï¿½ï¿½/(2ï¿½ï¿½) ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Íƒï¿½=0ï¿½Æ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ì‚Åƒï¿½ï¿½ï¿½0
 	//double u = sqrt( (_pow(sin(sqrt(w_s*w_s - a*a)*DT_S/2 ),2)+_pow( sinh(a*DT_S/2),2) )/ (_pow(sin(k_s*DT_S/2),2)*cosh(a*DT_S))  );
 
-	// a = 0, tanh(0) = sinh(0) = 0, cosh(0) = 1@‚ğ—p‚¢‚ÄÅ“K‰»‚·‚é
+	// a = 0, tanh(0) = sinh(0) = 0, cosh(0) = 1ï¿½@ï¿½ï¿½pï¿½ï¿½ï¿½ÄÅ“Kï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	//double u = sin(w_s*DT_S/2)/ sin(k_s*DT_S/2);
 	*/
 
@@ -196,6 +196,6 @@ void NsFDTD_TM::absorbing(){
 		time = maxStep+1;
 	}
 	else{
-		//SaveData(name);		//ƒVƒ~ƒ…ƒŒ[ƒg‚µ‚½ƒf[ƒ^‚Í•Û‘¶
+		//SaveData(name);		//ï¿½Vï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½Í•Û‘ï¿½
 	}
 */

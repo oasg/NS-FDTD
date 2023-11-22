@@ -21,7 +21,7 @@ private:
     #ifdef _OPENMP
     #pragma omp for
     #endif
-		//“dŠE‚ÌŒvZEx
+		//é›»ç•Œã®è¨ˆç®—Ex
 		for(int i=1; i<mField->getNpx()-1; i++)
 			for(int j=0; j<mField->getNpy()-1; j++)
 				EX(i, j, +1) = CEX(i,j)*EX(i, j, 0) 
@@ -29,7 +29,7 @@ private:
     #ifdef _OPENMP
     #pragma omp for
     #endif
-		//“dŠE‚ÌŒvZEy
+		//é›»ç•Œã®è¨ˆç®—Ey
 		for(int i=0; i<mField->getNpx()-1; i++)
 			for(int j=1; j<mField->getNpy()-1; j++)
 				EY(i, j, +1) = CEY(i,j)*EY(i, j, 0)
@@ -37,7 +37,7 @@ private:
 }
 	}
 
-	//ÅŠO•Ç‚ÍŠ®‘S“±‘Ì‚Å‚Í‚ ‚é‚ªŠ®‘S¥‹C“±‘Ì‚Å‚Í‚ ‚é‚½‚ß, H‚ÍÅŠO•Ç‚ÌŒvZ‚à•K—v? todo
+	//æœ€å¤–å£ã¯å®Œå…¨å°ä½“ã§ã¯ã‚ã‚‹ãŒå®Œå…¨ç£æ°—å°ä½“ã§ã¯ã‚ã‚‹ãŸã‚, Hã¯æœ€å¤–å£ã®è¨ˆç®—ã‚‚å¿…è¦? todo
 	void CalcH(){
 #ifdef _OPENMP
 #pragma omp parallel

@@ -21,9 +21,9 @@ N_CELL( (width/h_u + 2*pml) * (height/h_u + 2*pml))
 };
 
 
-//B-PML‚É‚¨‚¯‚é“±“d—¦ƒĞ
+//B-PMLã«ãŠã‘ã‚‹å°é›»ç‡Ïƒ
 double Field::sigmaX(const int &i, const int &j){
-	//ƒ¢x = h = 1
+	//Î”x = h = 1
 	if(i<N_PML) 
 		return 1.0*(N_PML - i)/N_PML;
 
@@ -32,13 +32,13 @@ double Field::sigmaX(const int &i, const int &j){
 
 	else
 		return 1.0*(i - (N_PX - N_PML - 1))/N_PML;
-	//‚±‚ê‚¾‚Æˆês‚Å‘‚¯‚é‚¯‚Ç, ‰Â“Ç«‚ª‚æ‚­‚È‚¢
+	//ã“ã‚Œã ã¨ä¸€è¡Œã§æ›¸ã‘ã‚‹ã‘ã©, å¯èª­æ€§ãŒã‚ˆããªã„
 	//	int k = i%(N_X+N_PML);
 	//return (N_PML*H_S - k)/(N_PML*H_S);
 }
 
 double Field::sigmaY(const int &i, const int &j){
-	//ƒ¢y = h = 1
+	//Î”y = h = 1
 	if(j<N_PML) 
 		return 1.0*(N_PML - j)/N_PML;
 

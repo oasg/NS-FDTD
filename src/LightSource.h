@@ -7,10 +7,10 @@
 
 class LightSource{
 	const int angle;
-	const double lambda_s;	//”g’·
-	const double k_s;			//”g”
-	const double w_s;			//Špü”g”
-	const double T_s;			//üŠú
+	const double lambda_s;	//æ³¢é•·
+	const double k_s;			//æ³¢æ•°
+	const double w_s;			//è§’å‘¨æ³¢æ•°
+	const double T_s;			//å‘¨æœŸ
 public:
 	LightSource(int ang, double lambda);
 	int getAngle();
@@ -30,18 +30,18 @@ inline double LightSource::getAngleRad(){
 }
 
 /*
-//“_ŒõŒ¹‚Ì“üË
+//ç‚¹å…‰æºã®å…¥å°„
 void LightSource::pointSource(complex<double> *p){
 	double ray_coef = exp(-0.0001*(time-500)*(time-500));
 	p[index(mField->getNx()/2, mField->getNy()/2)] = ray_coef*polar(1.0, w_s*time);
 }
 
-//üŒõŒ¹‚Ì“üË
+//ç·šå…‰æºã®å…¥å°„
 void LightSource::linearLightSource(complex<double> *p){
 
 	double ray_coef = exp(-0.0001*(time-500)*(time-500));
 	for(int i=1; i<mField->getNy()-1; i++)
-		p[index(5,i, +1)]  +=ray_coef*polar(1.0, w_s*time);	//todo ‹«ŠEã‚É‚à“ü‚ê‚Ä‚¢‚¢‚Ì‚©?
+		p[index(5,i, +1)]  +=ray_coef*polar(1.0, w_s*time);	//todo å¢ƒç•Œä¸Šã«ã‚‚å…¥ã‚Œã¦ã„ã„ã®ã‹?
 }
 
 */

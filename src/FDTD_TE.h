@@ -7,10 +7,10 @@ class FDTD_TE: public Solver{
 	typedef Solver super;
 protected:
 	complex<double> *Ex, *Ey, *Hz, *Hzx, *Hzy;
-	double *C_EX, *C_EY, *C_EXLY, *C_EYLX, *C_HZLH;		//LX -> x���� LY -> y����
+	double *C_EX, *C_EY, *C_EXLY, *C_EYLX, *C_HZLH;		//LX -> xďż˝ďż˝ďż˝ďż˝ LY -> yďż˝ďż˝ďż˝ďż˝
 	double *C_HZX, *C_HZY, *C_HZXLX, *C_HZYLY;
 	double *EPS_EX, *EPS_EY, *EPS_HZ;
-	double *B_EXp, *B_EXm, *B_EYp, *B_EYm; //pml�t��NsFDTD�p
+	double *B_EXp, *B_EXm, *B_EYp, *B_EYm; //pmlďż˝tďż˝ďż˝NsFDTDďż˝p
 	double *B_HZXp, *B_HZXm, *B_HZYp, *B_HZYm;
 
 public:
@@ -22,13 +22,13 @@ public:
 	virtual void field();
 	void Initialize();
 
-	void NsScatteredWave(int angle);	//�U���g
+	void NsScatteredWave(int angle);	//ďż˝Uďż˝ďż˝ďż˝g
 	void IncidentWave(int angle);
 	void IncidentWaveH(int angle);
 
 	virtual void NTFFindexform(string label, NTFF::output flag = NTFF::REFLEC);
 
-	//�Q�b�^�[
+	//ďż˝Qďż˝bďż˝^ďż˝[
 	complex<double>& EX(const int &i, const int &j, const int &t){
 		return Ex[pmlIndex(i,j, t)];
 	};

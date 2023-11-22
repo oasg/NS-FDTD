@@ -10,8 +10,8 @@ using namespace std;
 
 Simulator::~Simulator() {
 	cout << "Simulator Destructor" << endl;
-	ButtonFactory::deleteAllButton();	//ボタンの削除, ウィンドウを閉じて終了した際に,すでに解放されたボタンを解放する恐れがある.(この順番だと大丈夫かも)
-	delete solv;						//solverの削除
+	ButtonFactory::deleteAllButton();	//繝懊ち繝ｳ縺ｮ蜑企勁, 繧ｦ繧｣繝ｳ繝峨え繧帝哩縺倥※邨ゆｺ�縺励◆髫帙↓,縺吶〒縺ｫ隗｣謾ｾ縺輔ｌ縺溘�懊ち繝ｳ繧定ｧ｣謾ｾ縺吶ｋ諱舌ｌ縺後≠繧�.(縺薙�ｮ鬆�逡ｪ縺�縺ｨ螟ｧ荳亥､ｫ縺九ｂ)
+	delete solv;						//solver縺ｮ蜑企勁
 };
 Simulator::Simulator(TYPE::sim_type type) {
     switch (type) {
@@ -48,8 +48,8 @@ void Simulator::draw(std::shared_ptr<GUI::ImageBuffer> img)
 {
 	//	return;
 	//if (((int)solv->getTime()) % 20 != 0) return;
-	solv->draw(img);					//シミュレーション状況描画
-	ButtonFactory::draw(img);		//ボタンを描画
+	solv->draw(img);			
+	ButtonFactory::draw(img);	
 }
 
 

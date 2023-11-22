@@ -22,12 +22,14 @@ namespace GUI{
             }
             ImGui::EndCombo();
         }
-
+        ImGui::Text("monitoring interval:");
+        ImGui::SliderFloat("#Slider", &_duration, 0.0f, 1.0f);
         if (ImGui::Button("Start")){
             _simControl = std::make_shared<SimControl>((TYPE::sim_type)currentItem);
             _simControl->doSim();
             _visualize = true;
         }
+        ImGui::Text("Field parameters: ");
         if(_visualize){
             _simControl ->doWatch(_duration);
         }

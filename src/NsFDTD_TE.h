@@ -30,7 +30,7 @@ private:
 #ifdef _OPENMP
 #pragma omp for
 #endif
-			//“dŠE‚ÌŒvZEx
+			//é›»ç•Œã®è¨ˆç®—Ex
 			for (int i = Npml; i < mField->getNpx() - Npml; i++) {
 				for (int j = Npml; j < mField->getNpy() - Npml; j++) {
 					EX(i, j, +1) = CEX(i, j)*EX(i, j, 0)
@@ -41,7 +41,7 @@ private:
 #ifdef _OPENMP
 #pragma omp for
 #endif
-			//“dŠE‚ÌŒvZEy
+			//é›»ç•Œã®è¨ˆç®—Ey
 			for (int i = Npml; i < mField->getNpx() - Npml; i++) {
 				for (int j = Npml; j < mField->getNpy() - Npml; j++) {
 					EY(i, j, +1) = CEY(i, j)*EY(i, j, 0)
@@ -52,7 +52,7 @@ private:
 		}
 	}
 
-	//¥ŠE‚ÌŒvZ Hz(i+1/2, j+1/2) -> Hz[i,j]
+	//ç£ç•Œã®è¨ˆç®— Hz(i+1/2, j+1/2) -> Hz[i,j]
 	void CalcH(){
 		int Npml = mField->getNpml();
 #ifdef _OPENMP
@@ -77,7 +77,7 @@ private:
 #ifdef _OPENMP
 #pragma omp for
 #endif
-			//“dŠE‚ÌŒvZEx
+			//é›»ç•Œã®è¨ˆç®—Ex
 			for (int i = 1; i < mField->getNpx() - 1; i++) {
 				for (int j = 0; j < mField->getNpy() - 1; j++) {
 					if (i < Npml || i > mField->getNpx() - Npml - 1 || j < Npml || j > mField->getNpy() - Npml - 1)
@@ -89,7 +89,7 @@ private:
 #ifdef _OPENMP
 #pragma omp for
 #endif
-			//“dŠE‚ÌŒvZEy
+			//é›»ç•Œã®è¨ˆç®—Ey
 			for (int i = 0; i < mField->getNpx() - 1; i++) {
 				for (int j = 1; j < mField->getNpy() - 1; j++) {
 					if (i < Npml || i > mField->getNpx() - Npml - 1 || j < Npml || j > mField->getNpy() - Npml - 1)
@@ -101,7 +101,7 @@ private:
 		}
 	}
 
-	//¥ŠE‚ÌŒvZ Hz(i+1/2, j+1/2) -> Hz[i,j]
+	//ç£ç•Œã®è¨ˆç®— Hz(i+1/2, j+1/2) -> Hz[i,j]
 	void CalcH_PML() {
 		int Npml = mField->getNpml();
 #ifdef _OPENMP
@@ -151,7 +151,7 @@ private:
 #endif //_NS_FDTD_TE	
 
 			/*
-	//todo i+1 - i ‚Å‚Í‚È‚­ i - (i-1) j‚à“¯—l H‚Ì•û‚ª+0.5i‚ñ‚Å‚¢‚é‚©‚ç
+	//todo i+1 - i ã§ã¯ãªã i - (i-1) jã‚‚åŒæ§˜ Hã®æ–¹ãŒ+0.5é€²ã‚“ã§ã„ã‚‹ã‹ã‚‰
 #ifdef _OPENMP
 #pragma omp parallel
 #endif
@@ -159,7 +159,7 @@ private:
     #ifdef _OPENMP
     #pragma omp for
     #endif
-	//“dŠE‚ÌŒvZEx
+	//é›»ç•Œã®è¨ˆç®—Ex
 	for(int i=2; i<mField->getNx()-1; i++)
 		for(int j=2; j<mField->getNy(); j++)
 			EX(i,j, +1) = CEX(i,j)*EX(i,j, 0)
@@ -169,7 +169,7 @@ private:
     #ifdef _OPENMP
     #pragma omp for
     #endif
-	//“dŠE‚ÌŒvZEy
+	//é›»ç•Œã®è¨ˆç®—Ey
 	for(int i=2; i<mField->getNx(); i++)
 		for(int j=2; j<mField->getNy()-1; j++)
 			EY(i,j, +1) = CEY(i,j)*EY(i,j, 0) 
@@ -179,8 +179,8 @@ private:
 }
 	}
 
-	//¥ŠE‚ÌŒvZ Hz(i+1/2, j+1/2) -> Hz[i,j]
-	//todo i - (i-1)‚Å‚Í‚È‚­ i+1 - i ? j‚à“¯—l H‚Ì•û‚ª+0.5i‚ñ‚Å‚¢‚é‚©‚ç
+	//ç£ç•Œã®è¨ˆç®— Hz(i+1/2, j+1/2) -> Hz[i,j]
+	//todo i - (i-1)ã§ã¯ãªã i+1 - i ? jã‚‚åŒæ§˜ Hã®æ–¹ãŒ+0.5é€²ã‚“ã§ã„ã‚‹ã‹ã‚‰
 	void CalcH(){
 #ifdef _OPENMP
 #pragma omp parallel for

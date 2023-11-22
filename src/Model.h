@@ -53,13 +53,13 @@ class FazzyMieModel :public FazzyModel{
 	double r;
 public:
 	FazzyMieModel(Field* f);
-	string mkdir(string root);	//ƒfƒBƒŒƒNƒgƒŠì¬
+	string mkdir(string root);	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä½œæˆ
 	virtual void InitializeLambda(double a) {
 		this->r = mField->nanoToCell(a);
 		cout << "r=" + to_s((int)mField->cellToNano(r)) << endl;
 	}
 
-	//—U“d—¦ŒvŽZ
+	//èª˜é›»çŽ‡è¨ˆç®—
 	double calcEPS(const double& x, const double& y, enum INTEG f);
 	double calcSIG(const double&, const double&, const double lam, enum INTEG = D_XY) {
 		return 0;
@@ -99,12 +99,12 @@ class FazzyHair_incidenceLayerModel :public FazzyModel {
 	const int alpha;
 	double alphaR, r, rn, cwidth, cn, cmc, mn, length, ln, lx, ly;
 	/*
-	alpha:ŒX‚«		alphaR:ŒX‚«(ƒ‰ƒWƒAƒ“)
-	r:–Ñ”çŽ¿”ÍˆÍ‚Ì”¼Œa(ƒÊm)							rn:–Ñ”çŽ¿”ÍˆÍ‚Ì”¼Œa(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	cwidth:ƒLƒ…[ƒeƒBƒNƒ‹Œú‚³(ƒÊm)					cn:ƒLƒ…[ƒeƒBƒNƒ‹Œú‚³(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	cmc:CMC•(ƒÊm)									mn:CMC•(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	length:ƒLƒ…[ƒeƒBƒNƒ‹’·‚³(ƒÊm)					ln:ƒLƒ…[ƒeƒBƒNƒ‹’·‚³(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	ly:ƒLƒ…[ƒeƒBƒNƒ‹”ÍˆÍ(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)		lx:x•ûŒü’·‚³(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
+	alpha:å‚¾ã		alphaR:å‚¾ã(ãƒ©ã‚¸ã‚¢ãƒ³)
+	r:æ¯›çš®è³ªç¯„å›²ã®åŠå¾„(Î¼m)							rn:æ¯›çš®è³ªç¯„å›²ã®åŠå¾„(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	cwidth:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«åŽšã•(Î¼m)					cn:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«åŽšã•(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	cmc:CMCå¹…(Î¼m)									mn:CMCå¹…(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	length:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é•·ã•(Î¼m)					ln:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é•·ã•(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	ly:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç¯„å›²(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)		lx:xæ–¹å‘é•·ã•(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
 	*/
 public:
 	FazzyHair_incidenceLayerModel(Field*);
@@ -125,12 +125,12 @@ class FazzyHair_incidenceLayerModel_try :public FazzyModel {
 	const int alpha;
 	double alphaR, r, rn, cwidth, cn, cmc, mn, length, ln, lx, ly;
 	/*
-	alpha:ŒX‚«		alphaR:ŒX‚«(ƒ‰ƒWƒAƒ“)
-	r:–Ñ”çŽ¿”ÍˆÍ‚Ì”¼Œa(ƒÊm)							rn:–Ñ”çŽ¿”ÍˆÍ‚Ì”¼Œa(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	cwidth:ƒLƒ…[ƒeƒBƒNƒ‹Œú‚³(ƒÊm)					cn:ƒLƒ…[ƒeƒBƒNƒ‹Œú‚³(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	cmc:CMC•(ƒÊm)									mn:CMC•(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	length:ƒLƒ…[ƒeƒBƒNƒ‹’·‚³(ƒÊm)					ln:ƒLƒ…[ƒeƒBƒNƒ‹’·‚³(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	ly:ƒLƒ…[ƒeƒBƒNƒ‹”ÍˆÍ(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)		lx:x•ûŒü’·‚³(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
+	alpha:å‚¾ã		alphaR:å‚¾ã(ãƒ©ã‚¸ã‚¢ãƒ³)
+	r:æ¯›çš®è³ªç¯„å›²ã®åŠå¾„(Î¼m)							rn:æ¯›çš®è³ªç¯„å›²ã®åŠå¾„(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	cwidth:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«åŽšã•(Î¼m)					cn:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«åŽšã•(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	cmc:CMCå¹…(Î¼m)									mn:CMCå¹…(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	length:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é•·ã•(Î¼m)					ln:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é•·ã•(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	ly:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç¯„å›²(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)		lx:xæ–¹å‘é•·ã•(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
 	*/
 public:
 	FazzyHair_incidenceLayerModel_try(Field*);

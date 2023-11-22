@@ -3,10 +3,10 @@
 
 #include <math.h>
 /*-----------------------------*/
-/*•¨—’è”‚ÌƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l */
+/*ç‰©ç†å®šæ•°ã®ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤ */
 /*-----------------------------*/
-const double LIGHT_SPEED_S  = 0.7;	//Œõ‘¬
-const double EPSILON_0_S    = 1.0;	//^‹ó‚Ì—U“d—¦
-const double MU_0_S	        = 1.0/0.7/0.7;	//^‹ó‚Ì“§Ž¥—¦@//Debugƒ‚[ƒh‚¾‚Æ,0.7‚ðLight_SPEED_S‚Æ‘‚­‚Æ,0‚Å‰Šú‰»‚³‚ê‚Ä‚µ‚Ü‚¤.(Release@‚È‚çok)
-const double Z_0_S	        = sqrt(1.0/0.7/0.7/1.0);	//”g“®ƒCƒ“ƒs[ƒ_ƒ“ƒX z = ã(ƒÊ/ƒÃ)
+const double LIGHT_SPEED_S  = 0.7;	//å…‰é€Ÿ
+const double EPSILON_0_S    = 1.0;	//çœŸç©ºã®èª˜é›»çŽ‡
+const double MU_0_S	        = 1.0/0.7/0.7;	//çœŸç©ºã®é€ç£çŽ‡ã€€//Debugãƒ¢ãƒ¼ãƒ‰ã ã¨,0.7ã‚’Light_SPEED_Sã¨æ›¸ãã¨,0ã§åˆæœŸåŒ–ã•ã‚Œã¦ã—ã¾ã†.(Releaseã€€ãªã‚‰ok)
+const double Z_0_S	        = sqrt(1.0/0.7/0.7/1.0);	//æ³¢å‹•ã‚¤ãƒ³ãƒ”ãƒ¼ãƒ€ãƒ³ã‚¹ z = âˆš(Î¼/Îµ)
 #endif

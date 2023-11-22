@@ -25,13 +25,13 @@ const int REGION_Y = 512;
 const int WINDOW_W = REGION_X + 200;
 const int WINDOW_H = REGION_Y;
 
-//���C���E�B���h�E�̑傫���ƈʒu
+//�ｿｽ�ｿｽ�ｿｽC�ｿｽ�ｿｽ�ｿｽE�ｿｽB�ｿｽ�ｿｽ�ｿｽh�ｿｽE�ｿｽﾌ大き�ｿｽ�ｿｽ�ｿｽﾆ位置
 const int MAIN_WINDOW_W = 200;
 const int MAIN_WINDOW_H = WINDOW_H;
 const int MAIN_WINDOW_X = WINDOW_W - MAIN_WINDOW_W;
 const int MAIN_WINDOW_Y = 0;
 
-const bool CHECK   = true;		//�{�^���ɕ\���������e���t�@�C���ɂƂ��Ă������ǂ���
+const bool CHECK   = true;		//�ｿｽ{�ｿｽ^�ｿｽ�ｿｽ�ｿｽﾉ表�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽe�ｿｽ�ｿｽ�ｿｽt�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉとゑｿｽ�ｿｽﾄゑｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾇゑｿｽ�ｿｽ�ｿｽ
 const bool UNCHECK = false;
 
 
@@ -63,7 +63,7 @@ template<class T> T _min(T a, T b){
 }
 
 template<class T> double _pow(T a, int b){
-	if(b==0) return 1.0;				//0���1
+	if(b==0) return 1.0;				//0�ｿｽ�ｿｽ�ｿｽ1
 	if(b<0)  return 1.0/_pow(a, -b);	//a^(-b) = 1/a^b 
 	T c =  _pow(a, b/2);
 	if(b%2 == 0)		

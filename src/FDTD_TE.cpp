@@ -9,16 +9,16 @@ FDTD_TE::FDTD_TE()
 :Solver()
 {
 	cout << "FDTD_TE Constructor" << endl;
-	Hz  = new complex<double>[3*mField->getNcel()];		//Hz(i+0.5, j+0.5) �� Hz(i,j)���Ӗ����� �̈�m��
-	Ex  = new complex<double>[3*mField->getNcel()];		//Ex(i+0.5,j) �� Ex(i,j)���Ӗ�����
-	Ey  = new complex<double>[3*mField->getNcel()];		//Ey(i,j+0.5) �� Ey(i,j)���Ӗ�����
-	Hzx	= new complex<double>[3*mField->getNcel()];		//Ey(i,j+0.5) �� Ey(i,j)���Ӗ�����
-	Hzy	= new complex<double>[3*mField->getNcel()];		//Ey(i,j+0.5) �� Ey(i,j)���Ӗ�����
+	Hz  = new complex<double>[3*mField->getNcel()];		//Hz(i+0.5, j+0.5) �ｿｽ�ｿｽ Hz(i,j)�ｿｽ�ｿｽ�ｿｽﾓ厄ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ �ｿｽﾌ茨ｿｽm�ｿｽ�ｿｽ
+	Ex  = new complex<double>[3*mField->getNcel()];		//Ex(i+0.5,j) �ｿｽ�ｿｽ Ex(i,j)�ｿｽ�ｿｽ�ｿｽﾓ厄ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ
+	Ey  = new complex<double>[3*mField->getNcel()];		//Ey(i,j+0.5) �ｿｽ�ｿｽ Ey(i,j)�ｿｽ�ｿｽ�ｿｽﾓ厄ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ
+	Hzx	= new complex<double>[3*mField->getNcel()];		//Ey(i,j+0.5) �ｿｽ�ｿｽ Ey(i,j)�ｿｽ�ｿｽ�ｿｽﾓ厄ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ
+	Hzy	= new complex<double>[3*mField->getNcel()];		//Ey(i,j+0.5) �ｿｽ�ｿｽ Ey(i,j)�ｿｽ�ｿｽ�ｿｽﾓ厄ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ
 
-//�v�Z�p�萔�z��
-	C_HZLH  = new double[mField->getNcel()];	//CHzlh(i+0.5, j+0.5) �� CHZLH(i,j)
-	C_EX    = new double[mField->getNcel()];	//CEx(i+0.5, j) �� CEX(i,j)
-	C_EY    = new double[mField->getNcel()];	//CEy(i, j+0.5) �� CEY(i,j)
+//計算用定数配列
+	C_HZLH  = new double[mField->getNcel()];	//CHzlh(i+0.5, j+0.5) �ｿｽ�ｿｽ CHZLH(i,j)
+	C_EX    = new double[mField->getNcel()];	//CEx(i+0.5, j) �ｿｽ�ｿｽ CEX(i,j)
+	C_EY    = new double[mField->getNcel()];	//CEy(i, j+0.5) �ｿｽ�ｿｽ CEY(i,j)
 	C_EXLY  = new double[mField->getNcel()];
 	C_EYLX  = new double[mField->getNcel()];
 	C_HZX   = new double[mField->getNcel()];
@@ -39,11 +39,11 @@ FDTD_TE::FDTD_TE()
 	B_HZYp = new double[mField->getNcel()];
 	B_HZYm = new double[mField->getNcel()];
 
-	//������
+	//�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ
 	for(int i=0; i<3*mField->getNcel(); i++)
 		Ex[i] = Ey[i] = Hz[i] = Hzx[i] = Hzy[i] = 0;
 
-	//todo �萔�͏��������Ȃ��Ă���?
+	//todo �ｿｽ關費ｿｽﾍ擾ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾈゑｿｽ�ｿｽﾄゑｿｽ�ｿｽ�ｿｽ?
 	// C_HZX[i] = C_HZY[i] = C_HZXLX[i] = C_HZYLY[i] = C_HZLH[i] = C_EX[i] = C_EY[i] = C_EXLY[i] = C_EYLX[i] = 0;
 }
 
@@ -87,7 +87,7 @@ void FDTD_TE::draw(std::shared_ptr<GUI::ImageBuffer> img){
 }
 
 void FDTD_TE::OpenData(string prefix){
-	string str = prefix+ "data/" + getWaveData();	//�f�[�^�I�[�v��
+	string str = prefix+ "data/" + getWaveData();	//�ｿｽf�ｿｽ[�ｿｽ^�ｿｽI�ｿｽ[�ｿｽv�ｿｽ�ｿｽ
 	cout << str << endl;
 
 	open_data(Hz, str +"Hz");
@@ -105,13 +105,13 @@ void FDTD_TE::SaveData(string prefix){
 
 void FDTD_TE::Initialize(){
 	super::Initialize();
-	//�̈揉����
+	//�ｿｽﾌ域初�ｿｽ�ｿｽ�ｿｽ�ｿｽ
 	for(int i=0; i<3*mField->getNcel(); i++)
 			Ex[i] = Ey[i] = Hz[i] = Hzx[i] = Hzy[i] = 0;
 }
 
 void FDTD_TE::field(){
-	setWorkingDirPass(mModel->mkdir(getDataDirPass()));	//�f�[�^��ۑ�����f�B���N�g���̐ݒ�
+	setWorkingDirPass(mModel->mkdir(getDataDirPass()));	//�ｿｽf�ｿｽ[�ｿｽ^�ｿｽ�ｿｽﾛ托ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽf�ｿｽB�ｿｽ�ｿｽ�ｿｽN�ｿｽg�ｿｽ�ｿｽ�ｿｽﾌ設抵ｿｽ
 	setWorkingDirPass(MakeDir("TE"));
 #ifdef _OPENMP
 #pragma omp parallel for
@@ -121,19 +121,19 @@ void FDTD_TE::field(){
 			EPSEX(i,j) = mModel->calcEPS(i+0.5,j    , D_Y);
 			EPSEY(i,j) = mModel->calcEPS(i    ,j+0.5, D_X);
 			EPSHZ(i,j) = 0.5*(mModel->calcEPS(i+0.5,j+0.5, D_X) + mModel->calcEPS(i+0.5,j+0.5, D_Y));
-			N_S(i,j)   = sqrt(mModel->calcEPS(i+0.5,j+0.5) / EPSILON_0_S );		//���ܗ� n = ��(��/ ��0) (�����ł� �� = ��0�Ƃ��Ă���̂�)
+			N_S(i,j)   = sqrt(mModel->calcEPS(i+0.5,j+0.5) / EPSILON_0_S );		//�ｿｽ�ｿｽ�ｿｽﾜ暦ｿｽ n = �ｿｽ�ｿｽ(�ｿｽ�ｿｽ/ �ｿｽ�ｿｽ0) (�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾅゑｿｽ �ｿｽ�ｿｽ = �ｿｽ�ｿｽ0�ｿｽﾆゑｿｽ�ｿｽﾄゑｿｽ�ｿｽ�ｿｽﾌゑｿｽ)
 
 			if (mField->sig == true)
-				SIG(i, j) = mModel->calcSIG(i, j, lambda_s);	// Hair/incidence���f���̂�(�����j���F�f�l���L)
+				SIG(i, j) = mModel->calcSIG(i, j, lambda_s);	// Hair/incidence�ｿｽ�ｿｽ�ｿｽf�ｿｽ�ｿｽ�ｿｽﾌゑｿｽ(�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽj�ｿｽ�ｿｽ�ｿｽF�ｿｽf�ｿｽl�ｿｽ�ｿｽ�ｿｽL)
 		}
 	}
 }
 
-//�U���g
+//�ｿｽU�ｿｽ�ｿｽ�ｿｽg
 void FDTD_TE::NsScatteredWave(int ang){
-	double rad = ang*M_PI/180;	//���W�A���ϊ�
-	double _cos = cos(rad), _sin = sin(rad);	//����v�Z����Ǝ��Ԃ����肻��������,������Ă���
-	//double a = (1-exp(-_pow(0.01*time,2)));		//�s�A���ɓ��˂����̂�h���ׂ̌W��
+	double rad = ang*M_PI/180;	//�ｿｽ�ｿｽ�ｿｽW�ｿｽA�ｿｽ�ｿｽ�ｿｽﾏ奇ｿｽ
+	double _cos = cos(rad), _sin = sin(rad);	//�ｿｽ�ｿｽ�ｿｽ�ｿｽv�ｿｽZ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾆ趣ｿｽ�ｿｽﾔゑｿｽ�ｿｽ�ｿｽ�ｿｽ閧ｻ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ,�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾄゑｿｽ�ｿｽ�ｿｽ
+	//double a = (1-exp(-_pow(0.01*time,2)));		//�ｿｽs�ｿｽA�ｿｽ�ｿｽ�ｿｽﾉ難ｿｽ�ｿｽﾋゑｿｽ�ｿｽ�ｿｽ�ｿｽﾌゑｿｽh�ｿｽ�ｿｽ�ｿｽﾗの係�ｿｽ�ｿｽ
 	double a = ray_coef;
 	double n, u0, u1, _n;
 #ifdef _OPENMP
@@ -144,13 +144,13 @@ void FDTD_TE::NsScatteredWave(int ang){
 			if(EPSEY(i,j) == EPSILON_0_S && EPSEX(i,j) == EPSILON_0_S) continue;
 			double ikx = k_s*(i*_cos + j*_sin);
 
-			n  = sqrt(EPSEY(i,j)/EPSILON_0_S);				//todo �� = 0���O��̘b
+			n  = sqrt(EPSEY(i,j)/EPSILON_0_S);				//todo �ｿｽ�ｿｽ = 0�ｿｽ�ｿｽ�ｿｽO�ｿｽ�ｿｽﾌ話
 			u0 = sin(w_s/n*H_S/2.0)  / sin(k_s*H_S/2.0);
 			u1 = sin(w_s/n*DT_S/2.0) / sin(k_s*n*H_S/2.0);
 			_n = u0/u1;
 			EY(i,j, +1) += a*_cos*(1.0/(_n*n) - 1.0)*(polar(1.0, ikx - w_s*(time+DT_S)) - polar(1.0, ikx - w_s*time));
 
-			n  = sqrt(EPSEX(i,j)/EPSILON_0_S);				//todo �� = 0���O��̘b
+			n  = sqrt(EPSEX(i,j)/EPSILON_0_S);				//todo �ｿｽ�ｿｽ = 0�ｿｽ�ｿｽ�ｿｽO�ｿｽ�ｿｽﾌ話
 			u0 = sin(w_s/n*H_S/2.0)  / sin(k_s*H_S/2.0);
 			u1 = sin(w_s/n*DT_S/2.0) / sin(k_s*n*H_S/2.0);
 			_n = u0/u1;
@@ -160,10 +160,10 @@ void FDTD_TE::NsScatteredWave(int ang){
 	}
 }
 
-//���˔g
+//�ｿｽ�ｿｽ�ｿｽﾋ波
 void FDTD_TE::IncidentWave(int ang){
-	double rad = ang*M_PI/180;	//���W�A���ϊ�
-	double _cos = cos(rad), _sin = sin(rad);	//����v�Z����Ǝ��Ԃ����肻��������,������Ă���
+	double rad = ang*M_PI/180;	//�ｿｽ�ｿｽ�ｿｽW�ｿｽA�ｿｽ�ｿｽ�ｿｽﾏ奇ｿｽ
+	double _cos = cos(rad), _sin = sin(rad);	//�ｿｽ�ｿｽ�ｿｽ�ｿｽv�ｿｽZ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾆ趣ｿｽ�ｿｽﾔゑｿｽ�ｿｽ�ｿｽ�ｿｽ閧ｻ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ,�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾄゑｿｽ�ｿｽ�ｿｽ
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif
@@ -177,8 +177,8 @@ void FDTD_TE::IncidentWave(int ang){
 }
 
 void FDTD_TE::IncidentWaveH(int ang){
-	double rad = ang*M_PI/180;	//���W�A���ϊ�
-	double _cos = cos(rad), _sin = sin(rad);	//����v�Z����Ǝ��Ԃ����肻��������,������Ă���
+	double rad = ang*M_PI/180;	//�ｿｽ�ｿｽ�ｿｽW�ｿｽA�ｿｽ�ｿｽ�ｿｽﾏ奇ｿｽ
+	double _cos = cos(rad), _sin = sin(rad);	//�ｿｽ�ｿｽ�ｿｽ�ｿｽv�ｿｽZ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾆ趣ｿｽ�ｿｽﾔゑｿｽ�ｿｽ�ｿｽ�ｿｽ閧ｻ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ,�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾄゑｿｽ�ｿｽ�ｿｽ
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif
@@ -202,18 +202,18 @@ void FDTD_TE::NTFFindexform(string label, NTFF::output flag){
     complex<double> Coef = sqrt( iu*k_s/(8*M_PI*r0) ) * exp( iu*k_s*r0 );	// common coefficient
 
     int offset = 5;		    // closed line offset
-	int lt,rt, tp, bm;		//�Ȗʂ̏ꏊ
-	tp = mField->getNy() - mField->getNpml() - offset;			//�ォ��-5
-	bm = mField->getNpml() + offset;			//������5
-	rt = mField->getNx() - mField->getNpml() - offset;		//�E����-5
-	lt = mField->getNpml() + offset;			//������5
+	int lt,rt, tp, bm;		//�ｿｽﾂ曲面の場所
+	tp = mField->getNy() - mField->getNpml() - offset;			//�ｿｽ繧ｩ�ｿｽ�ｿｽ-5
+	bm = mField->getNpml() + offset;			//�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ5
+	rt = mField->getNx() - mField->getNpml() - offset;		//�ｿｽE�ｿｽ�ｿｽ�ｿｽ�ｿｽ-5
+	lt = mField->getNpml() + offset;			//�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ5
 
 	double sum = 0;
-	const int max_angle = 360;	//�ǂ̊p�x�܂ŕ��z�����߂邩, 180��360
+	const int max_angle = 360;	//�ｿｽﾇの角�ｿｽx�ｿｽﾜで包ｿｽ�ｿｽz�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾟるか, 180�ｿｽ�ｿｽ360
 	double strength[max_angle];
     for ( int phi=0; phi<max_angle; phi++ ) {
         double rad = (phi-90) * M_PI/180.0;
-//		rad = M_PI - rad;							//todo �Ȃ���TE��180�����炷
+//		rad = M_PI - rad;							//todo �ｿｽﾈゑｿｽ�ｿｽ�ｿｽTE�ｿｽ�ｿｽ180�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ轤ｷ
         Vec2<double> r( cos(rad), sin(rad) );	        // eye vector
           
         complex<double> Nx( 0, 0 );
@@ -224,7 +224,7 @@ void FDTD_TE::NTFFindexform(string label, NTFF::output flag){
 
         // (left,bottom) -> (right,bottom)
         for ( int i=lt; i<rt; i++ ) {
-            r2    = Vec2<double>( i-cx + 0.5, bm-cy);	//���S����Z���܂ł̋���
+            r2    = Vec2<double>( i-cx + 0.5, bm-cy);	//�ｿｽ�ｿｽ�ｿｽS�ｿｽ�ｿｽ�ｿｽ�ｿｽZ�ｿｽ�ｿｽ�ｿｽﾜでの具ｿｽ�ｿｽ�ｿｽ
             C_HZ  = 0.5*( HZ(i,bm, +1) + HZ(i,bm-1, +1) );
             C_EX  = EX(i,bm, +1);
             Nx   -= C_HZ * exp( iu * k_s * In_prod(r,r2) );
@@ -265,20 +265,20 @@ void FDTD_TE::NTFFindexform(string label, NTFF::output flag){
 		sum += norm(Ephi);
     }
 
-	//NTFF�̌��ʂ��o��
+	//NTFF�ｿｽﾌ鯉ｿｽ�ｿｽﾊゑｿｽ�ｿｽo�ｿｽ�ｿｽ
 	if( (flag & NTFF::NTFFDATA) == NTFF::NTFFDATA ){
 		ofstream fp = WriteOpen(MakeDir("NTFF") + label + getWaveData());
 		for(int i=0; i<max_angle; i++)
 			fp << strength[i] << endl;
 	}
 
-	//NTFF�̌��ʂ̑��a���o��
+	//NTFF�ｿｽﾌ鯉ｿｽ�ｿｽﾊの托ｿｽ�ｿｽa�ｿｽ�ｿｽ�ｿｽo�ｿｽ�ｿｽ
 	if( (flag & NTFF::TOTAL) == NTFF::TOTAL){
-		ofstream fp= WriteOpen(MakeDir("NTFF") + label + "WaveAngleStrength", DATAFILE::ADD); //false�͒ǋL���[�h
-		fp << "(" <<(int)Inv_Nano_S(lambda_s) << "," << wave_angle << ")  " << sum << endl;		//�g�����Ƃ̑��a���o��
+		ofstream fp= WriteOpen(MakeDir("NTFF") + label + "WaveAngleStrength", DATAFILE::ADD); //false�ｿｽﾍ追記�ｿｽ�ｿｽ�ｿｽ[�ｿｽh
+		fp << "(" <<(int)Inv_Nano_S(lambda_s) << "," << wave_angle << ")  " << sum << endl;		//�ｿｽg�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾆの托ｿｽ�ｿｽa�ｿｽ�ｿｽ�ｿｽo�ｿｽ�ｿｽ
 	}
 
-	//���˗����o��
+	//�ｿｽ�ｿｽ�ｿｽﾋ暦ｿｽ�ｿｽ�ｿｽ�ｿｽo�ｿｽ�ｿｽ
 	if( (flag & NTFF::REFLEC) == NTFF::REFLEC){
 		ofstream fp = WriteOpen(MakeDir("Reflection") + label + getWaveData());
 		for(int i = 0; i < max_angle; i++)

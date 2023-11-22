@@ -5,38 +5,38 @@
 
 class Field{
 private:
-	const int WIDTH;	//‰¡•[nm]
-	const int HEIGHT;	//c•[nm]
-	const double H_U;		//1ƒZƒ‹‚Ì‘å‚«‚³[nm]
-	const int H_S;		//ƒZƒ‹ŠÔŠu(‚í‚©‚è‚â‚·‚¢‚æ‚¤‚É1‚É‚µ‚Ä‚ ‚é)
-	const int N_X;		//‰¡‚Ì”z—ñ”
-	const int N_Y;		//c‚Ì”z—ñ”
-	const int N_PML;	//PML‚Å—p‚¢‚éƒŒƒCƒ„‚ÌŒú‚³
-	const int N_PX;		//PMLƒŒƒCƒ„‚ğŠÜ‚ß‚½‰¡‚Ì”z—ñ”
-	const int N_PY;		//PMLƒŒƒCƒ„‚ğŠÜ‚ß‚½c‚Ì”z—ñ”
-	const int N_CELL;	//‘ƒZƒ‹”
+	const int WIDTH;	//æ¨ªå¹…[nm]
+	const int HEIGHT;	//ç¸¦å¹…[nm]
+	const double H_U;		//1ã‚»ãƒ«ã®å¤§ãã•[nm]
+	const int H_S;		//ã‚»ãƒ«é–“éš”(ã‚ã‹ã‚Šã‚„ã™ã„ã‚ˆã†ã«1ã«ã—ã¦ã‚ã‚‹)
+	const int N_X;		//æ¨ªã®é…åˆ—æ•°
+	const int N_Y;		//ç¸¦ã®é…åˆ—æ•°
+	const int N_PML;	//PMLã§ç”¨ã„ã‚‹ãƒ¬ã‚¤ãƒ¤ã®åšã•
+	const int N_PX;		//PMLãƒ¬ã‚¤ãƒ¤ã‚’å«ã‚ãŸæ¨ªã®é…åˆ—æ•°
+	const int N_PY;		//PMLãƒ¬ã‚¤ãƒ¤ã‚’å«ã‚ãŸç¸¦ã®é…åˆ—æ•°
+	const int N_CELL;	//ç·ã‚»ãƒ«æ•°
 public:
 	Field(int width, int height, double h_u, int pml);
 
-	bool sig;	//‹zûŒW”(F‘f)‚Ì—L–³
+	bool sig;	//å¸åä¿‚æ•°(è‰²ç´ )ã®æœ‰ç„¡
 
-	//ŒvZ—Ìˆæ‚É‚µ‚©ƒAƒNƒZƒX‚Å‚«‚È‚¢ƒCƒ“ƒfƒbƒNƒXŠÖ”(•‰‚Ì”‚ğ‚µ‚Ä‚¢‚·‚ê‚Î‚¢‚¯‚é)
+	//è¨ˆç®—é ˜åŸŸã«ã—ã‹ã‚¢ã‚¯ã‚»ã‚¹ã§ããªã„ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é–¢æ•°(è² ã®æ•°ã‚’ã—ã¦ã„ã™ã‚Œã°ã„ã‘ã‚‹)
 	int index(const int& i, const int& j){
 		//return (i+N_PML)*N_PY + (j+N_PML);
 		return i*N_PY + j;
 	}
 
-	//pml—Ìˆæ‚É‚àƒAƒNƒZƒX‚Å‚«‚éƒCƒ“ƒfƒbƒNƒXŠÖ”
+	//pmlé ˜åŸŸã«ã‚‚ã‚¢ã‚¯ã‚»ã‚¹ã§ãã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é–¢æ•°
 	int pmlIndex(const int &i, const int &j){
 		return i*N_PY + j;
 	}
 
-	//ŒvZ—Ìˆæ‚Ìî•ñ,(ƒtƒ@ƒCƒ‹–¼—p)
+	//è¨ˆç®—é ˜åŸŸã®æƒ…å ±,(ãƒ•ã‚¡ã‚¤ãƒ«åç”¨)
 	string getStringCellInfo(){
 		return "(" +to_s(H_U) + "nm,"+ to_s(N_X) + "cell" +  ")";
 	}
 
-	//nm’PˆÊ‚Ì•¨——Ê‚ğƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l‚É•ÏŠ·
+	//nmå˜ä½ã®ç‰©ç†é‡ã‚’ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤ã«å¤‰æ›
 	double nanoToCell(const double &length){
 		return length/H_U;
 	}
@@ -45,7 +45,7 @@ public:
 		return cell*H_U;
 	}
 
-	//ƒQƒbƒ^[
+	//ã‚²ãƒƒã‚¿ãƒ¼
 	int getNx(){
 		return N_X;
 	}
@@ -68,8 +68,8 @@ public:
 		return N_PML;
 	}
 
-	double sigmaX(const int &i, const int &j); //ƒĞx
-	double sigmaY(const int &i, const int &j); //ƒĞy
+	double sigmaX(const int &i, const int &j); //Ïƒx
+	double sigmaY(const int &i, const int &j); //Ïƒy
 };
 
 #endif //_FIELD_INFO_H

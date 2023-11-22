@@ -22,15 +22,15 @@ void Point::setY(int _y){
 	y = _y;
 }
 
-/* �����`��*/
+/* �ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ`�ｿｽ�ｿｽ*/
 void drawBitmapString(void *font, string s, int x, int y)
 {
 	double _x1 =  2.0*x/WINDOW_W - 1;
 	double _y1 = -2.0*y/WINDOW_H + 1;
 	
 // 	glPushAttrib(GL_CURRENT_BIT);
-// 	glRasterPos2d(_x1, _y1);		/* �`��ʒu */
-//   /* �r�b�g�}�b�v������̕`�� */
+// 	glRasterPos2d(_x1, _y1);		/* �ｿｽ`�ｿｽ�ｿｽﾊ置 */
+//   /* �ｿｽr�ｿｽb�ｿｽg�ｿｽ}�ｿｽb�ｿｽv�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾌ描�ｿｽ�ｿｽ */
 // 	for(unsigned int i=0; i<s.size() ;i++)
 // 		glutBitmapCharacter(font, s[i]);
 
@@ -64,21 +64,21 @@ int Button::calc(){
 
 void Button::draw(std::shared_ptr<GUI::ImageBuffer> img){
 	//TODO DRAW 
-	// glColor3d(1, 1, 1);  //�F�͔��ŕ`�� TODO�@�w�i�ɂ���Ă͉B���
+	// glColor3d(1, 1, 1);  //�ｿｽF�ｿｽﾍ費ｿｽ�ｿｽﾅ描�ｿｽ�ｿｽ TODO�ｿｽ@�ｿｽw�ｿｽi�ｿｽﾉゑｿｽ�ｿｽ�ｿｽﾄは隠�ｿｽ�ｿｽ�ｿｽ
 	// drawBitmapString(GLUT_BITMAP_HELVETICA_18, tag, x,y);
 	// drawBitmapString(GLUT_BITMAP_HELVETICA_18, to_s(value), x + 10*tag.size() ,y);
-	//if(check)	file << value << endl;	//�L�^����ꍇ�̓t�@�C���ɏ�������
+	//if(check)	file << value << endl;	//�ｿｽL�ｿｽ^�ｿｽ�ｿｽ�ｿｽ�ｿｽ鼾��ｿｽﾍフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ擾ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ
 }
 
 void Button::save(){
 	if(file)
-		file << value << endl;	//�L�^����ꍇ�̓t�@�C���ɏ�������
+		file << value << endl;	//�ｿｽL�ｿｽ^�ｿｽ�ｿｽ�ｿｽ�ｿｽ鼾��ｿｽﾍフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ擾ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ
 	else
 		cout << "no file error" << endl;
 }
 
 void ButtonFactory::addButton(string _tag, double _val, bool _check){
-	if(bList.count(_tag) == 0)	//���݂��Ȃ��ꍇ
+	if(bList.count(_tag) == 0)	//�ｿｽ�ｿｽ�ｿｽﾝゑｿｽ�ｿｽﾈゑｿｽ�ｿｽ鼾�
 		bList[_tag] = new Button(MENU_ITEM_X + MAIN_WINDOW_X, MENU_ITEM_D*bList.size() + MENU_ITEM_Y + MAIN_WINDOW_Y, MENU_ITEM_W, MENU_ITEM_H,  _tag, _val, _check);
 	else
 		bList[_tag]->setState(_val);

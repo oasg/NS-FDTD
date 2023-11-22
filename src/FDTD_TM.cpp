@@ -29,7 +29,7 @@ FDTD_TM::FDTD_TM()
 	C_HYLX   = new double[mField->getNcel()];	//Chylx(i+0.5, j) �� CHYLX(i,j) ���Ӗ�����
 
 	C_EZX   = new double[mField->getNcel()]; 
-	C_EZY   = new double[mField->getNcel()];
+	C_EZY   = new double[mField->getNcel()];∏
 	C_EZXLX = new double[mField->getNcel()];
 	C_EZYLY = new double[mField->getNcel()];
 	C_HX    = new double[mField->getNcel()];

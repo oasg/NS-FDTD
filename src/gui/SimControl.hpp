@@ -39,14 +39,14 @@ namespace GUI{
     public:
         SimControlElemnet();
         ~SimControlElemnet();
-
         virtual void draw() override;
     private:
         //create sim control
         std::shared_ptr<SimControl> _simControl;
         int currentItem = 0;
-        double _duration = 0.1;
+        float _duration = 0.1;
         bool _visualize = false;
+
 
     };
 

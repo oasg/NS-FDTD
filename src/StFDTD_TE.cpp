@@ -22,7 +22,7 @@ bool StFDTD_TE::calc(){
 	//absorbing();
 	CalcH();
 
-	if(time > maxStep){						//time•ÏX
+	if(time > maxStep){						//timeÂ•ÄÂX
 		MiePrint(Ey, "time" + to_s(maxStep) + "_PML" + to_s(mField->getNpml()) + "_StTE_");
 		//capture(to_s(time));
 		return false;
@@ -35,7 +35,7 @@ void StFDTD_TE::field(){
 	super::field();
 	setWorkingDirPass(MakeDir("St"));
 
-	double sig_x, sig_xx, sig_y, sig_yy; 	//ƒĞx, ƒĞx*, ƒĞy, ƒĞy*
+	double sig_x, sig_xx, sig_y, sig_yy; 	//ÂƒÄx, ÂƒÄx*, ÂƒÄy, ÂƒÄy*
 	for(int i=0; i<mField->getNpx();i++){
 		for(int j=0; j<mField->getNpy();j++){
 			sig_x = mField->sigmaX(i,j);
@@ -43,7 +43,7 @@ void StFDTD_TE::field(){
 			sig_y = mField->sigmaY(i,j);
 			sig_yy = MU_0_S/EPSILON_0_S * sig_y;
 
-			//ƒ¢t = 1, ƒÊ(i,j) = ƒÊ0 
+			//ÂƒË˜t = 1, ÂƒÄ˜(i,j) = ÂƒÄ˜0 
 			CEX(i,j)  =  MaxwellCoef(EPSEX(i,j), sig_y);
 			CEXLY(i,j)= MaxwellCoef2(EPSEX(i,j), sig_y);
 
@@ -59,7 +59,7 @@ void StFDTD_TE::field(){
 	}
 }
 
-//----------------Mur‚Ì‹zû‹«ŠE-----------------------//
+//----------------MurÂ‚ÄšÂ‹zÂÅ±Â‹Å¤ÂŠE-----------------------//
 void StFDTD_TE::absorbing(){
 	absorbing_stTB(Ex, mField->getNy()-2, TOP);
 	absorbing_stTB(Ex, 0,    BOTTOM);
@@ -67,12 +67,12 @@ void StFDTD_TE::absorbing(){
 	absorbing_stRL(Ey, 0,    LEFT);
 }
 
-//----------------üŠú‹«ŠE‚±‚±‚©‚ç-----------------------//
+//----------------ÂÃ¼ÂŠÃºÂ‹Å¤ÂŠEÂ‚Ä…Â‚Ä…Â‚Å Â‚Ã§-----------------------//
 void StFDTD_TE::cycle(){
 	
 	cycle_stRL(Hz,0   ,LEFT);
 	cycle_stRL(Hz,mField->getNx()-1,RIGHT);
-	//i=0 ‚Éi=mField->getNx()-2‚ğƒRƒs[, i=mField->getNx()-1‚Éi=1‚ğƒRƒs[
+	//i=0 Â‚Ã‰i=mField->getNx()-2Â‚Ä‘ÂƒRÂƒsÂ[, i=mField->getNx()-1Â‚Ã‰i=1Â‚Ä‘ÂƒRÂƒsÂ[
 	for(int i=0; i<mField->getNx(); i++){
 		HZ(i,0 ,+1)	   = HZ(i, mField->getNy()-2, +1);
 		HZ(i,mField->getNy()-1, +1) = HZ(i,1, +1);

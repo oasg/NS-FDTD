@@ -2,20 +2,20 @@
 #define _BUTTON_H
 #include"Object.h"
 #include <string>
-//���j���[�E�B���h�E�̑傫���ƈʒu
+//�ｿｽ�ｿｽ�ｿｽj�ｿｽ�ｿｽ�ｿｽ[�ｿｽE�ｿｽB�ｿｽ�ｿｽ�ｿｽh�ｿｽE�ｿｽﾌ大き�ｿｽ�ｿｽ�ｿｽﾆ位置
 const int MENU_WINDOW_W = WINDOW_W - MAIN_WINDOW_W;
 const int MENU_WINDOW_H = MAIN_WINDOW_W;
 const int MENU_WINDOW_X = 0;
 const int MENU_WINDOW_Y = WINDOW_H - MAIN_WINDOW_W;
 
-//���j���[���ڂ̔z�u�֌W
+//�ｿｽ�ｿｽ�ｿｽj�ｿｽ�ｿｽ�ｿｽ[�ｿｽ�ｿｽ�ｿｽﾚの配�ｿｽu�ｿｽﾖ係
 const int MENU_ITEM_EDGE = 5;
 const int MENU_ITEM_NUM = 4;
 const int MENU_ITEM_X   = 10;
 const int MENU_ITEM_Y   = 30;
 const int MENU_ITEM_W   = 180;
 const int MENU_ITEM_H   = 70;
-const int MENU_ITEM_D   = 30;//�Ԋu
+const int MENU_ITEM_D   = 30;//�ｿｽﾔ隔
 
 class Point: public Object{
 protected:
@@ -31,8 +31,8 @@ public:
 
 class Button :public Point{
 private:
-	ofstream file;	//�L�^�p
-	bool check;		//�L�^���邩�ǂ����̃t���O
+	ofstream file;	//�ｿｽL�ｿｽ^�ｿｽp
+	bool check;		//�ｿｽL�ｿｽ^�ｿｽ�ｿｽ�ｿｽ驍ｩ�ｿｽﾇゑｿｽ�ｿｽ�ｿｽ�ｿｽﾌフ�ｿｽ�ｿｽ�ｿｽO
 protected:
 	int width,height;
 	string tag;
@@ -49,16 +49,16 @@ public:
 
 void drawBitmapString(void *font, char *string, int x, int y);
 
-//�{�^�����ꊇ�ŊǗ�����N���X
+//�ｿｽ{�ｿｽ^�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ鼕��ｿｽﾅ管暦ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽN�ｿｽ�ｿｽ�ｿｽX
 class ButtonFactory{
 private:
 	static map<string, Button*> bList;
 public:
-	static void addButton(string tag, double val, bool check);	//�^�O�Ə����l��n��
-	static void setButton(string tag, double val);	//�l�̕ύX
+	static void addButton(string tag, double val, bool check);	//�ｿｽ^�ｿｽO�ｿｽﾆ擾ｿｽ�ｿｽ�ｿｽ�ｿｽl�ｿｽ�ｿｽn�ｿｽ�ｿｽ
+	static void setButton(string tag, double val);	//�ｿｽl�ｿｽﾌ変更
 	static void saveButton(string tag);
-	static void saveButton(string tag, double val);	//�l��ύX���ĕۑ�
-	static void draw(std::shared_ptr<GUI::ImageBuffer> img);	//���ׂẴ{�^����\��������
+	static void saveButton(string tag, double val);	//�ｿｽl�ｿｽ�ｿｽﾏ更�ｿｽ�ｿｽ�ｿｽﾄ保托ｿｽ
+	static void draw(std::shared_ptr<GUI::ImageBuffer> img);	//�ｿｽ�ｿｽ�ｿｽﾗてのボ�ｿｽ^�ｿｽ�ｿｽ�ｿｽ�ｿｽ\�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ
 	static void deleteAllButton();
 };
 

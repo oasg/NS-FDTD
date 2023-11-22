@@ -2,12 +2,12 @@
 #include"Field.h"
 #include <filesystem>
 /*---------------------------------------------*/
-/*--------------‰~’ŒMieU—--------------------*/
+/*--------------å††æŸ±Mieæ•£ä¹±--------------------*/
 /*---------------------------------------------*/
 FazzyMieModel::FazzyMieModel(Field *f):
 FazzyModel(f)
 {
-	ep = 1.6*1.6*EPSILON_0_S;			//—U“d—¦ = (‹üÜ—¦)^2
+	ep = 1.6*1.6*EPSILON_0_S;			//èª˜é›»ç‡ = (å±ˆæŠ˜ç‡)^2
 		
 }
 
@@ -15,25 +15,25 @@ string FazzyMieModel::mkdir(string root){
 	std::filesystem::create_directory((root + "Mie").c_str());
 
 	string name = "Mie/" + to_s((int)(mField->cellToNano(r))) +"nm,"+ mField->getStringCellInfo();
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 	return name + "/";
 }
 
 double FazzyMieModel::calcEPS(const double& x, const double& y, enum INTEG f){
 
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return EPSILON_0_S;
 
-	double _x = mx - 0.5*mField->getNx();//(N_X/2, N_Y/2)‚ğŒ´“_‚ÉƒVƒtƒg
+	double _x = mx - 0.5*mField->getNx();//(N_X/2, N_Y/2)ã‚’åŸç‚¹ã«ã‚·ãƒ•ãƒˆ
 	double _y = my - 0.5*mField->getNy();
 
-	//’†S‚Æ‚Ì‹——£‚ª”¼Œa+ã2/2ƒZƒ‹ˆÈã‚È‚ç, Š®‘S‚É”}¿‚ÌŠO(”O‚Ì‚½‚ß, ”¼Œa+1 ˆÈã‚©’²‚×‚Ä‚¢‚é)
+	//ä¸­å¿ƒã¨ã®è·é›¢ãŒåŠå¾„+âˆš2/2ã‚»ãƒ«ä»¥ä¸Šãªã‚‰, å®Œå…¨ã«åª’è³ªã®å¤–(å¿µã®ãŸã‚, åŠå¾„+1 ä»¥ä¸Šã‹èª¿ã¹ã¦ã„ã‚‹)
 	if(_x*_x + _y*_y >= pow(r+1, 2.0))
 
 		return EPSILON_0_S;
 
-	//’†S‚Æ‚Ì‹——£‚ª, ”¼Œa-ã2/2ƒZƒ‹ˆÈ“à‚È‚ç, Š®‘S‚É”}¿‚Ì’†
+	//ä¸­å¿ƒã¨ã®è·é›¢ãŒ, åŠå¾„-âˆš2/2ã‚»ãƒ«ä»¥å†…ãªã‚‰, å®Œå…¨ã«åª’è³ªã®ä¸­
 	if(_x*_x + _y*_y <= pow(r-1, 2.0))
 		return ep;
 
@@ -51,7 +51,7 @@ double FazzyMieModel::calcEPS(const double& x, const double& y, enum INTEG f){
 }
 
 /*---------------------------------------------*/
-/*--------------‘½‘w–Œ-------------------------*/
+/*--------------å¤šå±¤è†œ-------------------------*/
 /*---------------------------------------------*/
 FazzySlabModel::FazzySlabModel(Field* f):
 FazzyModel(f), ep1(2.0*2.0*EPSILON_0_S), ep2(EPSILON_0_S), width1(250), width2(50)
@@ -59,10 +59,10 @@ FazzyModel(f), ep1(2.0*2.0*EPSILON_0_S), ep2(EPSILON_0_S), width1(250), width2(5
 }
 
 double FazzySlabModel::calcEPS(const double& x, const double& y, enum INTEG f){
-//¶100nm‚©‚ç,250nmŠÔŠu‚Å50nm‚ÌƒXƒ‰ƒu‚ğ“ü‚ê‚Ä‚¢‚­  **¶250nm‚©‚ç(L70.71)10nmƒXƒ‰ƒu‚É•ÏX(L73)
-//‘½‘w–Œ
+//å·¦100nmã‹ã‚‰,250nmé–“éš”ã§50nmã®ã‚¹ãƒ©ãƒ–ã‚’å…¥ã‚Œã¦ã„ã  **å·¦250nmã‹ã‚‰(L70.71)10nmã‚¹ãƒ©ãƒ–ã«å¤‰æ›´(L73)
+//å¤šå±¤è†œ
 	
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 
 	if(mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy() ) return EPSILON_0_S;
@@ -81,34 +81,34 @@ string FazzySlabModel::mkdir(string root){
 	std::filesystem::create_directory((root + "SlabModel").c_str());
 
 	string name = "SlabModel/" + mField->getStringCellInfo();
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 	return name + "/";
 }
 
 /*---------------------------------------------*/
-/*---------------–Ñ”¯--------------------------*/
+/*---------------æ¯›é«ª--------------------------*/
 /*---------------------------------------------*/
 
 /*----------------------------*/
-/*-----------c’f–Ê-----------*/
+/*-----------ç¸¦æ–­é¢-----------*/
 /*----------------------------*/
 FazzyHair_incidenceModel::FazzyHair_incidenceModel(Field* f) :
 	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), alpha(5), cwidth(0.5), r(32+(4.36-cwidth))
-	//alpha:ƒLƒ…[ƒeƒBƒNƒ‹‚ÌŠp“x(deg)  cwidth:ƒLƒ…[ƒeƒBƒNƒ‹‚Ì•(ƒÊm)  r:–Ñ‚Ì”¼Œa(ƒÊm)(”¼Œa+ƒLƒ…[ƒeƒBƒNƒ‹‚ªd‚È‚é—Ìˆæ)
+	//alpha:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®è§’åº¦(deg)  cwidth:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®å¹…(Î¼m)  r:æ¯›ã®åŠå¾„(Î¼m)(åŠå¾„+ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãŒé‡ãªã‚‹é ˜åŸŸ)
 {
 	alphaR = alpha * PI / 180;
 	length = cwidth / sin(alphaR);
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹‚ÌŠp“x : " + to_s(alpha) + "deg" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹• : " + to_s(cwidth) + "micro" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹1–‡‚Ì˜Io• : " + to_s(length) + "micro" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®è§’åº¦ : " + to_s(alpha) + "deg" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å¹… : " + to_s(cwidth) + "micro" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«1æšã®éœ²å‡ºå¹… : " + to_s(length) + "micro" << endl;
 }
 /*
-	alpha:ŒX‚«		alphaR:ŒX‚«(ƒ‰ƒWƒAƒ“)
-	r:–Ñ”ç¿”ÍˆÍ‚Ì”¼Œa(ƒÊm)							rn:–Ñ”ç¿”ÍˆÍ‚Ì”¼Œa(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	cwidth:ƒLƒ…[ƒeƒBƒNƒ‹Œú‚³(ƒÊm)					cn:ƒLƒ…[ƒeƒBƒNƒ‹Œú‚³(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	cmc:CMC•(ƒÊm)									mn:CMC•(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	length:ƒLƒ…[ƒeƒBƒNƒ‹’·‚³(ƒÊm)					ln:ƒLƒ…[ƒeƒBƒNƒ‹’·‚³(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
-	ly:ƒLƒ…[ƒeƒBƒNƒ‹”ÍˆÍ(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)		lx:x•ûŒü’·‚³(nmƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’l)
+	alpha:å‚¾ã		alphaR:å‚¾ã(ãƒ©ã‚¸ã‚¢ãƒ³)
+	r:æ¯›çš®è³ªç¯„å›²ã®åŠå¾„(Î¼m)							rn:æ¯›çš®è³ªç¯„å›²ã®åŠå¾„(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	cwidth:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«åšã•(Î¼m)					cn:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«åšã•(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	cmc:CMCå¹…(Î¼m)									mn:CMCå¹…(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	length:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é•·ã•(Î¼m)					ln:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é•·ã•(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
+	ly:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç¯„å›²(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)		lx:xæ–¹å‘é•·ã•(nmã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å€¤)
 	*/
 
 double FazzyHair_incidenceModel::calcEPS(const double& x, const double& y, enum INTEG f) {
@@ -117,34 +117,34 @@ double FazzyHair_incidenceModel::calcEPS(const double& x, const double& y, enum 
 	lx = ln * cos(alphaR);
 	rn = mField->nanoToCell(r * 1000);
 	
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	double cx = mField->getNx() / 2;
 	double cy = mField->getNy() / 2;
 	
 	double h = mField->nanoToCell(0*1000);
 
-	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return ep2;	//PML‘w
-	if (my < cy)	my = 2 * cy - my;		//x²‚É‘Î‚µ‚Äü‘ÎÌ
+	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return ep2;	//PMLå±¤
+	if (my < cy)	my = 2 * cy - my;		//xè»¸ã«å¯¾ã—ã¦ç·šå¯¾ç§°
 
 
 	/***************************************************/
-	//ã–Ê‚¾‚¯ƒLƒ…[ƒeƒBƒNƒ‹‚È‚µ
+	//ä¸Šé¢ã ã‘ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãªã—
 //	if (y - mField->getNpml() >= mField->nanoToCell(32 * 1000) + cy)	return ep2;
 	/***************************************************/
 
 
-	int c = mField->getNx() / lx + 1;		//ŒvZ”ÍˆÍ“à‚ÌƒLƒ…[ƒeƒBƒNƒ‹‚Ì”
+	int c = mField->getNx() / lx + 1;		//è¨ˆç®—ç¯„å›²å†…ã®ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æ•°
 	for (int i = 0; i < c; i++) {
 		if (mx > i * lx + h && mx < (i + 1) * lx + h && mx < mField->getNx() - h) {
 			//			if (my > tan(alphaR) * (mx - lx*i) + cy + rn)	return ep2;
-			//			else return ep1;		//Fuzzy‚È‚µ(Staircaseƒ‚ƒfƒ‹)
+			//			else return ep1;		//Fuzzyãªã—(Staircaseãƒ¢ãƒ‡ãƒ«)
 
 			double dy1 = my - (tan(alphaR) * (mx - lx*i - h) + cy + rn);
 			double dy2 = my - (tan(alphaR) * ((mx - lx*i - h) + 1) + cy + rn);
 			double s;
-			if (dy1 > 0 && dy2 > 0) return ep2;		//ƒLƒ…[ƒeƒBƒNƒ‹’¼ü‚ÌŠO‘¤ (1)
-			if (fabs(dy1) > 1 && fabs(dy2) > 1) return ep1;		//ƒLƒ…[ƒeƒBƒNƒ‹’¼ü‚Ì“à‘¤ (2)
+			if (dy1 > 0 && dy2 > 0) return ep2;		//ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç›´ç·šã®å¤–å´ (1)
+			if (fabs(dy1) > 1 && fabs(dy2) > 1) return ep1;		//ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç›´ç·šã®å†…å´ (2)
 
 			if (dy1 <= 0 && dy2 <= 0) {
 				if (fabs(dy1) <= 1 && fabs(dy2) <= 1) {
@@ -173,21 +173,21 @@ double FazzyHair_incidenceModel::calcEPS(const double& x, const double& y, enum 
 double FazzyHair_incidenceModel::calcSIG(const double& x, const double& y, const double lam, enum INTEG f) {
 	rn = mField->nanoToCell(32 * 1000);
 
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	double cx = mField->getNx() / 2;
 	double cy = mField->getNy() / 2;
 
 	double h = mField->nanoToCell(0 * 1000);
 
-	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;	//PML‘w
-	if (my < cy)	my = 2 * cy - my;		//x²‚É‘Î‚µ‚Äü‘ÎÌ
+	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;	//PMLå±¤
+	if (my < cy)	my = 2 * cy - my;		//xè»¸ã«å¯¾ã—ã¦ç·šå¯¾ç§°
 
 	if (my <= rn + cy) {
 		int k = (int)(mField->cellToNano(my) - mField->cellToNano(cy) - 1500) % 4000;
 		double l = (mField->cellToNano(my) - mField->cellToNano(cy) - 1500) / 4000;
 
-		if (k > 0 && k <= 1000 && l < 8)	return 1.0;		//•F‚ÌF‘f
+		if (k > 0 && k <= 1000 && l < 8)	return 1.0;		//é»’è‰²ã®è‰²ç´ 
 		else	return 0;
 	}
 	else  return 0;
@@ -198,35 +198,35 @@ string FazzyHair_incidenceModel::mkdir(string root) {
 	string name;
 
 	if (mField->sig == false) {
-		std::filesystem::create_directory((root + "HairModel/incidenceplane").c_str());				//‹zûŒW”‚È‚µ‚Ìê‡
+		std::filesystem::create_directory((root + "HairModel/incidenceplane").c_str());				//å¸åä¿‚æ•°ãªã—ã®å ´åˆ
 		name = "HairModel/incidenceplane/" + mField->getStringCellInfo();
 	}
 	else if (mField->sig == true) {
-		std::filesystem::create_directory((root + "HairModel/incidenceplane_withSig").c_str());		//‹zûŒW”‚ ‚è‚Ìê‡
+		std::filesystem::create_directory((root + "HairModel/incidenceplane_withSig").c_str());		//å¸åä¿‚æ•°ã‚ã‚Šã®å ´åˆ
 		name = "HairModel/incidenceplane_withSig/" + mField->getStringCellInfo();
 	}
 
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 	
 	return name + "/";
 }
 
 /*--------------------------------------------------*/
-/*-----------c’f–Ê(‘½‘w–ŒƒLƒ…[ƒeƒBƒNƒ‹)-----------*/
+/*-----------ç¸¦æ–­é¢(å¤šå±¤è†œã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«)-----------*/
 /*--------------------------------------------------*/
 FazzyHair_incidenceLayerModel::FazzyHair_incidenceLayerModel(Field* f) :
 	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), alpha(5), cwidth(0.5), length(50), r(32), cmc(0.06)
-	//alpha:ƒLƒ…[ƒeƒBƒNƒ‹‚ÌŠp“x(deg)  cwidth:ƒLƒ…[ƒeƒBƒNƒ‹‚ÌŒú‚³(ƒÊm)  length:ƒLƒ…[ƒeƒBƒNƒ‹‚Ì’·‚³(ƒÊm)	r:–Ñ”ç¿”ÍˆÍ‚Ì”¼Œa(ƒÊm)  cmc:CMC”ÍˆÍ(ƒÊm)
+	//alpha:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®è§’åº¦(deg)  cwidth:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®åšã•(Î¼m)  length:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®é•·ã•(Î¼m)	r:æ¯›çš®è³ªç¯„å›²ã®åŠå¾„(Î¼m)  cmc:CMCç¯„å›²(Î¼m)
 {
 	alphaR = alpha * PI / 180;
 	int n = length * sin(alphaR) / (cmc + cwidth);
 
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹‚ÌŠp“x : " + to_s(alpha) + "deg" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹Œú‚³ : " + to_s(cwidth) + "micro" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹’·‚³ : " + to_s(length) + "micro" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹1–‡‚Ì˜Io• : " + to_s((cmc+cwidth)/sin(alphaR)) + "micro" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹”ÍˆÍ• : " + to_s(length*sin(alphaR)) + "micro" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹d‚È‚è–‡” : " + to_s(n) + "–‡" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®è§’åº¦ : " + to_s(alpha) + "deg" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«åšã• : " + to_s(cwidth) + "micro" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é•·ã• : " + to_s(length) + "micro" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«1æšã®éœ²å‡ºå¹… : " + to_s((cmc+cwidth)/sin(alphaR)) + "micro" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç¯„å›²å¹… : " + to_s(length*sin(alphaR)) + "micro" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é‡ãªã‚Šæšæ•° : " + to_s(n) + "æš" << endl;
 }
 
 double FazzyHair_incidenceLayerModel::calcEPS(const double& x, const double& y, enum INTEG f) {
@@ -239,25 +239,25 @@ double FazzyHair_incidenceLayerModel::calcEPS(const double& x, const double& y, 
 
 	mn = mField->nanoToCell(cmc * 1000);
 
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	double cx = mField->getNx() / 2;
 	double cy = mField->getNy() / 2;
 
-	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return ep2;	//PML‘w
+	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return ep2;	//PMLå±¤
 
-	/**** –Ñ”¯‘S‘Ì ****/
-	if (my < cy)	my = 2 * cy - my;		//x²‚É‘Î‚µ‚Äü‘ÎÌ
-	if (my <= rn + cy)		return ep1;		//–Ñ”ç¿•”•ª
+	/**** æ¯›é«ªå…¨ä½“ ****/
+	if (my < cy)	my = 2 * cy - my;		//xè»¸ã«å¯¾ã—ã¦ç·šå¯¾ç§°
+	if (my <= rn + cy)		return ep1;		//æ¯›çš®è³ªéƒ¨åˆ†
 
-	my = my - rn - cy;		//²ˆÚ“®
+	my = my - rn - cy;		//è»¸ç§»å‹•
 
-	/****************** ƒLƒ…[ƒeƒBƒNƒ‹•”•ª‚Ì‚İ ******************/
-	/* Field„§ƒTƒCƒY                                          */
-	/* Field(8000, 8000, 5, 10) Field(16000, 8000, 10, 10) ‚È‚Ç */
+	/****************** ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«éƒ¨åˆ†ã®ã¿ ******************/
+	/* Fieldæ¨å¥¨ã‚µã‚¤ã‚º                                          */
+	/* Field(8000, 8000, 5, 10) Field(16000, 8000, 10, 10) ãªã© */
 	/************************************************************/
-//	if (my <= 100)		return ep1;		//–Ñ”ç¿•”•ª
-//	my = my - 100;		//²ˆÚ“®
+//	if (my <= 100)		return ep1;		//æ¯›çš®è³ªéƒ¨åˆ†
+//	my = my - 100;		//è»¸ç§»å‹•
 
 
 	if (my > ly)	return ep2;
@@ -306,21 +306,21 @@ double FazzyHair_incidenceLayerModel::calcEPS(const double& x, const double& y, 
 double FazzyHair_incidenceLayerModel::calcSIG(const double& x, const double& y, const double lam, enum INTEG f) {
 	rn = mField->nanoToCell(32 * 1000);
 
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	double cx = mField->getNx() / 2;
 	double cy = mField->getNy() / 2;
 
 	double h = mField->nanoToCell(0 * 1000);
 
-	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;	//PML‘w
-	if (my < cy)	my = 2 * cy - my;		//x²‚É‘Î‚µ‚Äü‘ÎÌ
+	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;	//PMLå±¤
+	if (my < cy)	my = 2 * cy - my;		//xè»¸ã«å¯¾ã—ã¦ç·šå¯¾ç§°
 
 	if (my <= rn + cy) {
 		int k = (int)(mField->cellToNano(my) - mField->cellToNano(cy) - 1500) % 4000;
 		double l = (mField->cellToNano(my) - mField->cellToNano(cy) - 1500) / 4000;
 
-		if (k > 0 && k <= 1000 && l < 8)	return 1.0;		//•F‚ÌF‘f
+		if (k > 0 && k <= 1000 && l < 8)	return 1.0;		//é»’è‰²ã®è‰²ç´ 
 		else	return 0;
 	}
 	else  return 0;
@@ -331,15 +331,15 @@ string FazzyHair_incidenceLayerModel::mkdir(string root) {
 	string name;
 
 	if (mField->sig == false) {
-		std::filesystem::create_directory((root + "HairModel/incidenceLayer").c_str());				//‹zûŒW”‚È‚µ‚Ìê‡
+		std::filesystem::create_directory((root + "HairModel/incidenceLayer").c_str());				//å¸åä¿‚æ•°ãªã—ã®å ´åˆ
 		name = "HairModel/incidenceLayer/" + mField->getStringCellInfo();
 	}
 	else if (mField->sig == true) {
-		std::filesystem::create_directory((root + "HairModel/incidenceLayer_withSig").c_str());		//‹zûŒW”‚ ‚è‚Ìê‡
+		std::filesystem::create_directory((root + "HairModel/incidenceLayer_withSig").c_str());		//å¸åä¿‚æ•°ã‚ã‚Šã®å ´åˆ
 		name = "HairModel/incidenceLayer_withSig/" + mField->getStringCellInfo();
 	}
 
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 
 	return name + "/";
 }
@@ -347,17 +347,17 @@ string FazzyHair_incidenceLayerModel::mkdir(string root) {
 
 FazzyHair_incidenceLayerModel_try::FazzyHair_incidenceLayerModel_try(Field* f) :
 	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), alpha(5), cwidth(0.5), length(30), r(4), cmc(0.06)
-	//alpha:ƒLƒ…[ƒeƒBƒNƒ‹‚ÌŠp“x(deg)  cwidth:ƒLƒ…[ƒeƒBƒNƒ‹‚ÌŒú‚³(ƒÊm)  length:ƒLƒ…[ƒeƒBƒNƒ‹‚Ì’·‚³(ƒÊm)	r:–Ñ”ç¿”ÍˆÍ‚Ì”¼Œa(ƒÊm)  cmc:CMC”ÍˆÍ(ƒÊm)
+	//alpha:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®è§’åº¦(deg)  cwidth:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®åšã•(Î¼m)  length:ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®é•·ã•(Î¼m)	r:æ¯›çš®è³ªç¯„å›²ã®åŠå¾„(Î¼m)  cmc:CMCç¯„å›²(Î¼m)
 {
 	alphaR = alpha * PI / 180;
 	int n = length * sin(alphaR) / (cmc + cwidth);
 
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹‚ÌŠp“x : " + to_s(alpha) + "deg" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹Œú‚³ : " + to_s(cwidth) + "micro" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹’·‚³ : " + to_s(length) + "micro" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹1–‡‚Ì˜Io• : " + to_s((cmc + cwidth) / sin(alphaR)) + "micro" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹”ÍˆÍ• : " + to_s(length*sin(alphaR)) + "micro" << endl;
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹d‚È‚è–‡” : " + to_s(n) + "–‡" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®è§’åº¦ : " + to_s(alpha) + "deg" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«åšã• : " + to_s(cwidth) + "micro" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é•·ã• : " + to_s(length) + "micro" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«1æšã®éœ²å‡ºå¹… : " + to_s((cmc + cwidth) / sin(alphaR)) + "micro" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç¯„å›²å¹… : " + to_s(length*sin(alphaR)) + "micro" << endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é‡ãªã‚Šæšæ•° : " + to_s(n) + "æš" << endl;
 }
 
 double FazzyHair_incidenceLayerModel_try::calcEPS(const double& x, const double& y, enum INTEG f) {
@@ -370,25 +370,25 @@ double FazzyHair_incidenceLayerModel_try::calcEPS(const double& x, const double&
 
 	mn = mField->nanoToCell(cmc * 1000);
 
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	double cx = mField->getNx() / 2;
 	double cy = mField->getNy() / 2;
 
-	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return ep2;	//PML‘w
+	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return ep2;	//PMLå±¤
 
-	/**** –Ñ”¯‘S‘Ì ****/
-	if (my < cy)	my = 2 * cy - my;		//x²‚É‘Î‚µ‚Äü‘ÎÌ
-	if (my <= rn + cy)		return ep1;		//–Ñ”ç¿•”•ª
+	/**** æ¯›é«ªå…¨ä½“ ****/
+	if (my < cy)	my = 2 * cy - my;		//xè»¸ã«å¯¾ã—ã¦ç·šå¯¾ç§°
+	if (my <= rn + cy)		return ep1;		//æ¯›çš®è³ªéƒ¨åˆ†
 
-	my = my - rn - cy;		//²ˆÚ“®
+	my = my - rn - cy;		//è»¸ç§»å‹•
 
-	/****************** ƒLƒ…[ƒeƒBƒNƒ‹•”•ª‚Ì‚İ ******************/
-	/* Field„§ƒTƒCƒY                                          */
-	/* Field(8000, 8000, 5, 10) Field(16000, 8000, 10, 10) ‚È‚Ç */
+	/****************** ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«éƒ¨åˆ†ã®ã¿ ******************/
+	/* Fieldæ¨å¥¨ã‚µã‚¤ã‚º                                          */
+	/* Field(8000, 8000, 5, 10) Field(16000, 8000, 10, 10) ãªã© */
 	/************************************************************/
-//	if (my <= 100)		return ep1;		//–Ñ”ç¿•”•ª
-//	my = my - 100;		//²ˆÚ“®
+//	if (my <= 100)		return ep1;		//æ¯›çš®è³ªéƒ¨åˆ†
+//	my = my - 100;		//è»¸ç§»å‹•
 
 
 	if (my > ly)	return ep2;
@@ -437,15 +437,15 @@ double FazzyHair_incidenceLayerModel_try::calcEPS(const double& x, const double&
 double FazzyHair_incidenceLayerModel_try::calcSIG(const double& x, const double& y, const double lam, enum INTEG f) {
 	rn = mField->nanoToCell(32 * 1000);
 
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	double cx = mField->getNx() / 2;
 	double cy = mField->getNy() / 2;
 
 	double h = mField->nanoToCell(0 * 1000);
 
-	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;	//PML‘w
-	if (my < cy)	my = 2 * cy - my;		//x²‚É‘Î‚µ‚Äü‘ÎÌ
+	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;	//PMLå±¤
+	if (my < cy)	my = 2 * cy - my;		//xè»¸ã«å¯¾ã—ã¦ç·šå¯¾ç§°
 
 	if (my <= rn + cy) {
 		
@@ -454,7 +454,7 @@ double FazzyHair_incidenceLayerModel_try::calcSIG(const double& x, const double&
 		
 		int k = (int)(mField->cellToNano(my) - mField->cellToNano(cy) ) % 8000;
 		double l = (mField->cellToNano(my) - mField->cellToNano(cy) ) / 8000;
-		if (k > 0 && k <= 1000 && l < 8)	return 1.0;		//•F‚ÌF‘f
+		if (k > 0 && k <= 1000 && l < 8)	return 1.0;		//é»’è‰²ã®è‰²ç´ 
 		else	return 0;
 	}
 	else  return 0;
@@ -465,41 +465,41 @@ string FazzyHair_incidenceLayerModel_try::mkdir(string root) {
 	string name;
 
 	if (mField->sig == false) {
-		std::filesystem::create_directory((root + "HairModel/incidenceLayer").c_str());				//‹zûŒW”‚È‚µ‚Ìê‡
+		std::filesystem::create_directory((root + "HairModel/incidenceLayer").c_str());				//å¸åä¿‚æ•°ãªã—ã®å ´åˆ
 		name = "HairModel/incidenceLayer/" + mField->getStringCellInfo();
 	}
 	else if (mField->sig == true) {
-		std::filesystem::create_directory((root + "HairModel/incidenceLayer_withSig").c_str());		//‹zûŒW”‚ ‚è‚Ìê‡
+		std::filesystem::create_directory((root + "HairModel/incidenceLayer_withSig").c_str());		//å¸åä¿‚æ•°ã‚ã‚Šã®å ´åˆ
 		name = "HairModel/incidenceLayer_withSig/" + mField->getStringCellInfo();
 	}
 
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 
 	return name + "/";
 }
 
 /*------------------------------------------------*/
-/*-----------c’f–Ê(ƒLƒ…[ƒeƒBƒNƒ‹‚È‚µ)-----------*/
+/*-----------ç¸¦æ–­é¢(ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãªã—)-----------*/
 /*------------------------------------------------*/
 FazzyHair_NONcuticleModel::FazzyHair_NONcuticleModel(Field* f) :
 	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), r(32)
-	//r:–Ñ‚Ì”¼Œa(ƒÊm)
+	//r:æ¯›ã®åŠå¾„(Î¼m)
 {
-	cout << "ƒLƒ…[ƒeƒBƒNƒ‹ : ‚È‚µ"<< endl;
+	cout << "ã‚­ãƒ¥ãƒ¼ãƒ†ã‚£ã‚¯ãƒ« : ãªã—"<< endl;
 }
 
 double FazzyHair_NONcuticleModel::calcEPS(const double& x, const double& y, enum INTEG f) {
 	rn = mField->nanoToCell(r * 1000);
 
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	double cx = mField->getNx() / 2;
 	double cy = mField->getNy() / 2;
 
 	double h = mField->nanoToCell(0 * 1000);
 
-	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return ep2;	//PML‘w
-	if (my < cy)	my = 2 * cy - my;		//x²‚É‘Î‚µ‚Äü‘ÎÌ
+	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return ep2;	//PMLå±¤
+	if (my < cy)	my = 2 * cy - my;		//xè»¸ã«å¯¾ã—ã¦ç·šå¯¾ç§°
 
 	if (my <= rn + cy)	return ep1;
 	else  return ep2;
@@ -508,21 +508,21 @@ double FazzyHair_NONcuticleModel::calcEPS(const double& x, const double& y, enum
 double FazzyHair_NONcuticleModel::calcSIG(const double& x, const double& y, const double lam, enum INTEG f) {
 	rn = mField->nanoToCell(r * 1000);
 
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	double cx = mField->getNx() / 2;
 	double cy = mField->getNy() / 2;
 
 	double h = mField->nanoToCell(0 * 1000);
 
-	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;	//PML‘w
-	if (my < cy)	my = 2 * cy - my;		//x²‚É‘Î‚µ‚Äü‘ÎÌ
+	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;	//PMLå±¤
+	if (my < cy)	my = 2 * cy - my;		//xè»¸ã«å¯¾ã—ã¦ç·šå¯¾ç§°
 
 	if (my <= rn + cy) {
 		int k = (int)(mField->cellToNano(my) - mField->cellToNano(cy) - 1500) % 4000;
 		double l = (mField->cellToNano(my) - mField->cellToNano(cy) - 1500) / 4000;
 
-		if (k > 0 && k <= 1000 && l < 8)	return 1.0;		//•F‚ÌF‘f
+		if (k > 0 && k <= 1000 && l < 8)	return 1.0;		//é»’è‰²ã®è‰²ç´ 
 		else	return 0;
 	}
 	else  return 0;
@@ -533,26 +533,26 @@ string FazzyHair_NONcuticleModel::mkdir(string root) {
 	string name;
 
 	if (mField->sig == false) {
-		std::filesystem::create_directory((root + "HairModel/NONcuticle").c_str());				//‹zûŒW”‚È‚µ‚Ìê‡
+		std::filesystem::create_directory((root + "HairModel/NONcuticle").c_str());				//å¸åä¿‚æ•°ãªã—ã®å ´åˆ
 		name = "HairModel/NONcuticle/" + mField->getStringCellInfo();
 	}
 	else if (mField->sig == true) {
-		std::filesystem::create_directory((root + "HairModel/NONcuticle_withSig").c_str());		//‹zûŒW”‚ ‚è‚Ìê‡
+		std::filesystem::create_directory((root + "HairModel/NONcuticle_withSig").c_str());		//å¸åä¿‚æ•°ã‚ã‚Šã®å ´åˆ
 		name = "HairModel/NONcuticle_withSig/" + mField->getStringCellInfo();
 	}
 
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 	return name + "/";
 }
 
 /*----------------------------*/
-/*-----------‰¡’f–Ê-----------*/
+/*-----------æ¨ªæ–­é¢-----------*/
 /*----------------------------*/
 FazzyHair_normalModel::FazzyHair_normalModel(Field* f) :
 	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), e(0.6), r(32)
-	//a:—£S—¦  r:–Ñ‚Ì”¼Œa(ƒÊm)
+	//a:é›¢å¿ƒç‡  r:æ¯›ã®åŠå¾„(Î¼m)
 {
-	cout << "‘È‰~‚Ì—£S—¦ = " + to_s((double)e) << endl;
+	cout << "æ¥•å††ã®é›¢å¿ƒç‡ = " + to_s((double)e) << endl;
 }
 
 double FazzyHair_normalModel::calcEPS(const double& x, const double& y, enum INTEG f) {
@@ -560,24 +560,24 @@ double FazzyHair_normalModel::calcEPS(const double& x, const double& y, enum INT
 	ax = rn;
 	by = ax * sqrt(1 - e*e);
 
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	double cx = mField->getNx() / 2;
 	double cy = mField->getNy() / 2;
 
-	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return ep2;	//PML‘w
+	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return ep2;	//PMLå±¤
 
-	double _x = mx - 0.5*mField->getNx();//(N_X/2, N_Y/2)‚ğŒ´“_‚ÉƒVƒtƒg
+	double _x = mx - 0.5*mField->getNx();//(N_X/2, N_Y/2)ã‚’åŸç‚¹ã«ã‚·ãƒ•ãƒˆ
 	double _y = my - 0.5*mField->getNy();
 
-	//’†S‚Æ‚Ì‹——£‚ª”¼Œa+ã2/2ƒZƒ‹ˆÈã‚È‚ç, Š®‘S‚É”}¿‚ÌŠO(”O‚Ì‚½‚ß, ”¼Œa+1 ˆÈã‚©’²‚×‚Ä‚¢‚é)
+	//ä¸­å¿ƒã¨ã®è·é›¢ãŒåŠå¾„+âˆš2/2ã‚»ãƒ«ä»¥ä¸Šãªã‚‰, å®Œå…¨ã«åª’è³ªã®å¤–(å¿µã®ãŸã‚, åŠå¾„+1 ä»¥ä¸Šã‹èª¿ã¹ã¦ã„ã‚‹)
 	double _ax = ax+1, _by = by+1;
 	if ((_x*_x) / (_ax*_ax) + (_y*_y) / (_by*_by) >= 1)
 		return ep2;
 
 	_ax = ax - 1;
 	_by = by - 1;
-	//’†S‚Æ‚Ì‹——£‚ª, ”¼Œa-ã2/2ƒZƒ‹ˆÈ“à‚È‚ç, Š®‘S‚É”}¿‚ÌŠO
+	//ä¸­å¿ƒã¨ã®è·é›¢ãŒ, åŠå¾„-âˆš2/2ã‚»ãƒ«ä»¥å†…ãªã‚‰, å®Œå…¨ã«åª’è³ªã®å¤–
 	if ((_x*_x) / (_ax*_ax) + (_y*_y) / (_by*_by) <= 1)
 		return ep1;
 
@@ -599,10 +599,10 @@ string FazzyHair_normalModel::mkdir(string root) {
 	std::filesystem::create_directory((root + "HairModel/normalplane").c_str());
 	
 	string name = "HairModel/normalplane/e=" + to_s((double)e);
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 	
 	name = "HairModel/normalplane/e=" + to_s((double)e) + "/" + mField->getStringCellInfo();
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 	return name + "/";
 }
 
@@ -706,12 +706,12 @@ string BuprestidaeModel::mkdir(string root) {
 	std::filesystem::create_directory((root + "Buprestidae").c_str());
 
 	string name = "Buprestidae\\"+to_s(int(lambda));
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 	return name+"\\" ;
 }
 
 double BuprestidaeModel::calcEPS(const double& x,const double& y,enum INTEG f) {
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return EPSILON_0_S;
 
@@ -734,7 +734,7 @@ double BuprestidaeModel::calcEPS(const double& x,const double& y,enum INTEG f) {
 }
 
 double BuprestidaeModel::calcSIG(const double& x, const double& y, const double lam, enum INTEG f) {
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;
 
@@ -887,12 +887,12 @@ string BuprestidaeModelWithNoise::mkdir(string root) {
 	std::filesystem::create_directory((root + "BuprestidaeWithNoise").c_str());
 
 	string name = "BuprestidaeWithNoise\\" + to_s(int(lambda));
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 	return name + "\\";
 }
 
 double BuprestidaeModelWithNoise::calcEPS(const double& x, const double& y, enum INTEG f) {
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return EPSILON_0_S;
 
@@ -919,7 +919,7 @@ double BuprestidaeModelWithNoise::calcEPS(const double& x, const double& y, enum
 }
 
 double BuprestidaeModelWithNoise::calcSIG(const double& x, const double& y, const double lam, enum INTEG f) {
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;
 
@@ -977,37 +977,37 @@ double BuprestidaeModelWithNoise::calcSIGFromN(bool white) {
 }
 
 
-/*•¡G‚È‘½‘w–Œ
+/*è¤‡é›‘ãªå¤šå±¤è†œ
 
-‡Œv18‘w
+åˆè¨ˆ18å±¤
 
 in filed()
-ƒ‚ƒfƒ‹
-1F”’@150nm     30
-1.5  5nm @@ (3”’,2.05 •)
-2F•@30nm      6
-2.5  5nm@    (2.55”’,2.05•)@
-3F”’@115nm     23
-3.5  5nm      (2.55”’,0.55•)
-4F•@55nm      11
-4.5  5nm      (1.75”’,0.55•)
-5F”’@95nm      19
-5.5  5nm      (1.75”’,2.413•)
-6F•@50nm      10
-6.5  5nm      (1”’,2.413•)
-7F”’@85nm      17
-7.5  5nm      (1”’,1.85•)
-8F•@40nm      8
-8.5  5nm      (0”’,1.85•)
-9F”’@90nm      18
-9.5  5nm      (0”’,1•)
-10F•@45nm     9
-10.5 5nm      (1.225”’,1•)
+ãƒ¢ãƒ‡ãƒ«
+1ï¼šç™½ã€€150nm     30
+1.5  5nm ã€€ã€€ (3ç™½,2.05 é»’)
+2ï¼šé»’ã€€30nm      6
+2.5  5nmã€€    (2.55ç™½,2.05é»’)ã€€
+3ï¼šç™½ã€€115nm     23
+3.5  5nm      (2.55ç™½,0.55é»’)
+4ï¼šé»’ã€€55nm      11
+4.5  5nm      (1.75ç™½,0.55é»’)
+5ï¼šç™½ã€€95nm      19
+5.5  5nm      (1.75ç™½,2.413é»’)
+6ï¼šé»’ã€€50nm      10
+6.5  5nm      (1ç™½,2.413é»’)
+7ï¼šç™½ã€€85nm      17
+7.5  5nm      (1ç™½,1.85é»’)
+8ï¼šé»’ã€€40nm      8
+8.5  5nm      (0ç™½,1.85é»’)
+9ï¼šç™½ã€€90nm      18
+9.5  5nm      (0ç™½,1é»’)
+10ï¼šé»’ã€€45nm     9
+10.5 5nm      (1.225ç™½,1é»’)
 
-11F”’@80nm
-11.5 5nm      (1.225”’,1.86•)
-12F•  55nm
-12.5 5nm      (1.225”’,1.86•)
+11ï¼šç™½ã€€80nm
+11.5 5nm      (1.225ç™½,1.86é»’)
+12ï¼šé»’  55nm
+12.5 5nm      (1.225ç™½,1.86é»’)
 
 
 
@@ -1244,12 +1244,12 @@ string BuprestidaeModelsmooth2nd::mkdir(string root) {
 	std::filesystem::create_directory((root + "BuprestidaeModelsmooth2nd").c_str());
 
 	string name = "BuprestidaeModelsmooth2nd\\" + to_s(int(lambda));
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 	return name + "\\";
 }
 
 double BuprestidaeModelsmooth2nd::calcEPS(const double& x, const double& y, enum INTEG f) {
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return EPSILON_0_S;
 
@@ -1276,7 +1276,7 @@ double BuprestidaeModelsmooth2nd::calcEPS(const double& x, const double& y, enum
 }
 
 double BuprestidaeModelsmooth2nd::calcSIG(const double& x, const double& y, const double lam, enum INTEG f) {
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;
 
@@ -1494,12 +1494,12 @@ string BuprestidaeModelWithNoise2nd::mkdir(string root) {
 	std::filesystem::create_directory((root + "BuprestidaeWithNoise2nd").c_str());
 
 	string name = "BuprestidaeWithNoise2nd\\" + to_s(int(lambda));
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 	return name + "\\";
 }
 
 double BuprestidaeModelWithNoise2nd::calcEPS(const double& x, const double& y, enum INTEG f) {
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return EPSILON_0_S;
 
@@ -1526,7 +1526,7 @@ double BuprestidaeModelWithNoise2nd::calcEPS(const double& x, const double& y, e
 }
 
 double BuprestidaeModelWithNoise2nd::calcSIG(const double& x, const double& y, const double lam, enum INTEG f) {
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;
 
@@ -1584,37 +1584,37 @@ double BuprestidaeModelWithNoise2nd::calcSIGFromN(bool white) {
 }
 
 
-/*•¡G‚È‘½‘w–Œ
+/*è¤‡é›‘ãªå¤šå±¤è†œ
 
-‡Œv20‘w
+åˆè¨ˆ20å±¤
 
 in filed()
-ƒ‚ƒfƒ‹
-1F”’@150nm     30
-1.5  5nm @@ (3”’,2.05 •)
-2F•@30nm      6
-2.5  5nm@    (2.55”’,2.05•)@
-3F”’@115nm     23
-3.5  5nm      (2.55”’,0.55•)
-4F•@55nm      11
-4.5  5nm      (1.75”’,0.55•)
-5F”’@95nm      19
-5.5  5nm      (1.75”’,2.413•)
-6F•@50nm      10
-6.5  5nm      (1”’,2.413•)
-7F”’@85nm      17
-7.5  5nm      (1”’,1.85•)
-8F•@40nm      8
-8.5  5nm      (0”’,1.85•)
-9F”’@90nm      18
-9.5  5nm      (0”’,1•)
-10F•@45nm     9
-10.5 5nm      (1.225”’,1•)
+ãƒ¢ãƒ‡ãƒ«
+1ï¼šç™½ã€€150nm     30
+1.5  5nm ã€€ã€€ (3ç™½,2.05 é»’)
+2ï¼šé»’ã€€30nm      6
+2.5  5nmã€€    (2.55ç™½,2.05é»’)ã€€
+3ï¼šç™½ã€€115nm     23
+3.5  5nm      (2.55ç™½,0.55é»’)
+4ï¼šé»’ã€€55nm      11
+4.5  5nm      (1.75ç™½,0.55é»’)
+5ï¼šç™½ã€€95nm      19
+5.5  5nm      (1.75ç™½,2.413é»’)
+6ï¼šé»’ã€€50nm      10
+6.5  5nm      (1ç™½,2.413é»’)
+7ï¼šç™½ã€€85nm      17
+7.5  5nm      (1ç™½,1.85é»’)
+8ï¼šé»’ã€€40nm      8
+8.5  5nm      (0ç™½,1.85é»’)
+9ï¼šç™½ã€€90nm      18
+9.5  5nm      (0ç™½,1é»’)
+10ï¼šé»’ã€€45nm     9
+10.5 5nm      (1.225ç™½,1é»’)
 
-11F”’@80nm
-11.5 5nm      (1.225”’,1.86•)
-12F•  55nm
-12.5 5nm      (1.225”’,1.86•)
+11ï¼šç™½ã€€80nm
+11.5 5nm      (1.225ç™½,1.86é»’)
+12ï¼šé»’  55nm
+12.5 5nm      (1.225ç™½,1.86é»’)
 
 
 
@@ -1859,12 +1859,12 @@ string BuprestidaeModelSmooth24::mkdir(string root) {
 	std::filesystem::create_directory((root + "BuprestidaeSmooth24").c_str());
 
 	string name = "BuprestidaeSmooth24\\" + to_s(int(lambda));
-	std::filesystem::create_directory((root + name).c_str());	//ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+	std::filesystem::create_directory((root + name).c_str());	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
 	return name + "\\";
 }
 
 double BuprestidaeModelSmooth24::calcEPS(const double& x, const double& y, enum INTEG f) {
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return EPSILON_0_S;
 
@@ -1891,7 +1891,7 @@ double BuprestidaeModelSmooth24::calcEPS(const double& x, const double& y, enum 
 }
 
 double BuprestidaeModelSmooth24::calcSIG(const double& x, const double& y, const double lam, enum INTEG f) {
-	double mx = x - mField->getNpml(); //ŒvZ—Ìˆæ“à‚ÖÊ‘œ
+	double mx = x - mField->getNpml(); //è¨ˆç®—é ˜åŸŸå†…ã¸å†™åƒ
 	double my = y - mField->getNpml();
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;
 

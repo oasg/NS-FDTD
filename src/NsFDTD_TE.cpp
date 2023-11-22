@@ -14,13 +14,13 @@ NsFDTD_TE::~NsFDTD_TE(){
 
 bool NsFDTD_TE::calc(){	
 	//std::lock_guard<std::mutex> lock(field_mutex);
-	CalcE();	//“dŠE‚ÌŒvZ
+	CalcE();	//é›»ç•Œã®è¨ˆç®—
 	CalcE_PML();
 
 	NsScatteredWave(wave_angle);
 	//absorbing();
 
-	CalcH();		//¥ŠE‚ÌŒvZ Hz(i+1/2, j+1/2) -> Hz[i,j]
+	CalcH();		//ç£ç•Œã®è¨ˆç®— Hz(i+1/2, j+1/2) -> Hz[i,j]
 	CalcH_PML();
 
 	//pointLightSource(Hz);
@@ -41,7 +41,7 @@ bool NsFDTD_TE::EndTask(){
 
 	NTFFindexform(label, NTFF::NTFFDATA | NTFF::TOTAL);
 
-	//I—¹ğŒ‚ÌŠm”F
+	//çµ‚äº†æ¡ä»¶ã®ç¢ºèª
 	if( !Terminate())
 		return false;
 
@@ -51,15 +51,15 @@ bool NsFDTD_TE::EndTask(){
 }
 
 void NsFDTD_TE::field(){		
-	super::field();	//—U“d—¦‚Ìİ’è
+	super::field();	//èª˜é›»ç‡ã®è¨­å®š
 	setWorkingDirPass(MakeDir("Ns"));
 
-	R_M = NsCoef();		//·•ª‰‰Z—p‚ÌŒvZ’è”‚Ìİ’è
+	R_M = NsCoef();		//å·®åˆ†æ¼”ç®—ç”¨ã®è¨ˆç®—å®šæ•°ã®è¨­å®š
 	R_P = 1.0-R_M;
 
-	//ƒĞ=0‚ğ—p‚¢‚ÄÅ“K‰»‚µ‚½’è”‚ÌŒvZ
+	//Ïƒ=0ã‚’ç”¨ã„ã¦æœ€é©åŒ–ã—ãŸå®šæ•°ã®è¨ˆç®—
 	double mu;
-	double sig = 0;	//^‹ó‚Ì—U“d—¦, “±“d—¦, “§¥—¦
+	double sig = 0;	//çœŸç©ºã®èª˜é›»ç‡, å°é›»ç‡, é€ç£ç‡
 	for(int i=0; i<mField->getNpx(); i++){
 		for(int j=0; j<mField->getNpy(); j++){
 			mu = MU_0_S;
@@ -89,7 +89,7 @@ void NsFDTD_TE::PMLfield() {
 #endif
 	for (int i = 0; i < mField->getNpx(); i++) {
 		for (int j = 0; j < mField->getNpy(); j++) {
-			double sig_x = mField->sigmaX(i, j);			//ƒĞx, ƒĞx*, ƒĞy, ƒĞy* @@<- B-PML‚ÌŒW”
+			double sig_x = mField->sigmaX(i, j);			//Ïƒx, Ïƒx*, Ïƒy, Ïƒy* ã€€ã€€<- B-PMLã®ä¿‚æ•°
 			double sig_xx = mu / EPSILON_0_S * sig_x;
 			double sig_y = mField->sigmaY(i, j);
 			double sig_yy = mu / EPSILON_0_S * sig_y;
@@ -135,7 +135,7 @@ void NsFDTD_TE::PMLfield() {
 }
 
 void NsFDTD_TE::absorbing(){
-	//H(i,j)‚¾‚Á‚½‚â‚Âi¡‚Ü‚Å‚¿‚á‚ñ‚Æ“®‚¢‚Ä‚¢‚½‚â‚Âj
+	//H(i,j)ã ã£ãŸã‚„ã¤ï¼ˆä»Šã¾ã§ã¡ã‚ƒã‚“ã¨å‹•ã„ã¦ã„ãŸã‚„ã¤ï¼‰
 	
 	absorbing_nsRL(Ey, 0,	 LEFT);
 	absorbing_nsRL(Ey, mField->getNpx()-2, RIGHT);
@@ -151,8 +151,8 @@ void NsFDTD_TE::absorbing(){
 
 
 
-//double a = 0; //ƒ¿ = ƒĞ/(2ƒÃ) ‚æ‚è, ¡‚ÍƒĞ=0‚Æ‚µ‚Ä‚¢‚é‚Ì‚Åƒ¿‚à0
+//double a = 0; //Î± = Ïƒ/(2Îµ) ã‚ˆã‚Š, ä»Šã¯Ïƒ=0ã¨ã—ã¦ã„ã‚‹ã®ã§Î±ã‚‚0
 //double u = sqrt( (_pow(sin(sqrt(w_s*w_s - a*a)*DT_S/2 ),2)+_pow( sinh(a*DT_S/2),2) )/ (_pow(sin(k_s*DT_S/2),2)*cosh(a*DT_S))  );
-// a = 0, tanh(0) = sinh(0) = 0, cosh(0) = 1@‚ğ—p‚¢‚ÄÅ“K‰»‚·‚é
+// a = 0, tanh(0) = sinh(0) = 0, cosh(0) = 1ã€€ã‚’ç”¨ã„ã¦æœ€é©åŒ–ã™ã‚‹
 
 
