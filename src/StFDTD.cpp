@@ -5,9 +5,6 @@ StFDTD::StFDTD()
 {
 	cout << "StFDTD Constructor" << endl;
 
-	ButtonFactory::addButton("time", 0, UNCHECK);
-	ButtonFactory::addButton("phi" , 0, UNCHECK);
-	ButtonFactory::addButton("str" , 0, UNCHECK);
 
 }
 
@@ -39,9 +36,9 @@ bool StFDTD::calc(){
 	//phi[index(mField->getNx()/2, mField->getNy()/2, +1)] += 5*(1-exp(-0.01*time*time))*sin(- w_s*time);
 
 	//{^ĚlXV
-	ButtonFactory::setButton("time", time);
-	ButtonFactory::setButton("phi", phi[index(9*mField->getNx()/10, mField->getNy()/2, +1)].real());
-	ButtonFactory::setButton("str", norm(phi[index(9*mField->getNx()/10, mField->getNy()/2)]));
+//	ButtonFactory::setButton("time", time);
+//	ButtonFactory::setButton("phi", phi[index(9*mField->getNx()/10, mField->getNy()/2, +1)].real());
+//	ButtonFactory::setButton("str", norm(phi[index(9*mField->getNx()/10, mField->getNy()/2)]));
 
 	if((int)time%1000 == 0) cout << "time=" << time << endl;	
 

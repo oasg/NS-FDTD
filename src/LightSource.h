@@ -3,7 +3,7 @@
 
 #include "Object.h"
 #include "PhysicalConstant.h"
-#include "Field.h"
+#include "type/Field.h"
 
 class LightSource{
 	const int angle;

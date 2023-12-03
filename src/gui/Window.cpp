@@ -14,7 +14,7 @@ namespace GUI
 #ifdef __APPLE__
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-        _window = glfwCreateWindow(width, height, "EMQuest", nullptr, nullptr);
+        _window = glfwCreateWindow(width, height, "FTDT", nullptr, nullptr);
         if (_window == NULL)
         {
             std::cout << "Failed to create GLFW window" << std::endl;
@@ -31,6 +31,7 @@ namespace GUI
     {
         glfwDestroyWindow(_window);
         glfwTerminate();
+        std::cout<<"GUI DESTROY"<<std::endl;
     }
     void GUIWindow::InitContext()
     {
@@ -50,5 +51,6 @@ namespace GUI
             glfwSwapBuffers(_window);
             glfwPollEvents();
         }
+
     }
 }

@@ -28,6 +28,7 @@ namespace GUI
 
     GUIApp::~GUIApp()
     {
+        
         // Cleanup
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();

@@ -10,6 +10,7 @@ namespace GUI{
     class GUIElement {
     public:
         virtual void draw() = 0;
+        ~GUIElement() = default;
     };
 
 

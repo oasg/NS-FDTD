@@ -1,10 +1,10 @@
 #include"Model.h"
-#include"Field.h"
+#include"type/Field.h"
 #include <filesystem>
 /*---------------------------------------------*/
 /*--------------円柱Mie散乱--------------------*/
 /*---------------------------------------------*/
-FazzyMieModel::FazzyMieModel(Field *f):
+FazzyMieModel::FazzyMieModel(TYPE::Field *f):
 FazzyModel(f)
 {
 	ep = 1.6*1.6*EPSILON_0_S;			//誘電率 = (屈折率)^2
@@ -53,7 +53,7 @@ double FazzyMieModel::calcEPS(const double& x, const double& y, enum INTEG f){
 /*---------------------------------------------*/
 /*--------------多層膜-------------------------*/
 /*---------------------------------------------*/
-FazzySlabModel::FazzySlabModel(Field* f):
+FazzySlabModel::FazzySlabModel(TYPE::Field* f):
 FazzyModel(f), ep1(2.0*2.0*EPSILON_0_S), ep2(EPSILON_0_S), width1(250), width2(50)
 {
 }
@@ -92,7 +92,7 @@ string FazzySlabModel::mkdir(string root){
 /*----------------------------*/
 /*-----------縦断面-----------*/
 /*----------------------------*/
-FazzyHair_incidenceModel::FazzyHair_incidenceModel(Field* f) :
+FazzyHair_incidenceModel::FazzyHair_incidenceModel(TYPE::Field* f) :
 	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), alpha(5), cwidth(0.5), r(32+(4.36-cwidth))
 	//alpha:キューティクルの角度(deg)  cwidth:キューティクルの幅(μm)  r:毛の半径(μm)(半径+キューティクルが重なる領域)
 {
@@ -214,7 +214,7 @@ string FazzyHair_incidenceModel::mkdir(string root) {
 /*--------------------------------------------------*/
 /*-----------縦断面(多層膜キューティクル)-----------*/
 /*--------------------------------------------------*/
-FazzyHair_incidenceLayerModel::FazzyHair_incidenceLayerModel(Field* f) :
+FazzyHair_incidenceLayerModel::FazzyHair_incidenceLayerModel(TYPE::Field* f) :
 	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), alpha(5), cwidth(0.5), length(50), r(32), cmc(0.06)
 	//alpha:キューティクルの角度(deg)  cwidth:キューティクルの厚さ(μm)  length:キューティクルの長さ(μm)	r:毛皮質範囲の半径(μm)  cmc:CMC範囲(μm)
 {
@@ -345,7 +345,7 @@ string FazzyHair_incidenceLayerModel::mkdir(string root) {
 }
 
 
-FazzyHair_incidenceLayerModel_try::FazzyHair_incidenceLayerModel_try(Field* f) :
+FazzyHair_incidenceLayerModel_try::FazzyHair_incidenceLayerModel_try(TYPE::Field* f) :
 	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), alpha(5), cwidth(0.5), length(30), r(4), cmc(0.06)
 	//alpha:キューティクルの角度(deg)  cwidth:キューティクルの厚さ(μm)  length:キューティクルの長さ(μm)	r:毛皮質範囲の半径(μm)  cmc:CMC範囲(μm)
 {
@@ -481,7 +481,7 @@ string FazzyHair_incidenceLayerModel_try::mkdir(string root) {
 /*------------------------------------------------*/
 /*-----------縦断面(キューティクルなし)-----------*/
 /*------------------------------------------------*/
-FazzyHair_NONcuticleModel::FazzyHair_NONcuticleModel(Field* f) :
+FazzyHair_NONcuticleModel::FazzyHair_NONcuticleModel(TYPE::Field* f) :
 	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), r(32)
 	//r:毛の半径(μm)
 {
@@ -548,7 +548,7 @@ string FazzyHair_NONcuticleModel::mkdir(string root) {
 /*----------------------------*/
 /*-----------横断面-----------*/
 /*----------------------------*/
-FazzyHair_normalModel::FazzyHair_normalModel(Field* f) :
+FazzyHair_normalModel::FazzyHair_normalModel(TYPE::Field* f) :
 	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), e(0.6), r(32)
 	//a:離心率  r:毛の半径(μm)
 {
@@ -606,7 +606,7 @@ string FazzyHair_normalModel::mkdir(string root) {
 	return name + "/";
 }
 
-BuprestidaeModel::BuprestidaeModel(Field* f,double lambda):FazzyModel(f){
+BuprestidaeModel::BuprestidaeModel(TYPE::Field* f,double lambda):FazzyModel(f){
 	#define WHITE true
     #define BLACK false
 	//this->lambda = lambda;
@@ -787,7 +787,7 @@ double BuprestidaeModel::calcSIGFromN(bool white) {
 	
 }
 
-BuprestidaeModelWithNoise::BuprestidaeModelWithNoise(Field* f, double lambda) :FazzyModel(f) {
+BuprestidaeModelWithNoise::BuprestidaeModelWithNoise(TYPE::Field* f, double lambda) :FazzyModel(f) {
 #define WHITE true
 #define BLACK false
 	//this->lambda = lambda;
@@ -1144,7 +1144,7 @@ double BuprestidaeModelWithNoise::selectLayer(double x, double start) {
 	return 1;
 }
 
-BuprestidaeModelsmooth2nd::BuprestidaeModelsmooth2nd(Field* f, double lambda) :FazzyModel(f) {
+BuprestidaeModelsmooth2nd::BuprestidaeModelsmooth2nd(TYPE::Field* f, double lambda) :FazzyModel(f) {
 #define WHITE true
 #define BLACK false
 	//this->lambda = lambda;
@@ -1394,7 +1394,7 @@ double BuprestidaeModelsmooth2nd::selectLayer(double x, double start) {
 	return 1;
 }
 
-BuprestidaeModelWithNoise2nd::BuprestidaeModelWithNoise2nd(Field* f, double lambda) :FazzyModel(f) {
+BuprestidaeModelWithNoise2nd::BuprestidaeModelWithNoise2nd(TYPE::Field* f, double lambda) :FazzyModel(f) {
 #define WHITE true
 #define BLACK false
 	//this->lambda = lambda;
@@ -1759,7 +1759,7 @@ double BuprestidaeModelWithNoise2nd::selectLayer(double x, double start) {
 	return 1;
 }
 
-BuprestidaeModelSmooth24::BuprestidaeModelSmooth24(Field* f, double lambda) :FazzyModel(f) {
+BuprestidaeModelSmooth24::BuprestidaeModelSmooth24(TYPE::Field* f, double lambda) :FazzyModel(f) {
 #define WHITE true
 #define BLACK false
 	//this->lambda = lambda;

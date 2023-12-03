@@ -6,6 +6,7 @@ namespace GUI{
 
     }
     SimControlElemnet::~SimControlElemnet() {
+
     }
     void SimControlElemnet::draw() {
         // Create a window called "My First Tool", with a menu bar.
@@ -69,12 +70,13 @@ namespace GUI{
 
     SimControl::~SimControl() {
         //todo thread control!!!
+        doStop();
         _cal_thread.join();
     }
 
     void SimControl::doSim() {
         auto cal = [=](){
-            while(1){
+            while(_run){
                 _sim->calc();
             }
         };
@@ -92,6 +94,9 @@ namespace GUI{
         _watch->imageView();
     }
 
-
+    void SimControl::doStop()
+    {
+        _run = false;
+    }
 }
 

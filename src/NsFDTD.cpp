@@ -60,7 +60,6 @@ bool NsFDTD::calc(){
 
 	//phi[index(mField->getNx()/2, mField->getNy()/2, +1)] += 5*(1-exp(-0.01*time*time))*sin(- w_s*time);
 	pointLightSource(phi);
-	ButtonFactory::setButton("time", time);
 	if(time > 2500){
 		MiePrint(phi, "Mie_Nsphi2");
 		return false;

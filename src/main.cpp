@@ -4,10 +4,7 @@
 
 #include <string>
 #include "Simulator.h"
-#include "EventState.h"
 #include "gui/Window.hpp"
-#include "ImageBuffer.hpp"
-#include <thread>
 
 
 void SIMThread(std::shared_ptr<Simulator> sim){

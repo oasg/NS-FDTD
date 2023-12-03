@@ -34,7 +34,7 @@ Solver::Solver()
 	//mField = new Field(3000, 3000, 4, 16);//4
 	//mField = new Field(1000, 1000, 4, 8);
 
-	mField = new Field(4000, 4000, 10, 10);
+	mField = new TYPE::Field(4000, 4000, 10, 10);
 
 	//LambdaRange    = Range<double>(Nano_S(400), Nano_S(600), Nano_S(30));
 	//LambdaRange    = Range<double>(Nano_S(100), Nano_S(100), Nano_S(5)); // �ｿｽ�ｿｽ
@@ -63,8 +63,8 @@ Solver::Solver()
 
 	//mModel = new BuprestidaeModel(mField, Inv_Nano_S(lambda_s));
 	//mModel = new BuprestidaeModelWithNoise(mField, Inv_Nano_S(lambda_s));
-	mModel	= new FazzyHair_incidenceLayerModel_try(mField);
-	//mModel	= new FazzyHair_incidenceLayerModel(mField);
+	//mModel	= new FazzyHair_incidenceLayerModel_try(mField);
+	mModel	= new FazzyHair_incidenceLayerModel(mField);
 	//mModel	= new FazzyHair_normalModel(mField);
 	//mModel	= new FazzyHair_NONcuticleModel(mField);
 

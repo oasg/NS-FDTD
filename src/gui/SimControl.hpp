@@ -26,12 +26,14 @@ namespace GUI{
             ~SimControl();
             void doSim();
             void doWatch(double imageDuration);
+            void doStop();
 
         private:
             std::shared_ptr<Simulator> _sim;
             std::thread _cal_thread;
             std::unique_ptr<SimWatch> _watch;
             double tick;
+            bool _run = true;
     };
 
     //draw SimControl menu

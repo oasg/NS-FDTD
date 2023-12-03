@@ -4,10 +4,12 @@ project(NS-FDTD VERSION 0.1.0 LANGUAGES C CXX)
 add_subdirectory(third_party/glfw)
 file(GLOB SRC src/* 
             src/gui/*
+            src/type/*
             third_party/glad/src/glad.c)
 include_directories(
     src
     src/gui
+    src/type
     third_party/glad/include
     third_party/imgui
     )

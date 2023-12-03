@@ -1,7 +1,6 @@
 #ifndef _SIMULATOR_H
 #define _SIMULATOR_H
 
-#include"MenuWindow.h"
 #include "NsFDTD_TM.h"
 #include "NsFDTD_TE.h"
 #include "StFDTD_TM.h"

@@ -2,16 +2,14 @@
 #define _SOLVER_H
 
 #include "Object.h"
-#include "MenuWindow.h"
 #include "Model.h"
-//#include <direct.h>
 #include<stack>
 #include<math.h>
 #include<iomanip>
 #include "PhysicalConstant.h"
-#include "Field.h"
+#include "type/Field.h"
 #include<filesystem>
-#include "ImageBuffer.hpp"
+#include "gui/ImageBuffer.hpp"
 #include<mutex>
 
 #define _USE_MATH_DEFINES
@@ -91,7 +89,7 @@ protected:
 	FazzyModel	*mModel;
 	//protect the field to access by gui(main) thread
 	std::mutex field_mutex;
-	Field		*mField;	//�t�B�[���h
+	TYPE::Field		*mField;	//�t�B�[���h
 public:
 	Solver();
 	virtual ~Solver();
@@ -99,7 +97,7 @@ public:
 	virtual void draw(std::shared_ptr<GUI::ImageBuffer> img) = 0;
 	virtual void field() = 0;
 	double getTime(){ return time; }
-	Field* getFild(){ return mField; }
+	TYPE::Field* getFild(){ return mField; }
 	void nextTime(){
 		time += DT_S;							//���Ԃ̍X�V
 		ray_coef = 1-exp(-0.0001*time*time);	//�g���s�A���ɓ��˂����̂�h�����߂̌W��
