@@ -34,7 +34,7 @@ Solver::Solver()
 	//mField = new Field(3000, 3000, 4, 16);//4
 	//mField = new Field(1000, 1000, 4, 8);
 
-	mField = new TYPE::Field(4000, 4000, 10, 10);
+	mField = new TYPE::Field(8000, 8000, 5, 10);
 
 	//LambdaRange    = Range<double>(Nano_S(400), Nano_S(600), Nano_S(30));
 	//LambdaRange    = Range<double>(Nano_S(100), Nano_S(100), Nano_S(5)); // �ｿｽ�ｿｽ
@@ -362,7 +362,7 @@ void Solver::draw(Complex *p, Complex *q,std::shared_ptr<GUI::ImageBuffer> img){
 	//critical section
 	//the calculation threads will be locked
 	//the drawing thread will copy the field to the image buffer
-	std::lock_guard<std::mutex> lock(field_mutex);
+	//std::lock_guard<std::mutex> lock(field_mutex);
 	for (int i = 0; i < mField->getNpx(); i++){
 		for (int j = 0; j < mField->getNpy(); j++){
 			Color c = color( norm(p[index(i,j)] + q[index(i,j)]) );
@@ -381,7 +381,7 @@ void Solver::draw(Complex *p,std::shared_ptr<GUI::ImageBuffer> img){
 	//critical section
 	//the calculation threads will be locked
 	//the drawing thread will copy the field to the image buffer
-	std::lock_guard<std::mutex> lock(field_mutex);
+	//std::lock_guard<std::mutex> lock(field_mutex);
 	for (int i = 0; i < mField->getNpx(); i++){
 		for (int j = 0; j < mField->getNpy(); j++){
 			Color c = color( norm(p[index(i,j)]) );

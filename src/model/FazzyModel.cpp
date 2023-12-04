@@ -1,4 +1,4 @@
-#include"Model.h"
+#include"FazzyModel.h"
 #include"type/Field.h"
 #include <filesystem>
 /*---------------------------------------------*/
@@ -13,7 +13,6 @@ FazzyModel(f)
 
 string FazzyMieModel::mkdir(string root){
 	std::filesystem::create_directory((root + "Mie").c_str());
-
 	string name = "Mie/" + to_s((int)(mField->cellToNano(r))) +"nm,"+ mField->getStringCellInfo();
 	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 	return name + "/";
@@ -30,7 +29,6 @@ double FazzyMieModel::calcEPS(const double& x, const double& y, enum INTEG f){
 
 	//中心との距離が半径+√2/2セル以上なら, 完全に媒質の外(念のため, 半径+1 以上か調べている)
 	if(_x*_x + _y*_y >= pow(r+1, 2.0))
-
 		return EPSILON_0_S;
 
 	//中心との距離が, 半径-√2/2セル以内なら, 完全に媒質の中

@@ -2,7 +2,7 @@
 #define _SOLVER_H
 
 #include "Object.h"
-#include "Model.h"
+#include "model/FazzyModel.h"
 #include<stack>
 #include<math.h>
 #include<iomanip>
@@ -21,14 +21,13 @@ enum DIRECT{
 	BOTTOM = +1
 };
 
-//NTTF���鎞�̏����o���I�v�V����
+//NTTFする時の書き出しオプション
 namespace NTFF{
 	typedef unsigned int output;
-	const output NTFFDATA = 1;			//�ϊ������f�[�^�i�G�l���M�[�j�������o��
-	const output TOTAL    = 1 << 1;		//�ϊ������f�[�^�̍��v���Ō�̍s�ɏ����o��
-	const output REFLEC   = 1 << 2;		//�ϊ������f�[�^�����v�Ŋ��������˗��������o��
+	const output NTFFDATA = 1;			//変換したデータ（エネルギー）を書き出す
+	const output TOTAL    = 1 << 1;		//変換したデータの合計を最後の行に書き出す
+	const output REFLEC   = 1 << 2;		//変換したデータを合計で割った反射率を書き出す
 }
-
 namespace DATAFILE{
 	typedef bool filemode;
 	const filemode    ADD = false;
@@ -71,25 +70,23 @@ public:
 
 class Solver{
 private:
-	string DataDir;			//�f�[�^��u���f�B���N�g���ւ̃p�X
-	string WorkingDir;		//���[�g���烏�[�L���O�f�B���N�g���ւ̃p�X
+	string DataDir;			//データを置くディレクトリへのパス
+	string WorkingDir;		//ルートからワーキングディレクトリへのパス
 	stack<double> LamList;
 	stack<int>	  WaveAngleList;
 protected:
-	const double H_S, DT_S;	//1�Z���̑傫���̃V�~�����[�V�����l, ������, 1�X�e�b�v������̎���
-	double time;	//����
-	double lambda_s, w_s, k_s, T_s;		//�V�~�����[�V�����p�̒l
-	int		wave_angle;	//�g�̊p�x
-	double	*n_s;		//���ܗ�, �U�d��
-	double  *Sig_hair;	//�����j���F�f�̋z���W��
+	const double H_S, DT_S;	//1セルの大きさのシミュレーション値, 物理量, 1ステップあたりの時間
+	double time;	//時間
+	double lambda_s, w_s, k_s, T_s;		//シミュレーション用の値
+	int		wave_angle;	//波の角度
+	double	*n_s;		//屈折率, 誘電率
+	double  *Sig_hair;	//メラニン色素の吸収係数
 	double ray_coef;
 	int maxStep;
 	Range<double>	LambdaRange;
 	Range<int>		WaveAngleRange;
 	FazzyModel	*mModel;
-	//protect the field to access by gui(main) thread
-	std::mutex field_mutex;
-	TYPE::Field		*mField;	//�t�B�[���h
+	TYPE::Field* mField;	//フィールド
 public:
 	Solver();
 	virtual ~Solver();
