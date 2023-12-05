@@ -87,6 +87,7 @@ protected:
 	Range<int>		WaveAngleRange;
 	FazzyModel	*mModel;
 	TYPE::Field* mField;	//フィールド
+	
 public:
 	Solver();
 	virtual ~Solver();

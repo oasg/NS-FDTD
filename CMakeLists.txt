@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.0.0)
 set(CMAKE_CXX_STANDARD 20)
 project(NS-FDTD VERSION 0.1.0 LANGUAGES C CXX)
 add_subdirectory(third_party/glfw)
+add_subdirectory(third_party/json)
+add_subdirectory(third_party/gtest)
+
 file(GLOB SRC src/* 
             src/gui/*
             src/type/*
@@ -12,6 +15,7 @@ include_directories(
     src
     third_party/glad/include
     third_party/imgui
+    third_party/imguifile
     )
 
 
@@ -27,12 +31,30 @@ add_executable(NS-FDTD
     third_party/imgui/imgui_tables.cpp
     third_party/imgui/imgui_widgets.cpp
     third_party/imgui/imgui.cpp
+    third_party/imguifile/ImGuiFileDialog.cpp
 )
 target_link_libraries(NS-FDTD 
 OpenGL::GL
 glfw
+nlohmann_json
 OpenMP::OpenMP_CXX
 )
 
-
-
+###
+### Tests
+###
+enable_testing()
+add_executable(
+  model_parser_test
+  tests/test_model_phase.cpp
+  src/model/model_builder.cpp
+  src/model/FazzyModel.cpp
+  src/type/Field.cpp
+)
+target_link_libraries(
+  model_parser_test
+  nlohmann_json
+  GTest::gtest_main
+)
+include(GoogleTest)
+gtest_discover_tests(model_parser_test)
