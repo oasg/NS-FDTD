@@ -4,6 +4,7 @@ project(NS-FDTD VERSION 0.1.0 LANGUAGES C CXX)
 add_subdirectory(third_party/glfw)
 add_subdirectory(third_party/json)
 add_subdirectory(third_party/gtest)
+add_subdirectory(third_party/spdlog)
 
 file(GLOB SRC src/* 
             src/gui/*
@@ -34,10 +35,11 @@ add_executable(NS-FDTD
     third_party/imguifile/ImGuiFileDialog.cpp
 )
 target_link_libraries(NS-FDTD 
-OpenGL::GL
-glfw
-nlohmann_json
-OpenMP::OpenMP_CXX
+  OpenGL::GL
+  glfw
+  nlohmann_json
+  OpenMP::OpenMP_CXX
+  spdlog
 )
 
 ###

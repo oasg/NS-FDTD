@@ -1,7 +1,7 @@
 import json
 import numpy as np
 
-cell_size = np.float64(5)
+cell_size = np.float64(10)
 def Nano_S(length):
     return length/cell_size
 
@@ -12,7 +12,7 @@ model = {
     "name": "hairmodel",
     "field":{
         "type": "2d",
-        "size[nm]": [8000, 8000],
+        "size[nm]": [4000, 4000],
         "cell_size[nm]": cell_size,
         "boundary_size": 10,
         #other parameters

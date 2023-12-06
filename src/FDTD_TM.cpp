@@ -12,8 +12,8 @@
 
 using namespace std;
 const int n_ang = 180;
-FDTD_TM::FDTD_TM()
-:Solver()
+FDTD_TM::FDTD_TM(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model)
+:Solver(field,model)
 {
 	//�̈�m��
 	Ez  = new complex<double>[3*mField->getNcel()];		//Ez(i,j)      �� Ez(i,j)

@@ -5,6 +5,7 @@
 #include "GUIElement.hpp"
 #include <thread>
 #include "ImageBuffer.hpp"
+#include "model/model_builder.hpp"
 namespace GUI{
 
     //watch simulation result realtime
@@ -22,18 +23,21 @@ namespace GUI{
 
     class SimControl{
         public:
-            explicit SimControl(TYPE::sim_type type);
+            explicit SimControl(TYPE::sim_type type,std::string filePath);
             ~SimControl();
             void doSim();
             void doWatch(double imageDuration);
             void doStop();
+            bool simBuild();
+            inline bool ready(){ return _run; }
 
         private:
+            std::shared_ptr<ModelBuilder> _builder;
             std::shared_ptr<Simulator> _sim;
             std::thread _cal_thread;
             std::unique_ptr<SimWatch> _watch;
             double tick;
-            bool _run = true;
+            bool _run = false;
     };
 
     //draw SimControl menu
@@ -48,7 +52,8 @@ namespace GUI{
         int currentItem = 0;
         float _duration = 0.1;
         bool _visualize = false;
-
+        std::string filePathName = "hairmodel.json";
+        std::string filePath = "scene/model/hairmodel.json";
 
     };
 

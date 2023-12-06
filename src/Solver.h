@@ -11,6 +11,7 @@
 #include<filesystem>
 #include "gui/ImageBuffer.hpp"
 #include<mutex>
+#include "model/model_builder.hpp"
 
 #define _USE_MATH_DEFINES
 
@@ -85,17 +86,19 @@ protected:
 	int maxStep;
 	Range<double>	LambdaRange;
 	Range<int>		WaveAngleRange;
-	FazzyModel	*mModel;
-	TYPE::Field* mField;	//フィールド
+	std::shared_ptr<TYPE::Field> mField;
+	std::shared_ptr<FazzyModel> mModel;
+
+
 	
 public:
-	Solver();
+	explicit Solver(std::shared_ptr<TYPE::Field> field,std::shared_ptr<FazzyModel> model);
 	virtual ~Solver();
 	virtual bool calc() = 0;
 	virtual void draw(std::shared_ptr<GUI::ImageBuffer> img) = 0;
 	virtual void field() = 0;
 	double getTime(){ return time; }
-	TYPE::Field* getFild(){ return mField; }
+	std::shared_ptr<TYPE::Field> getFild(){ return mField; }
 	void nextTime(){
 		time += DT_S;							//���Ԃ̍X�V
 		ray_coef = 1-exp(-0.0001*time*time);	//�g���s�A���ɓ��˂����̂�h�����߂̌W��

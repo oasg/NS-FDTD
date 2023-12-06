@@ -5,8 +5,8 @@
 #include <math.h> 
 using namespace std;
 
-FDTD_TE::FDTD_TE()
-:Solver()
+FDTD_TE::FDTD_TE(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model)
+:Solver(field,model)
 {
 	cout << "FDTD_TE Constructor" << endl;
 	Hz  = new complex<double>[3*mField->getNcel()];		//Hz(i+0.5, j+0.5) �ｿｽ�ｿｽ Hz(i,j)�ｿｽ�ｿｽ�ｿｽﾓ厄ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ �ｿｽﾌ茨ｿｽm�ｿｽ�ｿｽ

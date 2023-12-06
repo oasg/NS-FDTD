@@ -2,8 +2,8 @@
 static double min_lambda = 200*_pow(10,-9);		//ďż˝ďż˝ďż˝×ďż˝gďż˝ďż˝ďż˝ĚÍďż˝
 static double max_lambda = 800*_pow(10,-9);
 
-FDTD::FDTD()
-:Solver()
+FDTD::FDTD(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model)
+:Solver(field,model)
 {
 	phi  = new complex<double>[3*mField->getNcel()];		//ďż˝Ěďż˝mďż˝ďż˝
 	np   = new double[mField->getNcel()];		//ďż˝vďż˝Zďż˝pďż˝č

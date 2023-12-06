@@ -5,7 +5,7 @@
 class StFDTD_TM: public FDTD_TM{
 	typedef FDTD_TM super;
 public:
-	StFDTD_TM();
+	StFDTD_TM(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model);
 	~StFDTD_TM();
 	bool calc();
 	void field();

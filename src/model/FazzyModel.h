@@ -17,10 +17,10 @@ enum INTEG{
 
 class FazzyModel {
 protected:
-	TYPE::Field * mField;
+	std::shared_ptr<TYPE::Field> mField;
 
 public:
-	FazzyModel(TYPE::Field *field) {
+	FazzyModel(std::shared_ptr<TYPE::Field>field) {
 		mField = field;
 	};
 	virtual string mkdir(string root) = 0;
@@ -36,7 +36,7 @@ class FazzySlabModel :public FazzyModel{
 	const double ep1, ep2;
 	const int width1, width2;
 public:
-	FazzySlabModel(TYPE::Field*);
+	FazzySlabModel(std::shared_ptr<TYPE::Field>);
 	string mkdir(string root);
 	double calcEPS(const double&, const double&, enum INTEG = D_XY);
 	bool update(int){
@@ -52,7 +52,7 @@ class FazzyMieModel :public FazzyModel{
 	double ep;
 	double r;
 public:
-	FazzyMieModel(TYPE::Field* f);
+	FazzyMieModel(std::shared_ptr<TYPE::Field> f);
 	string mkdir(string root);	//ディレクトリ作成
 	virtual void InitializeLambda(double a) {
 		this->r = mField->nanoToCell(a);
@@ -79,7 +79,7 @@ class FazzyHair_incidenceModel :public FazzyModel {
 	const int alpha;
 	double alphaR, length, ln, lx, ly, rn, cwidth, r;
 public:
-	FazzyHair_incidenceModel(TYPE::Field*);
+	FazzyHair_incidenceModel(std::shared_ptr<TYPE::Field>);
 	string mkdir(string root);
 	double calcEPS(const double&, const double&, enum INTEG = D_XY);
 	double calcSIG(const double&, const double&, const double lam, enum INTEG = D_XY);
@@ -107,7 +107,7 @@ class FazzyHair_incidenceLayerModel :public FazzyModel {
 	ly:キューティクル範囲(nmシミュレーション値)		lx:x方向長さ(nmシミュレーション値)
 	*/
 public:
-	FazzyHair_incidenceLayerModel(TYPE::Field*);
+	FazzyHair_incidenceLayerModel(std::shared_ptr<TYPE::Field>);
 	string mkdir(string root);
 	double calcEPS(const double&, const double&, enum INTEG = D_XY);
 	double calcSIG(const double&, const double&, const double lam, enum INTEG = D_XY);
@@ -133,7 +133,7 @@ class FazzyHair_incidenceLayerModel_try :public FazzyModel {
 	ly:キューティクル範囲(nmシミュレーション値)		lx:x方向長さ(nmシミュレーション値)
 	*/
 public:
-	FazzyHair_incidenceLayerModel_try(TYPE::Field*);
+	FazzyHair_incidenceLayerModel_try(std::shared_ptr<TYPE::Field>);
 	string mkdir(string root);
 	double calcEPS(const double&, const double&, enum INTEG = D_XY);
 	double calcSIG(const double&, const double&, const double lam, enum INTEG = D_XY);
@@ -151,7 +151,7 @@ class FazzyHair_normalModel :public FazzyModel {
 	const int r;
 	double rn, ax, by;
 public:
-	FazzyHair_normalModel(TYPE::Field*);
+	FazzyHair_normalModel(std::shared_ptr<TYPE::Field>);
 	string mkdir(string root);
 	double calcEPS(const double&, const double&, enum INTEG f);
 	bool update(int) {
@@ -168,7 +168,7 @@ class FazzyHair_NONcuticleModel :public FazzyModel {
 	const int r;
 	double rn;
 public:
-	FazzyHair_NONcuticleModel(TYPE::Field*);
+	FazzyHair_NONcuticleModel(std::shared_ptr<TYPE::Field>);
 	string mkdir(string root);
     double calcEPS(const double&, const double&, enum INTEG = D_XY);
 	double calcSIG(const double&, const double&, const double lam, enum INTEG = D_XY);
@@ -192,7 +192,7 @@ class BuprestidaeModel :public FazzyModel {
 	double imaginaryPartOfBlack[7];
 	double lambda, w;
 public:
-	BuprestidaeModel(TYPE::Field*, double);
+	BuprestidaeModel(std::shared_ptr<TYPE::Field>, double);
 	string mkdir(string root);
 	double calcEPS(const double& x, const double& y, enum INTEG f = D_XY);
 	double calcSIG(const double& x, const double& y, const double lam, enum INTEG f = D_XY);
@@ -257,7 +257,7 @@ class BuprestidaeModelWithNoise :public FazzyModel {
 	double imaginaryPartOfBlack[7];
 	double lambda, w;
 public:
-	BuprestidaeModelWithNoise(TYPE::Field*, double);
+	BuprestidaeModelWithNoise(std::shared_ptr<TYPE::Field>, double);
 	string mkdir(string root);
 	double calcEPS(const double& x, const double& y, enum INTEG f = D_XY);
 	double calcSIG(const double& x, const double& y, const double lam, enum INTEG f = D_XY);
@@ -321,7 +321,7 @@ class BuprestidaeModelsmooth2nd :public FazzyModel {
 	double imaginaryPartOfBlack[7];
 	double lambda, w;
 public:
-	BuprestidaeModelsmooth2nd(TYPE::Field*, double);
+	BuprestidaeModelsmooth2nd(std::shared_ptr<TYPE::Field>, double);
 	string mkdir(string root);
 	double calcEPS(const double& x, const double& y, enum INTEG f = D_XY);
 	double calcSIG(const double& x, const double& y, const double lam, enum INTEG f = D_XY);
@@ -386,7 +386,7 @@ class BuprestidaeModelWithNoise2nd :public FazzyModel {
 	double imaginaryPartOfBlack[7];
 	double lambda, w;
 public:
-	BuprestidaeModelWithNoise2nd(TYPE::Field*, double);
+	BuprestidaeModelWithNoise2nd(std::shared_ptr<TYPE::Field>, double);
 	string mkdir(string root);
 	double calcEPS(const double& x, const double& y, enum INTEG f = D_XY);
 	double calcSIG(const double& x, const double& y, const double lam, enum INTEG f = D_XY);
@@ -452,7 +452,7 @@ class BuprestidaeModelSmooth24 :public FazzyModel {
 	double imaginaryPartOfBlack[7];
 	double lambda, w;
 public:
-	BuprestidaeModelSmooth24(TYPE::Field*, double);
+	BuprestidaeModelSmooth24(std::shared_ptr<TYPE::Field>, double);
 	string mkdir(string root);
 	double calcEPS(const double& x, const double& y, enum INTEG f = D_XY);
 	double calcSIG(const double& x, const double& y, const double lam, enum INTEG f = D_XY);

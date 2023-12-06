@@ -12,10 +12,9 @@ using namespace std;
 
 class Simulator:public Object{
 private:
-	Solver *solv;	//Solver
-
+	std::shared_ptr<Solver> solv;
 public:
-	Simulator(TYPE::sim_type type);
+	Simulator(TYPE::sim_type type,std::shared_ptr<ModelBuilder> builder);
 	~Simulator();
 	inline int getFieldW(){return solv->getFild()->getNpx();};
 	inline int getFieldH(){return solv->getFild()->getNpy();};

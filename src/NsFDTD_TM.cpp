@@ -8,8 +8,8 @@
 #define new ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 //---------------�R���X�g���N�^, �f�X�g���N�^ -----------------//
-NsFDTD_TM::NsFDTD_TM()
-:FDTD_TM()
+NsFDTD_TM::NsFDTD_TM(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model)
+:FDTD_TM(field,model)
 {
 	cout << "NsFDTD_TM Constructor" << endl;
 };

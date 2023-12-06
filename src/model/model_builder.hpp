@@ -10,11 +10,13 @@ public:
     ModelBuilder(std::string path);
     ~ModelBuilder();
     bool buildModel();
+    std::shared_ptr<TYPE::Field> getField();
+    std::shared_ptr<FazzyModel> getModel();
 private:
+    bool enable = false;
     std::string path;
     nlohmann::json _json_data;
-    FazzyModel	*mModel;
-	TYPE::Field* mField;	//フィールド
-
+	std::shared_ptr<TYPE::Field> mField;
+	std::shared_ptr<FazzyModel> mModel;
 };
 #endif

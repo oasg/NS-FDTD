@@ -2,8 +2,8 @@
 #include"NsFDTD_TE.h"
 #include <omp.h>
 
-NsFDTD_TE::NsFDTD_TE()
-:FDTD_TE()
+NsFDTD_TE::NsFDTD_TE(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model)
+:FDTD_TE(field,model)
 {
 	cout << "NsFDTD_TE Constructor" << endl;
 };

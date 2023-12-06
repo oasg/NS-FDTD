@@ -14,66 +14,18 @@
 //#define new ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #define _USE_MATH_DEFINES
 
-Solver::Solver()
-	:H_S(1.0), DT_S(1.0)
+Solver::Solver(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model):mField(field), mModel(model),H_S(1.0), DT_S(1.0)
 {
-	//mField = new Field(2038, 2038, 2, 20); //width, height, �ｿｽ�ｿｽh, Npml
-	//mField = new Field(1700, 1700, 5, 20);
-	//mField = new Field(2500, 2500, 10, 20);
-	//mField = new Field(1845, 1845, 5, 20);
-	//mField = new Field(1865, 1865, 5, 20);
-
-	/****************** �ｿｽL�ｿｽ�ｿｽ�ｿｽ[�ｿｽe�ｿｽB�ｿｽN�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾌゑｿｽ ******************/
-	/* Field�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽT�ｿｽC�ｿｽY                                          */
-	/* Field(8000, 8000, 5, 10) Field(16000, 8000, 10, 10) �ｿｽﾈゑｿｽ */
-	/************************************************************/
-	//mField = new Field(1000, 1000, 10, 8); //1�ｿｽ�ｿｽ
-	//mField = new Field(1002, 1002, 6, 8);//2
-	
-	//mField = new Field(1002, 1002, 3, 8);//3
-	//mField = new Field(3000, 3000, 4, 16);//4
-	//mField = new Field(1000, 1000, 4, 8);
-
-	mField = new TYPE::Field(8000, 8000, 5, 10);
-
-	//LambdaRange    = Range<double>(Nano_S(400), Nano_S(600), Nano_S(30));
-	//LambdaRange    = Range<double>(Nano_S(100), Nano_S(100), Nano_S(5)); // �ｿｽ�ｿｽ
-	//LambdaRange = Range<double>(Nano_S(50), Nano_S(50), Nano_S(5)); //5
-	//80 //6
-	//120 //7
-	//200 //8
-	//400 //9
 	LambdaRange = Range<double>(Nano_S(380), Nano_S(700), Nano_S(5)); 
 	WaveAngleRange = Range<int>   (-90, 0, 5);
 
-
-
-
 	time = 0;
-	// T = 1/f = �ｿｽ�ｿｽ/c
-	maxStep  = 20000; // t/T == 100
-	//mField->sig = false;		//�ｿｽz�ｿｽ�ｿｽ�ｿｽW�ｿｽ�ｿｽ�ｿｽﾐの有�ｿｽ�ｿｽ�ｿｽ@�ｿｽL�ｿｽFtrue / �ｿｽ�ｿｽ�ｿｽFfalse (FazzyHair_incidence(Layer)Model�ｿｽﾌみ選�ｿｽ�ｿｽ�ｿｽA �ｿｽ�ｿｽ�ｿｽﾌ托ｿｽ�ｿｽﾌ場合false)
+	// T = 1/f = λ/c
+	maxStep  = 2000; // t/T == 100
+	//mField->sig = false;		//吸収係数σの有無　有：true / 無：false (FazzyHair_incidence(Layer)Modelのみ選択、 その他の場合false)
 	mField->sig = true;
-	n_s     = new double[mField->getNcel()];	//�ｿｽ�ｿｽ�ｿｽﾜ暦ｿｽ
-	Sig_hair = new double[mField->getNcel()];	//�ｿｽz�ｿｽ�ｿｽ�ｿｽ�ｿｽ
-
-
-	//mModel	= new FazzySlabModel(mField);
-	//mModel	= new FazzyMieModel(mField);
-
-	//mModel = new BuprestidaeModel(mField, Inv_Nano_S(lambda_s));
-	//mModel = new BuprestidaeModelWithNoise(mField, Inv_Nano_S(lambda_s));
-	//mModel	= new FazzyHair_incidenceLayerModel_try(mField);
-	mModel	= new FazzyHair_incidenceLayerModel(mField);
-	//mModel	= new FazzyHair_normalModel(mField);
-	//mModel	= new FazzyHair_NONcuticleModel(mField);
-
-	//mModel = new BuprestidaeModelWithNoise2nd(mField,Inv_Nano_S(lambda_s));
-	//mModel = new BuprestidaeModelsmooth2nd(mField, Inv_Nano_S(lambda_s));
-	//mModel = new BuprestidaeModelSmooth24(mField, Inv_Nano_S(lambda_s));
-
-
-
+	n_s     = new double[mField->getNcel()];	//屈折率
+	Sig_hair = new double[mField->getNcel()];	//吸光率
 	SetWaveParameter(LambdaRange.MIN());
 	wave_angle = WaveAngleRange.MIN();
 
@@ -93,14 +45,13 @@ Solver::Solver()
 #else
 	cout << "OpenMP not used" << endl;
 #endif
+
 }
 
-
-Solver::~Solver(){
-	delete[] n_s;
+Solver::~Solver()
+{
+    delete[] n_s;
 	delete[] Sig_hair;
-	delete mModel;
-	delete mField;
 	cout << "Solver Destructor" << endl;
 }
 

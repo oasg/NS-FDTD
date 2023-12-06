@@ -14,7 +14,7 @@ protected:
 	double *B_HZXp, *B_HZXm, *B_HZYp, *B_HZYm;
 
 public:
-	FDTD_TE();
+	FDTD_TE(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model);
 	virtual ~FDTD_TE();
 
 	virtual bool calc()=0;

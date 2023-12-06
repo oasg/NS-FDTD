@@ -25,7 +25,7 @@ protected:
 	double *B_HXp, *B_HXm, *B_HYp, *B_HYm;
 
 public:
-	FDTD_TM();
+	FDTD_TM(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model);
 	virtual ~FDTD_TM();
 	virtual bool calc()=0;
 	void draw(std::shared_ptr<GUI::ImageBuffer> img);

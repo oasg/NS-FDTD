@@ -7,7 +7,7 @@ class NsFDTD_TE: public FDTD_TE{
 private:
 	double R_P, R_M;
 public:
-	NsFDTD_TE();
+	NsFDTD_TE(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model);
 	~NsFDTD_TE();
 	bool calc();
 	void field();

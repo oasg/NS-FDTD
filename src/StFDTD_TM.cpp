@@ -3,8 +3,8 @@
 
 using namespace std;
 
-StFDTD_TM::StFDTD_TM()
-:FDTD_TM()
+StFDTD_TM::StFDTD_TM(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model)
+:FDTD_TM(field,model)
 {
 	cout << "StFDTD_TM Constructor" << endl;
 }

@@ -12,7 +12,7 @@ protected:
 	complex<double> *phi;	//��
 	double *np;
 public:
-	FDTD();
+	FDTD(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model);
 	virtual ~FDTD();
 	virtual bool calc();
 	virtual void draw(std::shared_ptr<GUI::ImageBuffer> img);
@@ -30,7 +30,7 @@ class StFDTD:public FDTD{
 protected:
 
 public:
-	StFDTD();
+	StFDTD(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model);
 	~StFDTD();
 	bool calc();
 	void field();
@@ -46,7 +46,7 @@ protected:
 
 class NsFDTD: public FDTD{
 public:
-	NsFDTD();
+	NsFDTD(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model);
 	~NsFDTD();
 	bool calc();
 	void field();

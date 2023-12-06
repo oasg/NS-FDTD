@@ -1,7 +1,7 @@
 #include "FDTD.h"
 
-StFDTD::StFDTD()
-:FDTD()
+StFDTD::StFDTD(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model)
+:FDTD(field,model)
 {
 	cout << "StFDTD Constructor" << endl;
 
