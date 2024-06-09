@@ -80,7 +80,7 @@ namespace GUI
             {
                 try
                 {
-                    _simControl = std::make_shared<SimControl>((TYPE::sim_type)currentItem, filePath);
+                    _simControl = std::make_shared<SimControl>((TYPE::sim_type)currentItem, filePathName);
                     if (_simControl->ready())
                     {
                         _simControl->doSim();

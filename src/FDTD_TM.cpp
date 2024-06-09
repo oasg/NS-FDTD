@@ -15,14 +15,14 @@ const int n_ang = 180;
 FDTD_TM::FDTD_TM(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model)
 :Solver(field,model)
 {
-	//�̈�m��
-	Ez  = new complex<double>[3*mField->getNcel()];		//Ez(i,j)      �� Ez(i,j)
+	//領域確保
+	Ez  = new complex<double>[3*mField->getNcel()];		//Ez(i,j)      → Ez(i,j)
 	Hx  = new complex<double>[3*mField->getNcel()];		//Hx(i, j+0.5) �� Hx(i,j)
 	Hy  = new complex<double>[3*mField->getNcel()];		//Hy(i+0.5, j) �� Hy(i,j) ���Ӗ�����
 	Ezx = new complex<double>[3*mField->getNcel()];
 	Ezy = new complex<double>[3*mField->getNcel()];
 
-	//�v�Z�p�萔�z��
+	//計算用定数配列
 	C_EZ     = new double[mField->getNcel()];	//Cez(i, j)       �� CEZ(i,j)
 	C_EZLH	 = new double[mField->getNcel()];	//Cezlh(i, j)     �� CEZLH(i,j)
 	C_HXLY   = new double[mField->getNcel()];	//Chxly(i, j+0.5) �� CHXLY(i,j)
@@ -93,13 +93,13 @@ FDTD_TM::~FDTD_TM(){
 
 void FDTD_TM::Initialize(){
 	super::Initialize();
-	//�̈揉����
+	//領域初期化
 	for(int i=0; i<3*mField->getNcel(); i++)
 		Ez[i] = Hx[i] = Hy[i] = Ezx[i] = Ezy[i] = 0;
 }
 
 void FDTD_TM::OpenData(string prefix){
-	string str = prefix+ "data/" + getWaveData();	//�f�[�^�I�[�v��
+	string str = prefix+ "data/" + getWaveData();	//データオープン
 	cout << str << endl;
 
 	open_data(Ez, str +"Ez");
@@ -116,7 +116,7 @@ void FDTD_TM::SaveData(string prefix){
 }
 
 void FDTD_TM::field(){
-	setWorkingDirPass(mModel->mkdir(getDataDirPass()));	//�f�[�^��ۑ�����f�B���N�g���̐ݒ�
+	setWorkingDirPass(mModel->mkdir(getDataDirPass()));	//データを保存するディレクトリの設定
 	setWorkingDirPass(MakeDir("TM"));
 #ifdef _OPENMP
 #pragma omp parallel for
@@ -126,20 +126,20 @@ void FDTD_TM::field(){
 			EPSEZ(i,j) = mModel->calcEPS(i,j);
 			EPSHX(i,j) = mModel->calcEPS(i,j+0.5);
 			EPSHY(i,j) = mModel->calcEPS(i+0.5,j);
-			N_S(i,j)   = sqrt( mModel->calcEPS(i+0.5,j+0.5) / EPSILON_0_S );	//���ܗ� n = ��(��/ ��0) (�����ł� �� = ��0�Ƃ��Ă���̂�)
+			N_S(i,j)   = sqrt( mModel->calcEPS(i+0.5,j+0.5) / EPSILON_0_S );	//屈折率 n = √(ε/ ε0) (ここでは μ = μ0としているので)
 
 			if(mField->sig == true)
-				SIG(i, j) = mModel->calcSIG(i, j, lambda_s);	// Hair/incidence���f���̂�(�����j���F�f�l���L)
+				SIG(i, j) = mModel->calcSIG(i, j, lambda_s);	// Hair/incidenceモデルのみ(メラニン色素考慮有)
 		}
 	}
 }
 
-//�U���g
+//散乱波
 void FDTD_TM::NsScatteredWave(int ang){
-	double rad = ang*M_PI/180;	//���W�A���ϊ�
-	double _cos = cos(rad)*k_s;	//����v�Z����Ǝ��Ԃ����肻��������,������Ă���
+	double rad = ang*M_PI/180;	//ラジアン変換
+	double _cos = cos(rad)*k_s;	//毎回計算すると時間かかりそうだから,代入しておく
 	double _sin = sin(rad)*k_s;	
-	//double a = (1-exp(-_pow(0.01*time,2)));		//�s�A���ɓ��˂����̂�h���ׂ̌W��
+	//double a = (1-exp(-_pow(0.01*time,2)));		//不連続に入射されるのを防ぐ為の係数
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif
@@ -207,34 +207,34 @@ void FDTD_TM::PML(){
 
 }
 
-//-------------------Near_To_Far�ϊ�---------------------//
+//-------------------Near_To_Far変換---------------------//
 void FDTD_TM::NTFFindexform(string label, NTFF::output flag){
 	cout << "NTF start" << endl;
 
-	//Solver::MiePrint(Ez, "strong"); // Mie�U���ɂ����āA�U���̔��a1.2�{�ł̋��x Ez ���t�@�C���o��
+	//Solver::MiePrint(Ez, "strong"); // Mie散乱において、散乱体半径1.2倍での強度 Ez をファイル出力
 
-	int cx = mField->getNpx()/2;	//���W�ϊ���̌��_
+	int cx = mField->getNpx()/2;	//座標変換後の原点
 	int cy = mField->getNpy()/2;
 	
 	double r0 = 1.0e6;
-    complex<double> iu( 0.0, 1.0 );		//�P�ʋ����x�N�g��
-	complex<double> Coef = sqrt( iu*k_s/(8*M_PI*r0) ) * exp( iu*k_s*r0 );	//��(jw/8��cr)e^(jkr)
+    complex<double> iu( 0.0, 1.0 );		//単位虚数ベクトル
+	complex<double> Coef = sqrt( iu*k_s/(8*M_PI*r0) ) * exp( iu*k_s*r0 );	//√(jw/8πcr)e^(jkr)
     int offset = 5;		// closed line offset
 
-	int lt,rt, tp, bm;		//�Ȗʂ̏ꏊ	//�v�Z�̈��
-	tp = mField->getNpy() - mField->getNpml() - offset;			//�ォ��-5
-	bm = mField->getNpml() + offset;			//������5
-	rt = mField->getNpx() - mField->getNpml() - offset;		//�E����-5
-	lt = mField->getNpml() + offset;			//������5
+	int lt,rt, tp, bm;		//閉曲面の場所	//計算領域内
+	tp = mField->getNpy() - mField->getNpml() - offset;			//上から-5
+	bm = mField->getNpml() + offset;			//下から5
+	rt = mField->getNpx() - mField->getNpml() - offset;		//右から-5
+	lt = mField->getNpml() + offset;			//左から5
 
-	double sum = 0;			//���a
+	double sum = 0;			//総和
 	double strength[360];
 	int max_angle = 360;
 	for(int ang=0; ang<max_angle; ang++){
-		double rad = ang*M_PI/180.0;			//0(deg)start�Ƃ���Ƃ�
-		//double rad = (ang-90)*M_PI / 180.0;	//270(deg)start�Ƃ���Ƃ�
-		Vec2<double> r(cos(rad), sin(rad));		//�����̕����x�N�g��.
-		Vec2<double> r2;						//���S����Z���܂ł̋���
+		double rad = ang*M_PI/180.0;			//0(deg)startとするとき
+		//double rad = (ang-90)*M_PI / 180.0;	//270(deg)startとするとき
+		Vec2<double> r(cos(rad), sin(rad));		//遠方の方向ベクトル.
+		Vec2<double> r2;						//中心からセルまでの距離
 
 		complex<double> Nz( 0, 0 );
         complex<double> Lx( 0, 0 );
@@ -243,7 +243,7 @@ void FDTD_TM::NTFFindexform(string label, NTFF::output flag){
 		
         // (left,bottom) -> (right,bottom) n=(0, -1)
         for ( int i=lt; i<rt; i++ ) {
-            r2   = Vec2<double>( i-cx, bm-cy);	//���S����Z���܂ł̋���
+            r2   = Vec2<double>( i-cx, bm-cy);	//中心からセルまでの距離
 			C_EZ =  EZ(i,bm, +1);
 			C_HX = 0.5 * ( HX(i,bm, +1) + HX(i,bm-1, +1) ); 
 
@@ -280,33 +280,31 @@ void FDTD_TM::NTFFindexform(string label, NTFF::output flag){
         }
  
         // Get Ephi
-        complex<double> EZZ = Coef * ( Z_0_S*Nz - Lx*sin(rad) + Ly*cos(rad) ); //���c��y�̎����ł� Lx, Ly��-����
+        complex<double> EZZ = Coef * ( Z_0_S*Nz - Lx*sin(rad) + Ly*cos(rad) ); //岡田先輩の実装では Lx, Lyに-がつく
         
 		strength[int(ang)] = norm(EZZ);
 		sum += norm(EZZ);
 	}
 
-	//NTFF�̌��ʂ��o��
+	//NTFFの結果を出力
 	if( (flag & NTFF::NTFFDATA) == NTFF::NTFFDATA ){
-		cout << "NTFF�̌��ʂ��o��" << endl;
+		cout << "NTFFの結果を出力" << endl;
 		ofstream fp = WriteOpen(MakeDir("NTFF") + label + getWaveData());
 		for(int i=0; i<max_angle; i++)
 			fp << strength[i] << endl;
 	}
 
-	//NTFF�̌��ʂ̑��a���o��
+	//NTFFの結果の総和を出力
 	if( (flag & NTFF::TOTAL) == NTFF::TOTAL){
-		cout << "NTFF�̌��ʂ̑��a���o��" << endl;
-		ofstream fpntff= WriteOpen(MakeDir("NTFF") + label + "WaveAngleStrength", DATAFILE::ADD); //false�͒ǋL���[�h
-		fpntff << "(" << to_s((int)Inv_Nano_S(lambda_s)) << "," << wave_angle << ")  " << sum << endl;		//�g�����Ƃ̑��a���o��
+		cout << "NTFFの結果の総和を出力" << endl;
+		ofstream fpntff= WriteOpen(MakeDir("NTFF") + label + "WaveAngleStrength", DATAFILE::ADD); //falseは追記モード
+		fpntff << "(" << to_s((int)Inv_Nano_S(lambda_s)) << "," << wave_angle << ")  " << sum << endl;		//波長ごとの総和を出力
 	}
 
-	//���˗����o��
+	//反射率を出力
 	if( (flag & NTFF::REFLEC) == NTFF::REFLEC){
 		ofstream fp = WriteOpen(MakeDir("Reflection") + label + getWaveData());
 		for(int ang = 0; ang < 360; ang++)
 			fp << strength[ang] / sum << endl;
 	}
-
-	cout << "NTF finish" << endl;
 }
