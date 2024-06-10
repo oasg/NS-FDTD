@@ -202,18 +202,18 @@ void FDTD_TE::NTFFindexform(string label, NTFF::output flag){
     complex<double> Coef = sqrt( iu*k_s/(8*M_PI*r0) ) * exp( iu*k_s*r0 );	// common coefficient
 
     int offset = 5;		    // closed line offset
-	int lt,rt, tp, bm;		//�ｿｽﾂ曲面の場所
-	tp = mField->getNy() - mField->getNpml() - offset;			//�ｿｽ繧ｩ�ｿｽ�ｿｽ-5
-	bm = mField->getNpml() + offset;			//�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ5
-	rt = mField->getNx() - mField->getNpml() - offset;		//�ｿｽE�ｿｽ�ｿｽ�ｿｽ�ｿｽ-5
-	lt = mField->getNpml() + offset;			//�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ5
+	int lt,rt, tp, bm;		//閉曲面の場所
+	tp = mField->getNy() - mField->getNpml() - offset;			//上から-5
+	bm = mField->getNpml() + offset;			//下から5
+	rt = mField->getNx() - mField->getNpml() - offset;		//右から-5
+	lt = mField->getNpml() + offset;			//左から5
 
 	double sum = 0;
-	const int max_angle = 360;	//�ｿｽﾇの角�ｿｽx�ｿｽﾜで包ｿｽ�ｿｽz�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾟるか, 180�ｿｽ�ｿｽ360
+	const int max_angle = 360;	//どの角度まで分布を求めるか, 180か360
 	double strength[max_angle];
     for ( int phi=0; phi<max_angle; phi++ ) {
         double rad = (phi-90) * M_PI/180.0;
-//		rad = M_PI - rad;							//todo �ｿｽﾈゑｿｽ�ｿｽ�ｿｽTE�ｿｽ�ｿｽ180�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ轤ｷ
+//		rad = M_PI - rad;							//todo なぜかTEは180°ずらす
         Vec2<double> r( cos(rad), sin(rad) );	        // eye vector
           
         complex<double> Nx( 0, 0 );
@@ -224,7 +224,7 @@ void FDTD_TE::NTFFindexform(string label, NTFF::output flag){
 
         // (left,bottom) -> (right,bottom)
         for ( int i=lt; i<rt; i++ ) {
-            r2    = Vec2<double>( i-cx + 0.5, bm-cy);	//�ｿｽ�ｿｽ�ｿｽS�ｿｽ�ｿｽ�ｿｽ�ｿｽZ�ｿｽ�ｿｽ�ｿｽﾜでの具ｿｽ�ｿｽ�ｿｽ
+            r2    = Vec2<double>( i-cx + 0.5, bm-cy);	//中心からセルまでの距離
             C_HZ  = 0.5*( HZ(i,bm, +1) + HZ(i,bm-1, +1) );
             C_EX  = EX(i,bm, +1);
             Nx   -= C_HZ * exp( iu * k_s * In_prod(r,r2) );
@@ -265,20 +265,20 @@ void FDTD_TE::NTFFindexform(string label, NTFF::output flag){
 		sum += norm(Ephi);
     }
 
-	//NTFF�ｿｽﾌ鯉ｿｽ�ｿｽﾊゑｿｽ�ｿｽo�ｿｽ�ｿｽ
+	//NTFFの結果を出力
 	if( (flag & NTFF::NTFFDATA) == NTFF::NTFFDATA ){
 		ofstream fp = WriteOpen(MakeDir("NTFF") + label + getWaveData());
 		for(int i=0; i<max_angle; i++)
 			fp << strength[i] << endl;
 	}
 
-	//NTFF�ｿｽﾌ鯉ｿｽ�ｿｽﾊの托ｿｽ�ｿｽa�ｿｽ�ｿｽ�ｿｽo�ｿｽ�ｿｽ
+	//NTFFの結果の総和を出力
 	if( (flag & NTFF::TOTAL) == NTFF::TOTAL){
-		ofstream fp= WriteOpen(MakeDir("NTFF") + label + "WaveAngleStrength", DATAFILE::ADD); //false�ｿｽﾍ追記�ｿｽ�ｿｽ�ｿｽ[�ｿｽh
-		fp << "(" <<(int)Inv_Nano_S(lambda_s) << "," << wave_angle << ")  " << sum << endl;		//�ｿｽg�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾆの托ｿｽ�ｿｽa�ｿｽ�ｿｽ�ｿｽo�ｿｽ�ｿｽ
+		ofstream fp= WriteOpen(MakeDir("NTFF") + label + "WaveAngleStrength", DATAFILE::ADD); //falseは追記モード
+		fp << "(" <<(int)Inv_Nano_S(lambda_s) << "," << wave_angle << ")  " << sum << endl;		//波長ごとの総和を出力
 	}
 
-	//�ｿｽ�ｿｽ�ｿｽﾋ暦ｿｽ�ｿｽ�ｿｽ�ｿｽo�ｿｽ�ｿｽ
+	//反射率を出力
 	if( (flag & NTFF::REFLEC) == NTFF::REFLEC){
 		ofstream fp = WriteOpen(MakeDir("Reflection") + label + getWaveData());
 		for(int i = 0; i < max_angle; i++)
