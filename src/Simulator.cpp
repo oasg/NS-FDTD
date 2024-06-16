@@ -27,7 +27,12 @@ Simulator::Simulator(TYPE::sim_type type,std::shared_ptr<ModelBuilder> builder) 
 			solv = std::make_shared<NsFDTD_TM>(builder->getField(),builder->getModel());
             break;
     }
+
+	cout << "Simulator Constructor" << endl;
+	solv->setLambdaRange(builder->getWaveParameterRange());
+	solv->setWaveAngleRange(builder->getWaveAngleRange());
     solv->field();
+
 }
 int Simulator::calc()
 {

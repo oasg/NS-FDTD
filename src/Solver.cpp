@@ -16,12 +16,12 @@
 
 Solver::Solver(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> model):mField(field), mModel(model),H_S(1.0), DT_S(1.0)
 {
-	LambdaRange = Range<double>(Nano_S(380), Nano_S(700), Nano_S(5)); 
-	WaveAngleRange = Range<int>   (-90, 0, 5);
+	// LambdaRange = TYPE::Range<double>(Nano_S(380), Nano_S(700), Nano_S(5)); 
+	// WaveAngleRange = TYPE::Range<double>   (-90, 0, 5);
 
 	time = 0;
 	// T = 1/f = λ/c
-	maxStep  = 100; // t/T == 100
+	maxStep  = 3000; // t/T == 100
 	//mField->sig = false;		//吸収係数σの有無　有：true / 無：false (FazzyHair_incidence(Layer)Modelのみ選択、 その他の場合false)
 	mField->sig = true;
 	n_s     = new double[mField->getNcel()];	//屈折率

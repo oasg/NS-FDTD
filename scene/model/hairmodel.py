@@ -1,19 +1,13 @@
 import json
 import numpy as np
 
-cell_size = np.float64(5)
-def Nano_S(length):
-    return length/cell_size
-
-LambdaRange = np.arange(Nano_S(380),Nano_S(700), Nano_S(cell_size)); 
-WaveAngleRange = np.arange(-90, 0, 5);
 #model data
 model = {
     "name": "hairmodel",
     "field":{
         "type": "2d",
         "size[nm]": [8000, 8000],
-        "cell_size[nm]": cell_size,
+        "cell_size[nm]": 10,
         "boundary_size": 10,
         #other parameters
     },
@@ -21,8 +15,8 @@ model = {
         "type": "HairMultilayerModel",
     },
     "WaveParameter":{
-        "LambdaRange":LambdaRange,
-        "WaveAngleRange":WaveAngleRange,
+        "LambdaRange":[380,700,5],
+        "WaveAngleRange":[-90,0,1],
     },
 }
 

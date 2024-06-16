@@ -36,18 +36,20 @@ bool NsFDTD_TE::calc(){
 
 
 bool NsFDTD_TE::EndTask(){
-	cout << "End Task" << endl;
+	
 	string label = "";
 
 	NTFFindexform(label, NTFF::NTFFDATA | NTFF::TOTAL);
 
 	//終了条件の確認
-	if( !Terminate())
-		return false;
+	if(!Terminate()){
+		std::cout<<"continue"<<std::endl;
+		ReStart();
+		return true;
 
-	ReStart();
-
-	return true;
+	}
+	cout << "End Task" << endl;
+	return false;
 }
 
 void NsFDTD_TE::field(){		

@@ -9,10 +9,10 @@
 #include "PhysicalConstant.h"
 #include "type/Field.h"
 #include<filesystem>
-#include "gui/ImageBuffer.hpp"
+#include "type/ImageBuffer.hpp"
 #include<mutex>
 #include "model/model_builder.hpp"
-
+#include "type/Range.h"
 #define _USE_MATH_DEFINES
 
 enum DIRECT{
@@ -35,39 +35,7 @@ namespace DATAFILE{
 	const filemode REMOVE = true;
 }
 
-template <class T> class Range
-{
-	T Min;
-	T Max;
-	T interval;
-public:
-	Range(T mi, T ma)
-	{
-		Min = min(mi,ma);
-		Max = max(mi,ma);
-	}
-	
-	Range(T mi, T ma, T in)
-	{
-		Min = min(mi,ma);
-		Max = max(mi,ma);
-		interval = in;
-	}
 
-	Range(T m):Min(m), Max(m)
-	{
-	}
-
-	Range()
-	{
-	}
-
-	T MAX(){ return Max;}
-
-	T MIN(){ return Min; }
-
-	T INTERVAL(){ return interval; }
-};
 
 class Solver{
 private:
@@ -84,8 +52,8 @@ protected:
 	double  *Sig_hair;	//メラニン色素の吸収係数
 	double ray_coef;
 	int maxStep;
-	Range<double>	LambdaRange;
-	Range<int>		WaveAngleRange;
+	TYPE::Range<double>	LambdaRange;
+	TYPE::Range<double>		WaveAngleRange;
 	std::shared_ptr<TYPE::Field> mField;
 	std::shared_ptr<FazzyModel> mModel;
 
@@ -116,6 +84,21 @@ public:
 		}
 */
 	};
+	void setLambdaRange(TYPE::Range<double> range){
+		cout << "setLambdaRange" << endl;
+		cout<<"min:"<<range.MIN()<<" max:"<<range.MAX()<<" interval:"<<range.INTERVAL()<<endl;
+		LambdaRange = TYPE::Range<double>(Nano_S(range.MIN()),Nano_S(range.MAX()),Nano_S(range.INTERVAL()));
+		SetWaveParameter(LambdaRange.MIN());
+		
+	}
+	void setWaveAngleRange(TYPE::Range<double> range){
+		cout << "setWaveAngleRange" << endl;
+		cout<<"min:"<<range.MIN()<<" max:"<<range.MAX()<<" interval:"<<range.INTERVAL()<<endl;
+		WaveAngleRange = range;
+		wave_angle = WaveAngleRange.MIN();
+	}
+
+
 
 protected:
 	void draw(Complex *p,std::shared_ptr<GUI::ImageBuffer> img);
@@ -137,6 +120,12 @@ protected:
 		DataDir = "..\\data\\simulation";
 	}
 
+
+
+	double bilinear_interpolation(complex<double> *, double, double);//�o�C���C�i�[�C���^�|���[�V�������
+
+	Color color(double);
+	bool neighber(int i, int j);
 	void SetWaveParameter(double lam){
 		lambda_s = lam;				//�g���ݒ�
 		k_s      = 2*PI/lambda_s;	//�g��
@@ -144,48 +133,39 @@ protected:
 		T_s      = 2*M_PI/w_s;		//����
 		mModel->InitializeLambda(Inv_Nano_S(lambda_s));
 	}
-
-	double bilinear_interpolation(complex<double> *, double, double);//�o�C���C�i�[�C���^�|���[�V�������
-
-	Color color(double);
-	bool neighber(int i, int j);
-
 	bool nextLambda(){
-		SetWaveParameter(lambda_s + LambdaRange.INTERVAL());
-		if(lambda_s > LambdaRange.MAX())
+		if(lambda_s+LambdaRange.INTERVAL() > LambdaRange.MAX())
 			return false;
 		return true;
 	}
 
 	bool nextWaveAngle(){
-		wave_angle += WaveAngleRange.INTERVAL();
-		if(wave_angle > WaveAngleRange.MAX())
+		if(wave_angle+WaveAngleRange.INTERVAL() > WaveAngleRange.MAX())
 			return false;
-
 		return true;
 	}
 
 	bool Terminate(){
 	//	return false; //今は常に終了
-
-		if( !nextLambda()){
-			if(!nextWaveAngle()){
-				if(!mModel->update(10)){
-					return false;
-				}
-				else{
-					wave_angle = WaveAngleRange.MIN();
-					SetWaveParameter(LambdaRange.MIN());
-					//mModel->InitializeLambda(Inv_Nano_S(lambda_s));
-				}
+		if(!nextWaveAngle()){
+			if(!nextLambda()){
+				cout << "Terminate" << endl;
+				return true;
+			}else{
+				lambda_s += LambdaRange.INTERVAL();
+				SetWaveParameter(lambda_s);
 			}
-			else{
-				SetWaveParameter(LambdaRange.MIN());
-			}
+			wave_angle = WaveAngleRange.MIN();
+		}
+		else{
+			wave_angle += WaveAngleRange.INTERVAL();
 		}
 		cout << to_s(Inv_Nano_S(lambda_s)) + "nm" << endl;
 		cout << to_s(wave_angle) + "deg" << endl;
-		return true;
+
+
+		
+		return false;
 	}
 
 	//�z�����E
