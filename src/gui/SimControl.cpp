@@ -161,7 +161,10 @@ namespace GUI
         {
             while (_run)
             {
-                _sim->calc();
+                int res = _sim->calc();
+                if(res==0){
+                    break;
+                }
             }
         };
         _cal_thread = std::thread(cal);

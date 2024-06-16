@@ -166,7 +166,7 @@ protected:
 	}
 
 	bool Terminate(){
-	//	return false; //���͏�ɏI��
+	//	return false; //今は常に終了
 
 		if( !nextLambda()){
 			if(!nextWaveAngle()){

@@ -20,6 +20,7 @@ namespace GUI
         int getHeight(){return _h;}
         ~ImageBuffer();
         unsigned char *getImg(){return _img;}
+        void flipY();
     };
 
     class ImageDispalyLayer{

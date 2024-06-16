@@ -21,7 +21,7 @@ Solver::Solver(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> m
 
 	time = 0;
 	// T = 1/f = λ/c
-	maxStep  = 2000; // t/T == 100
+	maxStep  = 100; // t/T == 100
 	//mField->sig = false;		//吸収係数σの有無　有：true / 無：false (FazzyHair_incidence(Layer)Modelのみ選択、 その他の場合false)
 	mField->sig = true;
 	n_s     = new double[mField->getNcel()];	//屈折率
@@ -55,11 +55,11 @@ Solver::~Solver()
 	cout << "Solver Destructor" << endl;
 }
 
-//Bilinear Interpolation�ｿｽ�ｿｽ�ｿｽ  �ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽl�ｿｽﾌ配�ｿｽ�ｿｽﾔ搾ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ(�ｿｽl�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾌ費ｿｽﾅ値�ｿｽ�ｿｽ�ｿｽo�ｿｽ�ｿｽ)
+//Bilinear Interpolation補間  実数値の配列番号が引数(四隅からの比で値を出す)
 double Solver::bilinear_interpolation(complex<double> *p, double x, double y){
 	int i = floor(x);
 	int j = floor(y);
-	double dx = (x - 1.0*i);	//�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ_�ｿｽﾈ会ｿｽ�ｿｽﾌ値
+	double dx = (x - 1.0*i);	//小数点以下の値
 	double dy = (y - 1.0*j);	
 
 	return     norm(p[index(i,    j)]) * (1.0-dx)*(1.0-dy)
@@ -68,7 +68,7 @@ double Solver::bilinear_interpolation(complex<double> *p, double x, double y){
 	         + norm(p[index(i+1,j+1)]) * dx*dy;
 }
 
-//�ｿｽJ�ｿｽ�ｿｽ�ｿｽ[�ｿｽ}�ｿｽb�ｿｽv
+//カラーマップ
 Color Solver::color(double phi){
 	double range = 2.0;
 	Color c;

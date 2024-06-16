@@ -47,7 +47,8 @@ void Simulator::draw(std::shared_ptr<GUI::ImageBuffer> img)
 {
 	//	return;
 	//if (((int)solv->getTime()) % 20 != 0) return;
-	solv->draw(img);			
+	solv->draw(img);
+	img->flipY();			
 	//ButtonFactory::draw(img);
 }
 

@@ -52,6 +52,7 @@ add_executable(
   src/model/model_builder.cpp
   src/model/FazzyModel.cpp
   src/type/Field.cpp
+  src/model/HairMultilayerModel.cpp
 )
 target_link_libraries(
   model_parser_test

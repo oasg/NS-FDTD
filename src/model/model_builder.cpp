@@ -1,6 +1,7 @@
 #include "model_builder.hpp"
 #include <fstream>
 #include <string>
+#include "HairMultilayerModel.h"
 ModelBuilder::ModelBuilder(std::string path)
 {
     std::ifstream ifs(path);
@@ -24,7 +25,8 @@ bool ModelBuilder::buildModel()
             int fieldy = field["size[nm]"][1];
             auto cell_size = field["cell_size[nm]"].template get<double>();
             int npml = field["boundary_size"];
-            mField = std::make_shared<TYPE::Field>(fieldx, fieldy, cell_size, npml);
+            std::cout<<"Field:   x:"<<fieldx<<"  y: "<<fieldy<<std::endl;
+            mField = std::make_shared<TYPE::Field>(fieldx, fieldy, 20, npml);
         }
         catch (const nlohmann::json::exception &e)
         {
@@ -37,9 +39,9 @@ bool ModelBuilder::buildModel()
     auto model = _json_data["use_model"];
     if (!model.empty())
     {
-        if (model["type"] == "FazzyHair_incidenceLayerModel")
+        if (model["type"] == "HairMultilayerModel")
         {
-            mModel = std::make_shared<FazzyHair_incidenceLayerModel>(mField);
+            mModel = std::make_shared<HairMultilayerModel>(mField);
         }
         else
         {

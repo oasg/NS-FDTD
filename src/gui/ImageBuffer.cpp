@@ -24,6 +24,21 @@ namespace GUI
     {
         delete[] _img;
     }
+    void ImageBuffer::flipY()
+    {
+        unsigned char *temp = new unsigned char[_w * _h * 3];
+        for (int i = 0; i < _h; i++)
+        {
+            for (int j = 0; j < _w; j++)
+            {
+                temp[3 * (j + i * _w) + 0] = _img[3 * (j + (_h - i - 1) * _w) + 0];
+                temp[3 * (j + i * _w) + 1] = _img[3 * (j + (_h - i - 1) * _w) + 1];
+                temp[3 * (j + i * _w) + 2] = _img[3 * (j + (_h - i - 1) * _w) + 2];
+            }
+        }
+        delete[] _img;
+        _img = temp;
+    }
     ImageDispalyLayer::ImageDispalyLayer()
     {
 
@@ -43,6 +58,8 @@ namespace GUI
     }
     void ImageDispalyLayer::update_ImageBuffer(std::shared_ptr<ImageBuffer> img)
     {
+        //flip　y axis
+
         glActiveTexture(GL_TEXTURE0);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img->getWidth(), img->getHeight(), 0,GL_RGB, GL_UNSIGNED_BYTE, img->getImg());
         glGenerateMipmap(GL_TEXTURE_2D);

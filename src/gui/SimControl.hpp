@@ -53,7 +53,7 @@ namespace GUI{
         float _duration = 0.1;
         bool _visualize = false;
         std::string filePathName = "hairmodel.json";
-        std::string filePath = "scene/model/hairmodel.json";
+        std::string filePath = "/home/oasis/Documents/code/NS-FTDT/scene/model/hairmodel.json";
 
     };
 

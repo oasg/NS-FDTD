@@ -18,12 +18,15 @@ string FazzyMieModel::mkdir(string root){
 	return name + "/";
 }
 
+
 double FazzyMieModel::calcEPS(const double& x, const double& y, enum INTEG f){
 
 	double mx = x - mField->getNpml(); //計算領域内へ写像
 	double my = y - mField->getNpml();
+	//The area outside the simulation area is a vacuum.
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return EPSILON_0_S;
 
+	//find center point
 	double _x = mx - 0.5*mField->getNx();//(N_X/2, N_Y/2)を原点にシフト
 	double _y = my - 0.5*mField->getNy();
 
@@ -213,7 +216,7 @@ string FazzyHair_incidenceModel::mkdir(string root) {
 /*-----------縦断面(多層膜キューティクル)-----------*/
 /*--------------------------------------------------*/
 FazzyHair_incidenceLayerModel::FazzyHair_incidenceLayerModel(std::shared_ptr<TYPE::Field> f) :
-	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), alpha(5), cwidth(0.5), length(50), r(32), cmc(0.06)
+	FazzyModel(f), ep1(1.55*1.55*EPSILON_0_S), ep2(EPSILON_0_S), alpha(5.), cwidth(0.5), length(50), r(32), cmc(0.06)
 	//alpha:キューティクルの角度(deg)  cwidth:キューティクルの厚さ(μm)  length:キューティクルの長さ(μm)	r:毛皮質範囲の半径(μm)  cmc:CMC範囲(μm)
 {
 	alphaR = alpha * PI / 180;
@@ -239,26 +242,26 @@ double FazzyHair_incidenceLayerModel::calcEPS(const double& x, const double& y, 
 
 	double mx = x - mField->getNpml(); //計算領域内へ写像
 	double my = y - mField->getNpml();
-	double cx = mField->getNx() / 2;
-	double cy = mField->getNy() / 2;
+
+	double cx = mField->getNx() / 2.0;
+	double cy = mField->getNy() / 2.0;
 
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return ep2;	//PML層
 
-	/**** 毛髪全体 ****/
-	if (my < cy)	my = 2 * cy - my;		//x軸に対して線対称
-	if (my <= rn + cy)		return ep1;		//毛皮質部分
+	// /**** 毛髪全体 ****/
+	// if (my < cy)	my = 2 * cy - my;		//x軸に対して線対称
+	// if (my <= rn + cy)		return ep1;		//毛皮質部分  crotex
 
-	my = my - rn - cy;		//軸移動
+	// my = my - rn - cy;		//軸移動
 
 	/****************** キューティクル部分のみ ******************/
 	/* Field推奨サイズ                                          */
 	/* Field(8000, 8000, 5, 10) Field(16000, 8000, 10, 10) など */
 	/************************************************************/
-//	if (my <= 100)		return ep1;		//毛皮質部分
-//	my = my - 100;		//軸移動
-
-
+	if (my <= 100)		return ep1;		//毛皮質部分
+	my = my - 100;		//軸移動
 	if (my > ly)	return ep2;
+	
 	for (int i = -(ly / (cn + mn)); (i*mn + i*cn) / tan(alphaR) < mField->getNx(); i++) {
 		if (my <= ly - cn) {
 			if (my >= tan(alphaR) * (mx - (i*mn + (i + 1)*cn) / tan(alphaR)) + 1 && my <= tan(alphaR) * (mx - (i*mn + i*cn) / tan(alphaR)) - 1)
@@ -297,11 +300,11 @@ double FazzyHair_incidenceLayerModel::calcEPS(const double& x, const double& y, 
 			}	
 		}
 	}
-
 	return ep2;
 }
 
 double FazzyHair_incidenceLayerModel::calcSIG(const double& x, const double& y, const double lam, enum INTEG f) {
+	return 0;
 	rn = mField->nanoToCell(32 * 1000);
 
 	double mx = x - mField->getNpml(); //計算領域内へ写像
@@ -312,7 +315,7 @@ double FazzyHair_incidenceLayerModel::calcSIG(const double& x, const double& y, 
 	double h = mField->nanoToCell(0 * 1000);
 
 	if (mx < 0 || my < 0 || mx >= mField->getNx() || my >= mField->getNy()) return 0;	//PML層
-	if (my < cy)	my = 2 * cy - my;		//x軸に対して線対称
+	//if (my < cy)	my = 2 * cy - my;		//x軸に対して線対称
 
 	if (my <= rn + cy) {
 		int k = (int)(mField->cellToNano(my) - mField->cellToNano(cy) - 1500) % 4000;
