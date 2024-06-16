@@ -4,8 +4,9 @@
 #include <memory>
 #include "GUIElement.hpp"
 #include <thread>
-#include "ImageBuffer.hpp"
+#include "type/ImageBuffer.hpp"
 #include "model/model_builder.hpp"
+#include "ImageDispalyLayer.hpp"
 namespace GUI{
 
     //watch simulation result realtime
@@ -52,7 +53,7 @@ namespace GUI{
         int currentItem = 0;
         float _duration = 0.1;
         bool _visualize = false;
-        std::string filePathName = "hairmodel.json";
+        std::string filePathName = "/home/oasis/Documents/code/NS-FTDT/scene/model/hairmodel.json";
         std::string filePath = "/home/oasis/Documents/code/NS-FTDT/scene/model/hairmodel.json";
 
     };

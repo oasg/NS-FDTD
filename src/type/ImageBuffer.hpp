@@ -1,8 +1,6 @@
 #ifndef IMAGE_BUFFER
 #define IMAGE_BUFFER
-#include "Shader.hpp"
 #include <memory>
-#include "GUIElement.hpp"
 
 namespace GUI
 {
@@ -23,18 +21,6 @@ namespace GUI
         void flipY();
     };
 
-    class ImageDispalyLayer{
-        public:
-            ImageDispalyLayer();
-            ~ImageDispalyLayer();
-            void update_ImageBuffer(std::shared_ptr<ImageBuffer> img);
-            GLuint get_texture(){return _texture;}
-            void draw();
-        private:
-            unsigned int VAO, VBO, EBO;
-            GLuint _texture;
-            std::shared_ptr<Shader> _shader;
 
-    };
 }
 #endif

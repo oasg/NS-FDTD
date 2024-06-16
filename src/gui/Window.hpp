@@ -2,7 +2,7 @@
 #define WINDOW_HPP
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "ImageBuffer.hpp"
+#include "type/ImageBuffer.hpp"
 #include "GUIApp.hpp"
 namespace GUI
 {

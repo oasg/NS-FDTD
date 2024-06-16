@@ -157,10 +157,11 @@ namespace GUI
 
     void SimControl::doSim()
     {
-        auto cal = [=]()
+        auto cal = [this]()
         {
             while (_run)
             {
+                
                 int res = _sim->calc();
                 if(res==0){
                     break;

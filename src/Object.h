@@ -12,7 +12,7 @@
 #include <vector>
 #include <map>
 #include <complex>
-#include"gui/ImageBuffer.hpp"
+#include"type/ImageBuffer.hpp"
 
 using namespace std;
 

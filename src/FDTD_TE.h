@@ -22,7 +22,7 @@ public:
 	virtual void field();
 	void Initialize();
 
-	void NsScatteredWave(int angle);	//ďż˝Uďż˝ďż˝ďż˝g
+	void NsScatteredWave(double angle);	//ďż˝Uďż˝ďż˝ďż˝g
 	void IncidentWave(int angle);
 	void IncidentWaveH(int angle);
 

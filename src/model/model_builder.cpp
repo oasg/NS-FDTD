@@ -26,7 +26,7 @@ bool ModelBuilder::buildModel()
             auto cell_size = field["cell_size[nm]"].template get<double>();
             int npml = field["boundary_size"];
             std::cout<<"Field:   x:"<<fieldx<<"  y: "<<fieldy<<std::endl;
-            mField = std::make_shared<TYPE::Field>(fieldx, fieldy, 20, npml);
+            mField = std::make_shared<TYPE::Field>(fieldx, fieldy, cell_size, npml);
         }
         catch (const nlohmann::json::exception &e)
         {
@@ -51,10 +51,14 @@ bool ModelBuilder::buildModel()
     }
     else
         return false;
-    // auto WaveParameter = _json_data["WaveParameter"];
-    // if(!WaveParameter.empty()){
+    auto WaveParameter = _json_data["WaveParameter"];
+    if(!WaveParameter.empty()){
+        auto LambdaRange = WaveParameter["LambdaRange"];
+        auto wangelRange = WaveParameter["WaveAngleRange"];
+        WaveParameterRange = TYPE::Range<double>(LambdaRange[0],LambdaRange[1],LambdaRange[2]);
+        WaveAngleRange = TYPE::Range<double>(wangelRange[0],wangelRange[1],wangelRange[2]);
+    }else return false;
 
-    // }else return false;
     return true;
 }
 

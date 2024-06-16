@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.15.0)
 set(CMAKE_CXX_STANDARD 20)
 project(NS-FDTD VERSION 0.1.0 LANGUAGES C CXX)
 add_subdirectory(third_party/glfw)
@@ -6,12 +6,17 @@ add_subdirectory(third_party/json)
 add_subdirectory(third_party/gtest)
 add_subdirectory(third_party/spdlog)
 
-file(GLOB SRC src/* 
-            src/gui/*
-            src/type/*
-            src/model/*
-            third_party/glad/src/glad.c
+file(GLOB SRC 
+    src/* 
+    src/type/*
+    src/model/*
 )
+
+file (
+  GLOB GUI src/gui/*
+  third_party/glad/src/glad.c
+)
+
 include_directories(
     src
     third_party/glad/include
@@ -25,6 +30,7 @@ find_package(OpenMP REQUIRED)
 
 add_executable(NS-FDTD 
     ${SRC}
+    ${GUI}
     third_party/imgui/backends/imgui_impl_glfw.cpp
     third_party/imgui/backends/imgui_impl_opengl3.cpp
     third_party/imgui/imgui_demo.cpp
@@ -42,6 +48,17 @@ target_link_libraries(NS-FDTD
   spdlog
 )
 
+add_executable(
+  NS-FDTD-CLI
+  ${SRC}
+  src/cli/main.cpp
+)
+target_link_libraries(NS-FDTD-CLI 
+  nlohmann_json
+  OpenMP::OpenMP_CXX
+  spdlog
+)
+
 ###
 ### Tests
 ###
@@ -54,6 +71,9 @@ add_executable(
   src/type/Field.cpp
   src/model/HairMultilayerModel.cpp
 )
+
+
+
 target_link_libraries(
   model_parser_test
   nlohmann_json

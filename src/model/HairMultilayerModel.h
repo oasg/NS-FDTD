@@ -12,7 +12,7 @@ public:
 	double calcSIG(const double&, const double&, const double lam, enum INTEG = D_XY) override;
 	bool update(int) override {
 		//return true;
-		return true;
+		return false;
 	}
 	void Initialize() override
 	{

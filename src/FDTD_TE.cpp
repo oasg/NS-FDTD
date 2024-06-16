@@ -130,7 +130,7 @@ void FDTD_TE::field(){
 }
 
 //�ｿｽU�ｿｽ�ｿｽ�ｿｽg
-void FDTD_TE::NsScatteredWave(int ang){
+void FDTD_TE::NsScatteredWave(double ang){
 	double rad = ang*M_PI/180;	//�ｿｽ�ｿｽ�ｿｽW�ｿｽA�ｿｽ�ｿｽ�ｿｽﾏ奇ｿｽ
 	double _cos = cos(rad), _sin = sin(rad);	//�ｿｽ�ｿｽ�ｿｽ�ｿｽv�ｿｽZ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾆ趣ｿｽ�ｿｽﾔゑｿｽ�ｿｽ�ｿｽ�ｿｽ閧ｻ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ,�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾄゑｿｽ�ｿｽ�ｿｽ
 	//double a = (1-exp(-_pow(0.01*time,2)));		//�ｿｽs�ｿｽA�ｿｽ�ｿｽ�ｿｽﾉ難ｿｽ�ｿｽﾋゑｿｽ�ｿｽ�ｿｽ�ｿｽﾌゑｿｽh�ｿｽ�ｿｽ�ｿｽﾗの係�ｿｽ�ｿｽ
