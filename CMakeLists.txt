@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.15.0)
 set(CMAKE_CXX_STANDARD 20)
 project(NS-FDTD VERSION 0.1.0 LANGUAGES C CXX)
+
+
+
 add_subdirectory(third_party/glfw)
 add_subdirectory(third_party/json)
 add_subdirectory(third_party/gtest)
@@ -48,6 +51,7 @@ target_link_libraries(NS-FDTD
   spdlog
 )
 
+
 add_executable(
   NS-FDTD-CLI
   ${SRC}
@@ -58,6 +62,9 @@ target_link_libraries(NS-FDTD-CLI
   OpenMP::OpenMP_CXX
   spdlog
 )
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(NS-FDTD-CLI PRIVATE -O3 -march=native)
+endif()
 
 ###
 ### Tests
