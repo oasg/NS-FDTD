@@ -45,17 +45,19 @@ bool NsFDTD_TM::calc() {
 
 //----------------?I??????d??------------------------//
 bool NsFDTD_TM::EndTask(){
-	cout << "End Task" << endl;
-
 	string label = "";
-	NTFFindexform("", NTFF::NTFFDATA | NTFF::TOTAL );	// label -> "" ???????????????m?F??????.
-	
-	//?I????????m?F
-	if(!Terminate() )
-		return false;
 
-	ReStart();
-	return true;
+	NTFFindexform(label, NTFF::NTFFDATA | NTFF::TOTAL|NTFF::REFLEC);
+
+	//終了条件の確認
+	if(!Terminate()){
+		std::cout<<"continue"<<std::endl;
+		ReStart();
+		return true;
+
+	}
+	cout << "End Task" << endl;
+	return false;
 }
 
 //--------------?v?Z?W??????---------------------//

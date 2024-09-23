@@ -11,14 +11,8 @@ string HairMultilayerModel::mkdir(string root)
     std::filesystem::create_directory((root + "HairModel").c_str());
 	string name;
 
-	if (mField->sig == false) {
-		std::filesystem::create_directory((root + "HairModel/incidenceLayer").c_str());				//吸収係数なしの場合
-		name = "HairModel/incidenceLayer/" + mField->getStringCellInfo();
-	}
-	else if (mField->sig == true) {
-		std::filesystem::create_directory((root + "HairModel/incidenceLayer_withSig").c_str());		//吸収係数ありの場合
-		name = "HairModel/incidenceLayer_withSig/" + mField->getStringCellInfo();
-	}
+    std::filesystem::create_directory((root + "HairModel/incidenceLayer").c_str());		//吸収係数ありの場合
+	name = "HairModel/incidenceLayer/" + mField->getStringCellInfo();
 
 	std::filesystem::create_directory((root + name).c_str());	//ディレクトリの作成
 

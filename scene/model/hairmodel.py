@@ -15,7 +15,7 @@ model = {
         "type": "HairMultilayerModel",
     },
     "WaveParameter":{
-        "LambdaRange":[380,700,5],
+        "LambdaRange":[400,700,5],
         "WaveAngleRange":[-90,0,1],
     },
 }

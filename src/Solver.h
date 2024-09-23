@@ -117,7 +117,7 @@ protected:
 		time = 0;	//���Ԃ�0��
 		//DataDir		=  "../DataSet/";
 		//DataDir = "..\\Data\\Set\\";
-		DataDir = "..\\data\\simulation";
+		DataDir = "";
 	}
 
 
