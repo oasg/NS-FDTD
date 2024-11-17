@@ -21,7 +21,7 @@ Solver::Solver(std::shared_ptr<TYPE::Field> field, std::shared_ptr<FazzyModel> m
 
 	time = 0;
 	// T = 1/f = λ/c
-	maxStep  = 200; // t/T == 100
+	maxStep  = 1200; // t/T == 100
 	//mField->sig = false;		//吸収係数σの有無　有：true / 無：false (FazzyHair_incidence(Layer)Modelのみ選択、 その他の場合false)
 	mField->sig = true;
 	n_s     = new double[mField->getNcel()];	//屈折率

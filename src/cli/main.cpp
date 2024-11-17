@@ -1,7 +1,7 @@
 #include "Simulator.h"
 #include "model/HairMultilayerModel.h"
 int main(){
-    auto builder = std::make_shared<ModelBuilder>("../scene/model/hairmodel.json");
+    auto builder = std::make_shared<ModelBuilder>("../scene/model/hairmodelDamagedLargeDis.json");
     builder->buildModel();
     auto sim = std::make_shared<Simulator>(TYPE::sim_type::NsFTDT_TM,builder);
     while (true)

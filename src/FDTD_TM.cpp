@@ -228,8 +228,8 @@ void FDTD_TM::NTFFindexform(string label, NTFF::output flag){
 	lt = mField->getNpml() + offset;			//左から5
 
 	double sum = 0;			//総和
-	double strength[360];
-	int max_angle = 360;
+	double strength[180];
+	int max_angle = 180;
 	for(int ang=0; ang<max_angle; ang++){
 		double rad = ang*M_PI/180.0;			//0(deg)startとするとき
 		//double rad = (ang-90)*M_PI / 180.0;	//270(deg)startとするとき
@@ -304,7 +304,7 @@ void FDTD_TM::NTFFindexform(string label, NTFF::output flag){
 	//反射率を出力
 	if( (flag & NTFF::REFLEC) == NTFF::REFLEC){
 		ofstream fp = WriteOpen(MakeDir("Reflection") + label + getWaveData());
-		for(int ang = 0; ang < 360; ang++)
+		for(int ang = 0; ang < max_angle; ang++)
 			fp << strength[ang] / sum << endl;
 	}
 }

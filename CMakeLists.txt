@@ -42,6 +42,7 @@ add_executable(NS-FDTD
     third_party/imgui/imgui_widgets.cpp
     third_party/imgui/imgui.cpp
     third_party/imguifile/ImGuiFileDialog.cpp
+    
 )
 target_link_libraries(NS-FDTD 
   OpenGL::GL
@@ -77,6 +78,7 @@ add_executable(
   src/model/FazzyModel.cpp
   src/type/Field.cpp
   src/model/HairMultilayerModel.cpp
+  src/model/HairMultilayerDamagedModel.cpp
 )
 
 

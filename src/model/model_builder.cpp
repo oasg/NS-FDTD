@@ -2,6 +2,8 @@
 #include <fstream>
 #include <string>
 #include "HairMultilayerModel.h"
+#include "HairMultilayerDamagedModel.h"
+
 ModelBuilder::ModelBuilder(std::string path)
 {
     std::ifstream ifs(path);
@@ -42,6 +44,10 @@ bool ModelBuilder::buildModel()
         if (model["type"] == "HairMultilayerModel")
         {
             mModel = std::make_shared<HairMultilayerModel>(mField);
+        }else if(model["type"] == "HairMultilayerDamagedModel"){
+            mModel = std::make_shared<HairMultilayerDamagedModel>(mField);
+        }else if(model["type"] == "HairMultilayerDamagedLargeDisModel"){
+            mModel = std::make_shared<HairMultilayerDamagedLargeDisModel>(mField);
         }
         else
         {

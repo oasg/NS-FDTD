@@ -209,7 +209,7 @@ void FDTD_TE::NTFFindexform(string label, NTFF::output flag){
 	lt = mField->getNpml() + offset;			//左から5
 
 	double sum = 0;
-	const int max_angle = 360;	//どの角度まで分布を求めるか, 180か360
+	const int max_angle = 180;	//どの角度まで分布を求めるか, 180か360
 	double strength[max_angle];
     for ( int phi=0; phi<max_angle; phi++ ) {
         double rad = (phi-90) * M_PI/180.0;

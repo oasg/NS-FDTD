@@ -53,8 +53,8 @@ namespace GUI{
         int currentItem = 0;
         float _duration = 0.1;
         bool _visualize = false;
-        std::string filePathName = "/home/oasis/Documents/code/NS-FTDT/scene/model/hairmodel.json";
-        std::string filePath = "/home/oasis/Documents/code/NS-FTDT/scene/model/hairmodel.json";
+        std::string filePathName = "/home/ggrbb/code/NS-FDTD/scene/model/hairmodelDamaged.json";
+        std::string filePath = "/home/ggrbb/code/NS-FDTD/scene/model/hairmodelDamaged.json";
 
     };
 
