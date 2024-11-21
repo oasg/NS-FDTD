@@ -48,6 +48,8 @@ bool ModelBuilder::buildModel()
             mModel = std::make_shared<HairMultilayerDamagedModel>(mField);
         }else if(model["type"] == "HairMultilayerDamagedLargeDisModel"){
             mModel = std::make_shared<HairMultilayerDamagedLargeDisModel>(mField);
+        }else if(model["type"] == "HairMultilayerPerlinModel"){
+            mModel = std::make_shared<HairMultilayerPerlinModel>(mField);
         }
         else
         {
