@@ -79,6 +79,7 @@ add_executable(
   src/type/Field.cpp
   src/model/HairMultilayerModel.cpp
   src/model/HairMultilayerDamagedModel.cpp
+  src/model/HairMultilayerRepairedModel.cpp
 )
 
 

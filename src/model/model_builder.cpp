@@ -3,6 +3,7 @@
 #include <string>
 #include "HairMultilayerModel.h"
 #include "HairMultilayerDamagedModel.h"
+#include "HairMultilayerRepairedModel.h"
 
 ModelBuilder::ModelBuilder(std::string path)
 {
@@ -50,6 +51,14 @@ bool ModelBuilder::buildModel()
             mModel = std::make_shared<HairMultilayerDamagedLargeDisModel>(mField);
         }else if(model["type"] == "HairMultilayerPerlinModel"){
             mModel = std::make_shared<HairMultilayerPerlinModel>(mField);
+        }
+        else if(model["type"] == "HairMultilayerDamagedLargeDisPerlinModel"){
+            mModel = std::make_shared<HairMultilayerDamagedLargeDisPerlinModel>(mField);
+        }
+        else if(model["type"] == "HairMultilayerRepairedModel"){
+            mModel = std::make_shared<HairMultilayerRepairedModel>(mField);
+        }else if(model["type"] == "HairMultilayerRepairedPerlinModel"){
+            mModel = std::make_shared<HairMultilayerRepairedLargeDisPerlinModel>(mField);
         }
         else
         {
