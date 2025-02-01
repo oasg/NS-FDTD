@@ -1,9 +1,9 @@
 import json
-import numpy as np
 
 #model data
+filename = "hairmodel"
 model = {
-    "name": "hairmodel",
+    "name": filename,
     "field":{
         "type": "2d",
         "size[nm]": [8000, 8000],
@@ -31,5 +31,5 @@ class NumpyEncoder(json.JSONEncoder):
             return obj.tolist()
         return json.JSONEncoder.default(self, obj)
 
-with open('scene/model/hairmodel.json', 'w') as outfile:
+with open('scene/model/'+filename+'.json', 'w') as outfile:
     json.dump(model, outfile,cls = NumpyEncoder)

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15.0)
+cmake_minimum_required(VERSION 3.20.0)
 set(CMAKE_CXX_STANDARD 20)
 project(NS-FDTD VERSION 0.1.0 LANGUAGES C CXX)
 
@@ -29,6 +29,20 @@ include_directories(
 
 
 find_package(OpenGL REQUIRED)
+if(APPLE)
+    message(STATUS "Building on macOS")
+    # macOS-specific settings
+    # use homebrew-installed libomp
+    set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp -I/opt/homebrew/opt/libomp/include")
+    set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -I/opt/homebrew/opt/libomp/include")
+    set(OpenMP_C_LIB_NAMES "omp")
+    set(OpenMP_CXX_LIB_NAMES "omp")
+    set(OpenMP_omp_LIBRARY "/opt/homebrew/opt/libomp/lib/libomp.dylib")
+else()
+    message(STATUS "Not macOS")
+endif()
+
+
 find_package(OpenMP REQUIRED)
 
 add_executable(NS-FDTD 
