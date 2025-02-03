@@ -346,7 +346,6 @@ void Solver::draw(Complex *p,std::shared_ptr<GUI::ImageBuffer> img){
 	draw_model(img);
 }
 
-//�ｿｽU�ｿｽ�ｿｽ�ｿｽﾌの描�ｿｽ�ｿｽ
 void Solver::draw_model(std::shared_ptr<GUI::ImageBuffer> img){
 	//already in critical section
 	double N = max(mField->getNx(),mField->getNy());
@@ -354,11 +353,10 @@ void Solver::draw_model(std::shared_ptr<GUI::ImageBuffer> img){
 	double hs = img->getHeight()/N;
 	for (int i = 0; i < mField->getNpx(); i++){
 		for (int j = 0; j < mField->getNpy(); j++){
-			//�ｿｽ}�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽE
-			const double n = N_S(i, j);	//�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ,�ｿｽ�ｿｽ�ｿｽﾜ暦ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽﾄはゑｿｽ�ｿｽ�ｿｽ�ｿｽﾈゑｿｽ
+			const double n = N_S(i, j);	
 			const double s = SIG(i, j);
 			img->ColorBlend(i, j, (0.3/(n+s))*255, (0.3/(n+s))*255, (0.3/(n+s))*255);
-			if(n == 1.0) continue;	//�ｿｽ�ｿｽ�ｿｽﾜ暦ｿｽ�ｿｽ�ｿｽ1�ｿｽﾈゑｿｽﾆばゑｿｽ	
+			if(n == 1.0) continue;	
 		}
 	}
 }

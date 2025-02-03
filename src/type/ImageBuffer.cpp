@@ -16,10 +16,13 @@ namespace GUI
     }
     void ImageBuffer::ColorBlend(int x, int y, unsigned char r,unsigned char g,unsigned char b)
     {
-        _img[3 * (x + y * _w) + 0] =_img[3 * (x + y * _w) + 0]*0.4 + r * 0.6;
-        _img[3 * (x + y * _w) + 1] =_img[3 * (x + y * _w) + 1]*0.4 + g * 0.6;
-        _img[3 * (x + y * _w) + 2] =_img[3 * (x + y * _w) + 2]*0.4 + b * 0.6;
+        float alpha = 0.6;
+        int idx = 3 * (x + y * _w);
+        _img[idx + 0] = _img[idx + 0] * (1 - alpha) + r * alpha;
+        _img[idx + 1] = _img[idx + 1] * (1 - alpha) + g * alpha;
+        _img[idx + 2] = _img[idx + 2] * (1 - alpha) + b * alpha;
     }
+
     ImageBuffer::~ImageBuffer()
     {
         delete[] _img;

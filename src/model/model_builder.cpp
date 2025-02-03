@@ -4,6 +4,7 @@
 #include "HairMultilayerModel.h"
 #include "HairMultilayerDamagedModel.h"
 #include "HairMultilayerRepairedModel.h"
+#include "HairPretteMultilayerModel.h"
 
 ModelBuilder::ModelBuilder(std::string path)
 {
@@ -59,6 +60,10 @@ bool ModelBuilder::buildModel()
             mModel = std::make_shared<HairMultilayerRepairedModel>(mField);
         }else if(model["type"] == "HairMultilayerRepairedPerlinModel"){
             mModel = std::make_shared<HairMultilayerRepairedLargeDisPerlinModel>(mField);
+        }else if(model["type"] == "HairPretteMultilayerModel"){
+            mModel = std::make_shared<HairPretteMultilayerModel>(mField);
+        }else if(model["type"] == "HairPretteMultilayerPerlinModel"){
+            mModel = std::make_shared<HairPretteMultilayerPerlinModel>(mField);
         }
         else
         {
