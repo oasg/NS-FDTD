@@ -98,7 +98,8 @@ double HairMultilayerPerlinModel::calcEPS(const double& x, const double& y, enum
     const double rb = mField->getNpx()- mField->getNpml();
 
     double cortex_thick = mField->nanoToCell(1.7*1000.0);
-	if (my <= cortex_thick)		return ep1;		//毛皮質部分
+    auto cortexbasenoise = siv::PerlinNoise(123456);
+	if (my <= cortex_thick+cortexbasenoise.noise2D(mx*noise_scale,my*noise_scale)*8)		return ep1;		//毛皮質部分
 
     double cuticle_base = cortex_thick;
     double firm_thick = mField->nanoToCell((cmc_width+cuticle_width)*1000.0);
@@ -108,9 +109,9 @@ double HairMultilayerPerlinModel::calcEPS(const double& x, const double& y, enum
 
     for(int i = 0;i<num_layers;i++){
         double base = cuticle_base + i*firm_thick;
-        double dy1 = perlins[2*i].noise2D(mx*noise_scale,my*noise_scale)*10;
-        double dy2 = perlins[2*i+1].noise2D(mx*noise_scale,my*noise_scale)*10;
-        if(my+dy1>=base&&my+dy1 <= base + cmc_thick){
+        double dy1 = perlins[2*i].noise2D(mx*noise_scale,my*noise_scale)*8;
+        double dy2 = perlins[2*i+1].noise2D(mx*noise_scale,my*noise_scale)*8;
+        if(my+dy1>=base&&my+dy1 <= base + cmc_thick){  //cuticle layer
             return ep2;
         }
         if(my+dy2>=base + cmc_thick&&my+dy2 <= base + cmc_thick + cuticle_thick){
