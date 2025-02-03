@@ -99,7 +99,8 @@ double HairMultilayerPerlinModel::calcEPS(const double& x, const double& y, enum
 
     double cortex_thick = mField->nanoToCell(1.7*1000.0);
     auto cortexbasenoise = siv::PerlinNoise(123456);
-	if (my <= cortex_thick+cortexbasenoise.noise2D(mx*noise_scale,my*noise_scale)*8)		return ep1;		//毛皮質部分
+	if (my <= cortex_thick+cortexbasenoise.noise2D(mx*noise_scale,my*noise_scale)*8)		
+        return ep1;		//毛皮質部分
 
     double cuticle_base = cortex_thick;
     double firm_thick = mField->nanoToCell((cmc_width+cuticle_width)*1000.0);
