@@ -95,6 +95,7 @@ add_executable(
   src/model/HairMultilayerDamagedModel.cpp
   src/model/HairMultilayerRepairedModel.cpp
   src/model/HairPretteMultilayerModel.cpp
+  src/model/HairMultilayerLongitudinalModel.cpp
 )
 
 
