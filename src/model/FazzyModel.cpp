@@ -1,6 +1,37 @@
 #include"FazzyModel.h"
 #include"type/Field.h"
 #include <filesystem>
+
+// 判断给定点 (x, y) 是否在旋转长方形内
+// 参数说明：
+//   x, y      : 要判断的点
+//   cx, cy    : 长方形中心坐标
+//   width     : 长方形的宽度
+//   height    : 长方形的高度
+//   k         : 斜率，表示长方形相对于水平轴的倾斜度
+bool isPointInRotatedRectangle(double x, double y,
+    double cx, double cy,
+    double width, double height,
+    double theta)
+{
+
+// 将点平移，使长方形中心为原点
+double dx = x - cx;
+double dy = y - cy;
+
+// 对点进行逆时针旋转 -theta（即把长方形旋转回水平）
+// 旋转矩阵为：
+// [ cos(theta)   sin(theta)]
+// [-sin(theta)   cos(theta)]
+double localX =  std::cos(theta) * dx + std::sin(theta) * dy;
+double localY = -std::sin(theta) * dx + std::cos(theta) * dy;
+
+// 判断转换后的点是否在边界内
+if (std::abs(localX) <= width / 2.0 && std::abs(localY) <= height / 2.0) {
+return true;
+}
+return false;
+}
 /*---------------------------------------------*/
 /*--------------円柱Mie散乱--------------------*/
 /*---------------------------------------------*/

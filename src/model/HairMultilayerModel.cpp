@@ -122,3 +122,5 @@ double HairMultilayerPerlinModel::calcEPS(const double& x, const double& y, enum
     }
 	return ep2;
 }
+
+

@@ -14,7 +14,10 @@ enum INTEG{
 	D_X,
 	D_Y
 };
-
+bool isPointInRotatedRectangle(double x, double y,
+	double cx, double cy,
+	double width, double height,
+	double theta);
 class FazzyModel {
 protected:
 	std::shared_ptr<TYPE::Field> mField;

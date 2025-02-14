@@ -4,6 +4,8 @@
 #include<memory>
 #include <random>
 #include "PerlinNoise.hpp"
+
+
 class HairMultilayerModel : public FazzyModel
 {
 
