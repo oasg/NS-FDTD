@@ -7,6 +7,10 @@
 #include "HairPretteMultilayerModel.h"
 #include "HairMultilayerLongitudinalModel.h"
 
+
+
+
+
 ModelBuilder::ModelBuilder(std::string path)
 {
     std::ifstream ifs(path);
@@ -17,7 +21,8 @@ ModelBuilder::ModelBuilder(std::string path)
 ModelBuilder::~ModelBuilder()
 {
 }
-
+//todo use enum and switch
+//
 bool ModelBuilder::buildModel()
 {
     // build field
@@ -71,6 +76,10 @@ bool ModelBuilder::buildModel()
             mModel = std::make_shared<HairMultilayerDamagedLackLayerModel>(mField);
         }else if(model["type"] == "HairMultilayerDamagedTiltModel"){
             mModel = std::make_shared<HairMultilayerDamagedTiltModel>(mField);
+        }else if(model["type"] == "HairMultilayerDamagedLackLayerPerlinModel"){
+            mModel = std::make_shared<HairMultilayerDamagedLackLayerPerlinModel>(mField);
+        }else if(model["type"] == "HairMultilayerDamagedTiltPerlinModel"){
+            mModel = std::make_shared<HairMultilayerDamagedTiltPerlinModel>(mField);
         }
         else
         {

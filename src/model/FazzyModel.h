@@ -18,6 +18,10 @@ bool isPointInRotatedRectangle(double x, double y,
 	double cx, double cy,
 	double width, double height,
 	double theta);
+bool isPointInRotatedRectangleYRandom(double x, double y,
+		double cx, double cy,double ry1,double ry2,
+		double width, double height,
+		double theta);
 class FazzyModel {
 protected:
 	std::shared_ptr<TYPE::Field> mField;

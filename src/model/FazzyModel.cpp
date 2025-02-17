@@ -32,6 +32,30 @@ return true;
 }
 return false;
 }
+
+bool isPointInRotatedRectangleYRandom(double x, double y,
+    double cx, double cy,double ry1,double ry2,
+    double width, double height,
+    double theta)
+{
+
+// 将点平移，使长方形中心为原点
+double dx = x - cx;
+double dy = y - cy;
+
+// 对点进行逆时针旋转 -theta（即把长方形旋转回水平）
+// 旋转矩阵为：
+// [ cos(theta)   sin(theta)]
+// [-sin(theta)   cos(theta)]
+double localX =  std::cos(theta) * dx + std::sin(theta) * dy;
+double localY = -std::sin(theta) * dx + std::cos(theta) * dy;
+
+// 判断转换后的点是否在边界内
+if (std::abs(localX+ry1) <= width / 2.0 && std::abs(localY+ry2) <= height / 2.0) {
+return true;
+}
+return false;
+}
 /*---------------------------------------------*/
 /*--------------円柱Mie散乱--------------------*/
 /*---------------------------------------------*/
