@@ -458,7 +458,7 @@ double HairMultilayerDamagedTiltPerlinModel::calcEPS(const double& x, const doub
         if(my+dy1>=base&&my+dy1 <= base + cmc_thick){
             return ep2;
         }
-        if(my+dy2>=base + cmc_thick&&my+dy2 <= base + cmc_thick + cuticle_thick&& i%2 == 0){
+        if(my+dy2>=base + cmc_thick&&my+dy2 <= base + cmc_thick + cuticle_thick){
             return ep1;
         }
     }

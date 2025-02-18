@@ -1,1 +1,1 @@
-{"name": "HairMultilayerDamagedLackLayerModel", "field": {"type": "2d", "size[nm]": [8000, 8000], "cell_size[nm]": 10.0, "boundary_size": 10}, "use_model": {"type": "HairMultilayerDamagedLackLayerModel"}, "WaveParameter": {"LambdaRange": [400, 700, 5], "WaveAngleRange": [-90, 0, 1]}}
+{"name": "HairMultilayerDamagedLackLayerModel", "field": {"type": "2d", "size[nm]": [12000, 12000], "cell_size[nm]": 10.0, "boundary_size": 10}, "use_model": {"type": "HairMultilayerDamagedLackLayerModel"}, "WaveParameter": {"LambdaRange": [400, 700, 5], "WaveAngleRange": [-90, 0, 1]}}
