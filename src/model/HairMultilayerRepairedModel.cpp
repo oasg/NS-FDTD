@@ -54,9 +54,13 @@ double HairMultilayerRepairedModel::calcEPS(const double& x, const double& y, en
         if(my>=base + cmc_thick&&my <= base + cmc_thick + cuticle_thick){
             return ep1;
         }
-
-
     }
+    double oil_thick = mField->nanoToCell(0.1*1000.0); //100nm
+    double base = cuticle_base + num_layers*firm_thick;
+    if(my>=base&&my <= base + oil_thick){
+            return ep3;
+    }
+    
 	return ep2;
 }
 
@@ -122,6 +126,12 @@ double HairMultilayerRepairedLargeDisPerlinModel::calcEPS(const double& x, const
         if(my+dy2>=base + cmc_thick&&my+dy2 <= base + cmc_thick + cuticle_thick){
             return ep1;
         }
+    }
+    double dy2 = perlins[2*num_layers].noise2D(mx*noise_scale,my*noise_scale)*8;
+    double oil_thick = mField->nanoToCell(0.1*1000.0); //100nm
+    double base = cuticle_base + num_layers*firm_thick;
+    if(my+dy2>=base&&my <= base + oil_thick){
+            return ep3;
     }
 	return ep2;
 }
